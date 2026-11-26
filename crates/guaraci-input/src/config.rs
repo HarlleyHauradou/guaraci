@@ -132,6 +132,8 @@ pub struct MaterialDef {
     pub reference: Option<String>,
     /// Name of the material this one was copied from (`same_as`).
     pub copied_from: Option<String>,
+    /// Material number in the source compendium, if any.
+    pub number: Option<u64>,
 }
 
 /// A material as written, before `same_as` is resolved.
@@ -144,6 +146,7 @@ struct RawMaterial {
     title: Option<String>,
     comment: Option<String>,
     reference: Option<String>,
+    number: Option<u64>,
 }
 
 #[derive(Debug, Clone)]
@@ -561,6 +564,7 @@ fn read_material(s: &Section, builtin: bool, n: &mut Notes) -> Option<RawMateria
     let title = r.text("title", n).map(|t| t.node);
     let comment = r.text("comment", n).map(|t| t.node);
     let reference = r.text("reference", n).map(|t| t.node);
+    let number = r.count("number", n);
     let given: Vec<&str> = ["composition", "formula", "same_as"]
         .into_iter()
         .filter(|k| r.has(k))
@@ -635,6 +639,7 @@ fn read_material(s: &Section, builtin: bool, n: &mut Notes) -> Option<RawMateria
         title,
         comment,
         reference,
+        number,
     })
 }
 
@@ -686,6 +691,7 @@ fn resolve_materials(raw: Vec<RawMaterial>, n: &mut Notes) -> Vec<MaterialDef> {
             comment: m.comment.clone(),
             reference: m.reference.clone().or_else(|| cur.reference.clone()),
             copied_from: (chain.len() > 1).then(|| chain[1].to_string()),
+            number: m.number.or(cur.number),
         });
     }
     out

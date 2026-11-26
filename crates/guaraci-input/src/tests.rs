@@ -203,18 +203,22 @@ fn error_render_points_at_text() {
     assert!(out.contains("kev2"), "{out}");
 }
 
-const DATABASE: Builtin = Builtin { name: "materials", text: include_str!("../../../data/materials.gci") };
+const DATABASE: Builtin = Builtin {
+    name: "materials",
+    text: include_str!("../../../data/materials.gci"),
+};
 
 #[test]
 fn builtin_database_loads() {
     let text = "[world]\nmaterial = Air\nsize = 1 m\n[source]\nenergy = 140.5 keV\nposition = [0, 0, 0]\n";
     let prog = load_str("main.gci", text, &[DATABASE]).map_err(|(_, d)| d).unwrap();
     let c = Config::from_program(&prog).unwrap();
-    assert_eq!(c.materials.len(), 124);
+    assert_eq!(c.materials.len(), 372 + 147);
     let pmma = c.material("PMMA").unwrap();
     assert_eq!(pmma.copied_from.as_deref(), Some("Lucite"));
     assert!((pmma.density - 1.19).abs() < 1e-12);
-    assert!(c.material("Water").unwrap().title.as_deref() == Some("Water: Water, Liquid"));
+    assert_eq!(c.material("Water").unwrap().title.as_deref(), Some("Water, Liquid"));
+    assert_eq!(c.material("LYSO").unwrap().number, Some(186));
 }
 
 #[test]
