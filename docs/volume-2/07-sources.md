@@ -1,6 +1,6 @@
 # 7. Sources and radionuclides
 
-```ini
+```gci
 [source]
 nuclide = I-131
 in = thyroid

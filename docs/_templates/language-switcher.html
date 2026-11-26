@@ -1,9 +1,10 @@
 {# Language menu: links to the same page in the other languages (see conf.py) #}
-{%- set labels = {"en": "English", "pt_BR": "Português", "es": "Español"} %}
+{%- set code = (language or "en") | lower | replace("-", "_") %}
+{%- set current = "Português" if code.startswith("pt") else ("Español" if code.startswith("es") else "English") %}
 <div class="dropdown guaraci-language">
   <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Language">
     <i class="fa-solid fa-language"></i>
-    <span>{{ labels.get(language, "English") }}</span>
+    <span>{{ current }}</span>
   </button>
   <ul class="dropdown-menu dropdown-menu-end">
     <li><a class="dropdown-item" href="#" data-lang-slug="en">English</a></li>

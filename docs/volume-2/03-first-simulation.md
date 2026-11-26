@@ -2,7 +2,7 @@
 
 Create the file `thyroid.gci`:
 
-```ini
+```gci
 # I-131 in the thyroid, inside a simplified neck.
 
 [run]

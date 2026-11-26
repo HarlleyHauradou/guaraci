@@ -1,8 +1,9 @@
 <p align="center">
-  <img src="docs/_static/logo.svg" width="90" alt="">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/_static/brand/guaraci-assinatura-sobre-escuro.svg">
+    <img src="docs/_static/brand/guaraci-assinatura.svg" width="380" alt="guaraci">
+  </picture>
 </p>
-
-<h1 align="center">Guaraci</h1>
 
 <p align="center">
   <a href="README.md">English</a> · <a href="README.pt-BR.md">Português</a> · <b>Español</b>

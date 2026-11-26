@@ -6,6 +6,11 @@
 # Published on Read the Docs (.readthedocs.yaml): one project per language,
 # linked as translations of the English project.
 
+import os
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "_ext"))
+
 project = "Guaraci"
 author = "Harlley Hauradou"
 copyright = "Guaraci"
@@ -31,15 +36,22 @@ myst_heading_anchors = 3
 
 html_theme = "pydata_sphinx_theme"
 html_title = "Guaraci"
-html_logo = "_static/logo.svg"
-html_favicon = "_static/logo.svg"
+html_favicon = "_static/brand/favicon.svg"
 html_static_path = ["_static"]
 templates_path = ["_templates"]
-html_css_files = ["custom.css"]
+html_css_files = [
+    # IBM Plex (SIL Open Font License), the typeface of the Guaraci brand
+    "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap",
+    "custom.css",
+]
 html_show_sourcelink = False
 
 html_theme_options = {
-    "logo": {"text": "Guaraci"},
+    "logo": {
+        "image_light": "_static/brand/guaraci-assinatura.svg",
+        "image_dark": "_static/brand/guaraci-assinatura-sobre-escuro.svg",
+        "alt_text": "guaraci",
+    },
     "github_url": "https://github.com/HarlleyHauradou/guaraci",
     "header_links_before_dropdown": 6,
     "navbar_align": "left",
@@ -51,8 +63,8 @@ html_theme_options = {
     "show_prev_next": True,
     "footer_start": ["copyright"],
     "footer_end": ["theme-version"],
-    "pygments_light_style": "tango",
-    "pygments_dark_style": "monokai",
+    "pygments_light_style": "default",
+    "pygments_dark_style": "github-dark",
 }
 
 html_context = {
@@ -65,3 +77,9 @@ html_context = {
 
 copybutton_prompt_text = r"\$ "
 copybutton_prompt_is_regexp = True
+
+
+def setup(app):
+    from gci_lexer import GciLexer
+
+    app.add_lexer("gci", GciLexer)

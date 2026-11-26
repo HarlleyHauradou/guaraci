@@ -2,7 +2,18 @@
 html_theme.sidebar_secondary.remove: true
 ---
 
+{.hero-title}
 # Guaraci
+
+```{image} _static/brand/guaraci-assinatura.svg
+:alt: guaraci
+:class: only-light hero-logo
+```
+
+```{image} _static/brand/guaraci-assinatura-sobre-escuro.svg
+:alt: guaraci
+:class: only-dark hero-logo
+```
 
 **Monte Carlo radiation transport on CPU and GPU**, focused initially on
 medical physics and nuclear medicine.
@@ -45,7 +56,7 @@ Physics, nuclear data, transport engine, statistics and validation.
 
 ## An input file
 
-```ini
+```gci
 [world]
 material = Air
 size = [50, 50, 50] cm

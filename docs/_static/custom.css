@@ -1,17 +1,107 @@
-/* Guaraci colours: the sun (amber / orange) */
+/*
+ * Guaraci visual identity (brand manual v0.1)
+ *   jenipapo #141B24  text, rules, dark backgrounds
+ *   cal      #EEF0EC  light background
+ *   urucum   #D2461B  the sun: mark, links, highlights (dark mode #E65A2C)
+ *   grafite  #59616A  secondary text, rules
+ *   pequi    #F0A81C  hot spots, warnings
+ * Urucum on cal is 3.9:1: headings, accents and large text only; body text
+ * stays jenipapo on cal (15.1:1) or cal on jenipapo.
+ */
+
+:root {
+  --pst-font-family-base: "IBM Plex Sans", system-ui, sans-serif;
+  --pst-font-family-heading: "IBM Plex Sans Condensed", "IBM Plex Sans", system-ui, sans-serif;
+  --pst-font-family-monospace: "IBM Plex Mono", ui-monospace, monospace;
+  --pst-font-weight-heading: 600;
+}
+
 html[data-theme="light"] {
-  --pst-color-primary: #b45309;
-  --pst-color-secondary: #d97706;
-  --pst-color-accent: #f59e0b;
+  --pst-color-background: #eef0ec;
+  --pst-color-on-background: #f6f7f4;
+  --pst-color-surface: #e3e6e1;
+  --pst-color-on-surface: #141b24;
+  --pst-color-text-base: #141b24;
+  --pst-color-text-muted: #59616a;
+  --pst-color-heading: #141b24;
+  --pst-color-border: #d3d7d1;
+  --pst-color-shadow: rgba(20, 27, 36, 0.08);
+  --pst-color-primary: #d2461b;
+  --pst-color-primary-bg: #f6ddd3;
+  --pst-color-secondary: #d2461b;
+  --pst-color-secondary-bg: #f6ddd3;
+  --pst-color-accent: #d2461b;
+  --pst-color-link: #141b24;
+  --pst-color-link-hover: #d2461b;
+  --pst-color-inline-code: #141b24;
+  --pst-color-inline-code-links: #141b24;
+  --pst-color-target: #fbf3d5;
+  --pst-color-warning: #f0a81c;
+  --pst-color-warning-bg: #fbf3d5;
+  --pst-color-info: #59616a;
+  --guaraci-unit: #d2461b;
+  --guaraci-link-line: #d2461b;
 }
+
 html[data-theme="dark"] {
-  --pst-color-primary: #fbbf24;
-  --pst-color-secondary: #f59e0b;
-  --pst-color-accent: #fcd34d;
+  --pst-color-background: #141b24;
+  --pst-color-on-background: #10161e;
+  --pst-color-surface: #1c2531;
+  --pst-color-on-surface: #eef0ec;
+  --pst-color-text-base: #eef0ec;
+  --pst-color-text-muted: #a3a9af;
+  --pst-color-heading: #eef0ec;
+  --pst-color-border: #2a3441;
+  --pst-color-shadow: rgba(0, 0, 0, 0.3);
+  --pst-color-primary: #e65a2c;
+  --pst-color-primary-bg: #3b2341;
+  --pst-color-secondary: #e65a2c;
+  --pst-color-secondary-bg: #3b2341;
+  --pst-color-accent: #e65a2c;
+  --pst-color-link: #eef0ec;
+  --pst-color-link-hover: #e65a2c;
+  --pst-color-inline-code: #eef0ec;
+  --pst-color-inline-code-links: #eef0ec;
+  --pst-color-target: #3b2341;
+  --pst-color-warning: #f0a81c;
+  --pst-color-warning-bg: #3a2f17;
+  --pst-color-info: #a3a9af;
+  --guaraci-unit: #f0a81c;
+  --guaraci-link-line: #e65a2c;
 }
-.bd-content table { font-size: 0.9rem; }
-.hero-title { font-size: 2.6rem; font-weight: 700; margin-bottom: 0; }
-.hero-subtitle { font-size: 1.25rem; opacity: 0.85; }
+
+/* links: text keeps the reading contrast, the underline carries the urucum */
+.bd-article a:not(.headerlink):not(.sd-stretched-link) {
+  text-decoration-color: var(--guaraci-link-line);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+/* the lowercase wordmark is the title in the top bar */
+.navbar-brand img { height: 1.9rem; }
+
+/* home page: the signature replaces the text title */
+.hero-logo img, img.hero-logo { max-width: 26rem; width: 100%; margin: 0.5rem 0 1rem; }
+section.hero-title > h1, h1.hero-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* .gci syntax in the brand colours; units get their own colour (brand manual, 07) */
+html[data-theme] .highlight-gci .highlight { --gci-text: #141b24; --gci-muted: #59616a; --gci-accent: #d2461b; --gci-value: #3d4550; --gci-string: #9b2f27; }
+html[data-theme="dark"] .highlight-gci .highlight { --gci-text: #eef0ec; --gci-muted: #8a9198; --gci-accent: #e65a2c; --gci-value: #c9cdd1; --gci-string: #f2b8a2; }
+html[data-theme] .highlight-gci .highlight pre { color: var(--gci-text); }
+html[data-theme] .highlight-gci .highlight .kd { color: var(--gci-accent); font-weight: 600; }
+html[data-theme] .highlight-gci .highlight .nc { color: var(--gci-text); font-weight: 600; }
+html[data-theme] .highlight-gci .highlight .na { color: var(--gci-text); }
+html[data-theme] .highlight-gci .highlight .o,
+html[data-theme] .highlight-gci .highlight .p { color: var(--gci-muted); }
+html[data-theme] .highlight-gci .highlight .m { color: var(--gci-text); }
+html[data-theme] .highlight-gci .highlight .m-Unit { color: var(--guaraci-unit); font-weight: 600; }
+html[data-theme] .highlight-gci .highlight .n { color: var(--gci-value); }
+html[data-theme] .highlight-gci .highlight .kn { color: var(--gci-accent); font-weight: 600; }
+html[data-theme] .highlight-gci .highlight .kc,
+html[data-theme] .highlight-gci .highlight .s2 { color: var(--gci-string); }
+html[data-theme] .highlight-gci .highlight .c1 { color: var(--gci-muted); font-style: italic; }
+
+.bd-content table { font-size: 0.92rem; }
 
 /* language menu in the top bar */
 .guaraci-language .btn { font-size: 0.9rem; padding: 0.25rem 0.5rem; color: var(--pst-color-text-muted); border: none; }

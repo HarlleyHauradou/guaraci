@@ -5,7 +5,7 @@
 A `.gci` file is a sequence of **sections**. Each section starts with a header
 in square brackets, followed by `key = value` lines:
 
-```ini
+```gci
 [volume lesion]        # section type and name
 shape = sphere
 radius = 15 mm
@@ -35,7 +35,7 @@ Lists may span several lines.
 The unit comes after the number, with or without a space. In a list, a unit
 after the `]` applies to every element that has no unit of its own:
 
-```ini
+```gci
 size  = [10, 10, 10] cm
 voxel = [2 mm, 2 mm, 0.25 cm]
 ```

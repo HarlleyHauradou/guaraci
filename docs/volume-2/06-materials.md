@@ -30,7 +30,7 @@ between `Tissue_Soft_ICRP` and `Tissue_Soft_ICRUFourComponent`.
 
 By mass fractions (Guaraci normalises the sum to 1):
 
-```ini
+```gci
 [material MyGel]
 density = 1.05 g/cm3
 composition = { H = 0.10, C = 0.12, O = 0.75, N = 0.03 }
@@ -38,7 +38,7 @@ composition = { H = 0.10, C = 0.12, O = 0.75, N = 0.03 }
 
 By chemical formula:
 
-```ini
+```gci
 [material Acetone]
 density = 0.7899 g/cm3
 formula = C3H6O
@@ -46,7 +46,7 @@ formula = C3H6O
 
 Copying another material with a different density:
 
-```ini
+```gci
 [material Styrofoam]
 same_as = Polystyrene
 density = 0.03 g/cm3
@@ -72,7 +72,7 @@ A single-element material is defined like any other. Many elements are
 already in the database (`Lead`, `Aluminum`, `Iron`, `Gold`, `Tungsten`…); for
 the others, give the density:
 
-```ini
+```gci
 [material Iodine]
 density = 4.93 g/cm3
 composition = { I = 1 }
