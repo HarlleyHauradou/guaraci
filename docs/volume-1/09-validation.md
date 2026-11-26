@@ -99,6 +99,8 @@ value is the EGS4/MCNP mean.
 - the sphere and the medium are `Tissue_Soft_ICRP` (density 1);
 - the infinite medium is a 1 m cube;
 - absorbed fraction = energy deposited in the sphere ÷ energy emitted;
+- physics list `photon_electron` (the default): Compton, photo- and pair
+  electrons are transported;
 - 5×10⁵ histories per case; the statistical uncertainty is typically below 1 %.
 
 The case-by-case results are in `validation/stabin2000_comparison.csv`. To reproduce:
@@ -107,35 +109,39 @@ The case-by-case results are in `validation/stabin2000_comparison.csv`. To repro
 GUARACI_TEST_DATA=~/.local/share/guaraci cargo test --release -p guaraci-cpu stabin_spheres_full -- --ignored --nocapture
 ```
 
-Deviation from the recommended value (selected masses):
+Deviation from the recommended value (selected masses; over the 231 cases, the
+mean deviation is +1.8 %, and 182 values lie between EGS4 and MCNP within the
+rounding of the table):
 
 | Energy | 1 g | 10 g | 100 g | 1000 g | 6000 g |
 |---|---|---|---|---|---|
-| 20 keV | +7.6 % | +5.0 % | +3.2 % | +1.4 % | +0.6 % |
-| 30 keV | +8.8 % | +6.7 % | +4.9 % | +2.6 % | +1.0 % |
-| 40 keV | +6.0 % | +6.5 % | +6.8 % | +2.5 % | +0.8 % |
-| 60 keV | +3.5 % | +3.6 % | +6.1 % | +1.7 % | −0.1 % |
-| 80 keV | +4.0 % | +2.7 % | +4.3 % | +0.6 % | 0.0 % |
-| 100 keV | +1.9 % | +2.5 % | +3.9 % | +0.6 % | +0.3 % |
-| 140 keV | −2.0 % | +1.5 % | +3.4 % | — | — |
-| 160 keV | — | — | — | +0.4 % | −0.3 % |
-| 364 keV | +1.0 % | +2.2 % | +3.1 % | +0.7 % | −0.1 % |
-| 662 keV | +8.2 % | +4.2 % | +3.4 % | +1.1 % | 0.0 % |
-| 1460 keV | +48.6 % | +17.4 % | +7.7 % | +3.8 % | +1.8 % |
-| 2750 keV | +171.4 % | +46.9 % | +20.9 % | +7.6 % | +4.0 % |
+| 20 keV | +7.2 % | +5.0 % | +3.0 % | +1.6 % | +0.6 % |
+| 30 keV | +9.5 % | +7.0 % | +5.4 % | +2.8 % | +1.2 % |
+| 40 keV | +6.3 % | +6.5 % | +7.1 % | +2.6 % | +1.2 % |
+| 60 keV | +3.3 % | +3.8 % | +5.8 % | +1.9 % | +0.3 % |
+| 80 keV | +3.9 % | +2.1 % | +4.4 % | +0.9 % | +0.3 % |
+| 100 keV | +1.0 % | +2.3 % | +3.7 % | +0.8 % | +0.5 % |
+| 140 keV | −2.0 % | +2.2 % | +3.0 % | — | — |
+| 160 keV | — | — | — | +0.4 % | −0.2 % |
+| 364 keV | −1.8 % | +1.9 % | +2.0 % | +0.4 % | −0.5 % |
+| 662 keV | −3.7 % | +0.4 % | +0.5 % | −0.3 % | −0.5 % |
+| 1460 keV | −0.8 % | −0.7 % | +1.0 % | +1.1 % | +0.3 % |
+| 2750 keV | +11.9 % | −3.2 % | +1.0 % | −0.5 % | −0.2 % |
 
 ### Reading the results
 
-1. **From 80 to 364 keV, and above 300 g at any energy up to 662 keV:** agreement
-   within 0–4 %. The two reference codes differ from each other by up to about
-   6 % (as the paper points out, Table 3).
-2. **Above 1 MeV, in small spheres:** Guaraci overestimates, from +8 % at 100 g
-   to +171 % at 1 g and 2.75 MeV. The deviation falls with the size of the
-   sphere, as expected. This is the limitation of the current version: Compton
-   electrons (up to ~2.5 MeV, with a range of ~1 cm in tissue) are deposited on
-   the spot, whereas the reference codes transport them and they escape from
-   small spheres. The same effect, smaller, appears at 662 keV below 10 g.
-   **This benchmark will be repeated with electron transport.**
+1. **From 80 keV to 2.75 MeV:** agreement within 0–5 %. The two reference codes
+   differ from each other by up to about 6 % (as the paper points out, Table 3).
+   The one exception, +11.9 % at 1 g and 2.75 MeV, is a value the paper gives
+   with a single significant figure (0.004; EGS4 gives 0.005).
+2. **Above 1 MeV, in small spheres: the effect of electron transport.** With
+   the previous version, in which Compton electrons (up to ~2.5 MeV, with a
+   range of ~1 cm in tissue) were deposited on the spot, Guaraci overestimated
+   by +49 % at 1 g and 1460 keV and by +171 % at 1 g and 2.75 MeV. With the
+   electrons transported, they escape from small spheres as in the reference
+   codes, and the deviations fall to −0.8 % and +11.9 %. At 662 keV and 1 g,
+   the deviation goes from +8.2 % to −3.7 %. With `list = photon_local`, the
+   previous behaviour returns.
 3. **From 20 to 60 keV:** a systematic deviation of +3 to +8 % in small spheres.
    In this range the photoelectric effect dominates, and it is very sensitive to
    the composition. The paper uses the tissue of MIRD Pamphlets 3 and 8, whose
@@ -150,7 +156,9 @@ Deviation from the recommended value (selected masses):
 | MCNP (paper) | 0.137 | −4.2 % |
 
    Changing the material moves the result more than the observed deviation,
-   and Guaraci lies between the two reference codes, closer to EGS4.
+   and Guaraci lies between the two reference codes, closer to EGS4. (These
+   values were computed with `photon_local`; at 30 keV, electron transport
+   changes them by less than 0.5 %.)
 
 The `stabin_spheres_selected` test, run with every `cargo test`, uses five cases
 of region 1 with a tolerance of 6 % + 3σ.
@@ -189,7 +197,7 @@ Over the 133 cases, the mean deviation is +0.7 % and the largest is 6.6 %.
 - **Where the electron range is comparable to the sphere** (1–4 MeV, below 10 g):
   the two reference codes differ from each other by 5 to 15 %, and the
   recommended value is their mean. 123 of the 133 Guaraci values lie between
-  EGS4 and MCNP. The other 10 are 1 to 2 % above EGS4, with the largest
+  EGS4 and MCNP, within the rounding of the table. The other 10 are 1 to 2 % above EGS4, with the largest
   deviations at 4 MeV.
 
 Two corrections of this version came from this benchmark:

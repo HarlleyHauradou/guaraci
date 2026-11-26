@@ -15,8 +15,14 @@ msgstr "I-131 en la tiroides"
 msgid "[`examples/thyroid_i131.gci`](https://github.com/HarlleyHauradou/guaraci/blob/main/examples/thyroid_i131.gci): an ellipsoidal thyroid inside a cylindrical neck of soft tissue, with 3.7 GBq of I-131."
 msgstr "[`examples/thyroid_i131.gci`](https://github.com/HarlleyHauradou/guaraci/blob/main/examples/thyroid_i131.gci): una tiroides elipsoidal dentro de un cuello cilíndrico de tejido blando, con 3,7 GBq de I-131."
 
-msgid "Result with 10⁷ decays: mean dose rate in the thyroid of 7.756×10⁻³ Gy/s, which is what the hand calculation gives: 3.7 GBq × 0.2055 MeV per decay ÷ 15.7 g."
-msgstr "Resultado con 10⁷ decaimientos: tasa de dosis media en la tiroides de 7,756×10⁻³ Gy/s, que es lo que da el cálculo a mano: 3,7 GBq × 0,2055 MeV por decaimiento ÷ 15,7 g."
+msgid "Result with 2×10⁶ decays: mean dose rate in the thyroid of 7.43×10⁻³ Gy/s. If all the β energy and part of the photon energy stayed in the thyroid, the hand calculation would give 3.7 GBq × 0.2055 MeV per decay ÷ 15.7 g = 7.76×10⁻³ Gy/s, which is also what Guaraci gives with `list = photon_local`. With electron transport, the β particles emitted near the surface leave the thyroid and the result is about 4 % lower."
+msgstr "Resultado con 2×10⁶ decaimientos: tasa de dosis media en la tiroides de 7,43×10⁻³ Gy/s. Si toda la energía β y parte de la energía de los fotones se quedaran en la tiroides, el cálculo a mano daría 3,7 GBq × 0,2055 MeV por decaimiento ÷ 15,7 g = 7,76×10⁻³ Gy/s, que es también lo que da Guaraci con `list = photon_local`. Con el transporte de electrones, las partículas β emitidas cerca de la superficie salen de la tiroides y el resultado es cerca de un 4 % menor."
+
+msgid "Y-90 microspheres in a liver tumour"
+msgstr "Microesferas de Y-90 en un tumor hepático"
+
+msgid "[`examples/y90_microspheres.gci`](https://github.com/HarlleyHauradou/guaraci/blob/main/examples/y90_microspheres.gci): 1 GBq of Y-90, a pure β⁻ emitter, for 1 h in a tumour of 15 mm radius inside the liver, as in radioembolisation. The dose comes almost entirely from electrons with a range of up to 11 mm, so electron transport is essential. Result with 10⁵ decays: 33.2 Gy in the tumour, 91 % of the 36.6 Gy that full absorption would give."
+msgstr "[`examples/y90_microspheres.gci`](https://github.com/HarlleyHauradou/guaraci/blob/main/examples/y90_microspheres.gci): 1 GBq de Y-90, un emisor β⁻ puro, durante 1 h en un tumor de 15 mm de radio dentro del hígado, como en la radioembolización. La dosis viene casi por completo de electrones con un alcance de hasta 11 mm, así que el transporte de electrones es imprescindible. Resultado con 10⁵ decaimientos: 33,2 Gy en el tumor, el 91 % de los 36,6 Gy que daría la absorción total."
 
 msgid "Tc-99m lesion in a water phantom"
 msgstr "Lesión de Tc-99m en un maniquí de agua"

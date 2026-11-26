@@ -6,6 +6,9 @@ msgstr ""
 msgid "Guaraci"
 msgstr ""
 
+msgid "guaraci"
+msgstr ""
+
 msgid "**Monte Carlo radiation transport on CPU and GPU**, focused initially on medical physics and nuclear medicine."
 msgstr "**Transporte de radiação por Monte Carlo em CPU e GPU**, com foco inicial em física médica e medicina nuclear."
 
@@ -45,14 +48,14 @@ msgstr "O que já funciona"
 msgid "**Physics**"
 msgstr "**Física**"
 
-msgid "photoelectric effect, Compton (Klein-Nishina with S(x,Z)), Rayleigh (form factors), pair production"
-msgstr "efeito fotoelétrico, Compton (Klein-Nishina com S(x,Z)), Rayleigh (fatores de forma), produção de pares"
+msgid "photons: photoelectric effect, Compton (Klein-Nishina with S(x,Z)), Rayleigh (form factors), pair production; electrons and positrons: mixed condensed history with δ-rays, bremsstrahlung, multiple scattering and annihilation"
+msgstr "fótons: efeito fotoelétrico, Compton (Klein-Nishina com S(x,Z)), Rayleigh (fatores de forma), produção de pares; elétrons e pósitrons: história condensada mista com raios δ, bremsstrahlung, espalhamento múltiplo e aniquilação"
 
 msgid "**Sources**"
 msgstr "**Fontes**"
 
-msgid "3821 nuclides of ENDF/B-VIII.0, user-defined lines, activity and duration"
-msgstr "3821 nuclídeos do ENDF/B-VIII.0, linhas definidas pelo usuário, atividade e duração"
+msgid "3821 nuclides of ENDF/B-VIII.0 (γ, X, β⁻, β⁺, conversion and Auger electrons), user-defined photon, electron and positron lines, activity and duration"
+msgstr "3821 nuclídeos do ENDF/B-VIII.0 (γ, X, β⁻, β⁺, elétrons de conversão e Auger), linhas de fótons, elétrons e pósitrons definidas pelo usuário, atividade e duração"
 
 msgid "**Geometry**"
 msgstr "**Geometria**"
@@ -81,11 +84,11 @@ msgstr "milhões de histórias por segundo em CPUs multinúcleo; resultados idê
 msgid "**Validation**"
 msgstr "**Validação**"
 
-msgid "μ/ρ within 0.4 % of NIST XCOM; absorbed fractions in 231 spheres compared with Stabin & Konijnenberg (2000)"
-msgstr "μ/ρ a menos de 0,4 % do NIST XCOM; frações absorvidas em 231 esferas comparadas com Stabin & Konijnenberg (2000)"
+msgid "μ/ρ within 0.4 % of NIST XCOM; stopping powers and ranges within 1.1 % of NIST ESTAR; photon and electron absorbed fractions in spheres compared with Stabin & Konijnenberg (2000)"
+msgstr "μ/ρ a menos de 0,4 % do NIST XCOM; poder de freamento e alcance a menos de 1,1 % do NIST ESTAR; frações absorvidas de fótons e elétrons em esferas comparadas com Stabin & Konijnenberg (2000)"
 
-msgid "In development: voxelised phantoms (CT/DICOM), electron transport, CUDA backend and the graphical interface ([Volume III](volume-3/index.md))."
-msgstr "Em desenvolvimento: fantomas voxelizados (CT/DICOM), transporte de elétrons, backend CUDA e a interface gráfica ([Volume III](volume-3/index.md))."
+msgid "In development: voxelised phantoms (CT/DICOM), CUDA backend and the graphical interface ([Volume III](volume-3/index.md))."
+msgstr "Em desenvolvimento: fantomas voxelizados (CT/DICOM), backend CUDA e a interface gráfica ([Volume III](volume-3/index.md))."
 
 msgid "The three volumes"
 msgstr "Os três volumes"

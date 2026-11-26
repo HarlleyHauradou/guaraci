@@ -12,8 +12,21 @@ an ellipsoidal thyroid inside a cylindrical neck of soft tissue, with 3.7 GBq of
 guaraci run examples/thyroid_i131
 ```
 
-Result with 10⁷ decays: mean dose rate in the thyroid of 7.756×10⁻³ Gy/s,
-which is what the hand calculation gives: 3.7 GBq × 0.2055 MeV per decay ÷ 15.7 g.
+Result with 2×10⁶ decays: mean dose rate in the thyroid of 7.43×10⁻³ Gy/s.
+If all the β energy and part of the photon energy stayed in the thyroid, the
+hand calculation would give 3.7 GBq × 0.2055 MeV per decay ÷ 15.7 g =
+7.76×10⁻³ Gy/s, which is also what Guaraci gives with `list = photon_local`.
+With electron transport, the β particles emitted near the surface leave the
+thyroid and the result is about 4 % lower.
+
+## Y-90 microspheres in a liver tumour
+
+[`examples/y90_microspheres.gci`](https://github.com/HarlleyHauradou/guaraci/blob/main/examples/y90_microspheres.gci):
+1 GBq of Y-90, a pure β⁻ emitter, for 1 h in a tumour of 15 mm radius inside
+the liver, as in radioembolisation. The dose comes almost entirely from
+electrons with a range of up to 11 mm, so electron transport is essential.
+Result with 10⁵ decays: 33.2 Gy in the tumour, 91 % of the 36.6 Gy that full
+absorption would give.
 
 ## Tc-99m lesion in a water phantom
 
