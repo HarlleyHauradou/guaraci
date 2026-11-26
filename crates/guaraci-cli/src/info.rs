@@ -13,7 +13,13 @@ pub enum InfoCommand {
     /// Built-in materials; give a word to filter (e.g. `tissue`, `bone`, `LYSO`).
     Materials { filter: Option<String> },
     /// Decay data of a nuclide (e.g. `I-131`, `Tc-99m`).
-    Nuclide { name: String },
+    Nuclide {
+        name: String,
+        /// Print the photon lines as CSV (energy_keV,photons_per_decay,kind),
+        /// e.g. to build the source of another Monte Carlo code.
+        #[arg(long)]
+        csv: bool,
+    },
 }
 
 pub fn run(cmd: InfoCommand) -> Result<(), ()> {
@@ -65,7 +71,7 @@ pub fn run(cmd: InfoCommand) -> Result<(), ()> {
             println!("\n{n} materials");
             Ok(())
         }
-        InfoCommand::Nuclide { name } => {
+        InfoCommand::Nuclide { name, csv } => {
             let Some(id) = NuclideId::parse(&name) else {
                 eprintln!("error: `{name}` is not a nuclide name (e.g. I-131, Tc-99m)");
                 return Err(());
@@ -81,6 +87,17 @@ pub fn run(cmd: InfoCommand) -> Result<(), ()> {
                 eprintln!("error: {id} is not in {}", prov.title);
                 return Err(());
             };
+            if csv {
+                println!(
+                    "# {id} photon lines, {} ({}, sha256 {})",
+                    prov.title, prov.source, prov.sha256
+                );
+                println!("energy_keV,photons_per_decay,kind");
+                for l in &n.photons {
+                    println!("{:.4},{:.6e},{:?}", l.energy * 1e3, l.intensity, l.kind);
+                }
+                return Ok(());
+            }
             println!("{id}   ({})", prov.title);
             println!(
                 "  half-life                {}",

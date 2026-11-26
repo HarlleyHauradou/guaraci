@@ -511,10 +511,12 @@ impl Problem {
                     let vol = &geometry.volumes[v];
                     let half = vol.solid.half_extent();
                     let spacing = Vec3::from_array(*voxel);
+                    // ceil with a tolerance: 2.2 / 0.1 = 22.000000000000004 must give 22 voxels
+                    let count = |len: f64, step: f64| (((len / step) - 1e-9).ceil() as usize).max(1);
                     let dims = [
-                        ((2.0 * half.x / spacing.x).ceil() as usize).max(1),
-                        ((2.0 * half.y / spacing.y).ceil() as usize).max(1),
-                        ((2.0 * half.z / spacing.z).ceil() as usize).max(1),
+                        count(2.0 * half.x, spacing.x),
+                        count(2.0 * half.y, spacing.y),
+                        count(2.0 * half.z, spacing.z),
                     ];
                     let n = dims[0] * dims[1] * dims[2];
                     if n > 200_000_000 {
