@@ -1,81 +1,92 @@
-# Guaraci
+<p align="center">
+  <img src="docs/assets/favicon.svg" width="90" alt="">
+</p>
 
-**Monte Carlo radiation transport on CPU and GPU.**
+<h1 align="center">Guaraci</h1>
 
-Focused initially on medical physics and nuclear medicine.
+<p align="center">
+  <b>Monte Carlo radiation transport on CPU and GPU</b><br>
+  Focused initially on medical physics and nuclear medicine.
+</p>
 
-> *Guaraci* is the Sun in Tupi mythology — the source of the radiation that gives life to everything.
+<p align="center">
+  <a href="https://harlleyhauradou.github.io/guaraci/"><b>Documentation</b></a> ·
+  <a href="https://harlleyhauradou.github.io/guaraci/volume-2/03-primeira-simulacao/">First simulation</a> ·
+  <a href="https://harlleyhauradou.github.io/guaraci/volume-1/08-validacao/">Validation</a> ·
+  <a href="examples/">Examples</a>
+</p>
 
-## Status
+<p align="center">
+  <a href="https://github.com/HarlleyHauradou/guaraci/actions/workflows/ci.yml"><img src="https://github.com/HarlleyHauradou/guaraci/actions/workflows/ci.yml/badge.svg" alt="ci"></a>
+  <a href="https://github.com/HarlleyHauradou/guaraci/actions/workflows/docs.yml"><img src="https://github.com/HarlleyHauradou/guaraci/actions/workflows/docs.yml/badge.svg" alt="docs"></a>
+</p>
 
-Early development. Available so far:
+---
 
-- **Photon transport on CPU** (multi-threaded): photoelectric effect, Compton scattering (Klein-Nishina with incoherent scattering function), Rayleigh scattering (form factors) and pair production. Electrons deposit their energy locally.
-- **Probes**: 3D dose grids (MetaImage `.mhd`), dose in volumes, photon fluence spectra — each with its statistical uncertainty.
-- **Radionuclide sources** from ENDF/B-VIII.0 decay data (3821 nuclides), user-defined photon lines, activity and duration.
-- **Validation**: μ/ρ within 0.4 % of NIST XCOM (10 keV–10 MeV), uncollided fluence within 0.25 % of the analytic value, absorbed fractions in spheres compared with Stabin & Konijnenberg (2000) for 231 cases, exact energy conservation, results independent of the number of threads.
-- `guaraci check` explains what an input describes; `guaraci run` writes a readable report and a copy of the inputs.
-- Nuclear data downloaded from the official sources on first use (`guaraci data install endfb8`).
-- 372 materials from PNNL-15870 Rev. 1.
+*Guaraci is the Sun in Tupi mythology — the source of the radiation that gives life to everything.*
 
-Coming next: voxelised phantoms, CUDA backend, electron transport, desktop interface.
-
-## Quick start
-
-```bash
-cargo install --path crates/guaraci-cli
-guaraci check examples/thyroid_i131
-guaraci run examples/thyroid_i131
-```
-
-## Manual
-
-The manual has two volumes (in Portuguese for now): a [User Manual](docs/manual/usuario/README.md) and a [Technical Manual](docs/manual/tecnico/README.md).
-
-## A taste of the input
-
-```
-[world]
-material = Air
-size = [1, 1, 1] m
-
-[volume phantom]
-shape = cylinder
-radius = 10            # no unit = cm
-height = 20 cm
-material = Water
-
-[volume lesion]
-parent = phantom
-shape = sphere
-radius = 15 mm
-center = [3, 0, 0]
-material = Water
+```ini
+[volume thyroid]
+parent = neck
+shape = ellipsoid
+semi_axes = [1, 1.5, 2.5] cm
+material = Tissue_Soft_ICRP
 
 [source]
-nuclide = Tc-99m
-in = lesion
-activity = 370 MBq
+nuclide = I-131
+in = thyroid
+activity = 3.7 GBq
 
 [probe dose]
 type = dose_grid
-in = phantom
+in = neck
 voxel = [2, 2, 2] mm
 ```
 
-Default units when none is written: cm, keV, MBq, s, g/cm³, degrees.
+```bash
+guaraci check thyroid    # what Guaraci understood, without running
+guaraci run thyroid      # dose map, uncertainties and a readable report
+```
 
-## Nuclear data
+## Features
 
-Guaraci does not redistribute nuclear data libraries. They are downloaded from their official sources on first use (or with `guaraci data install`) and converted locally.
+- **Photon transport** on multi-core CPUs: photoelectric effect, Compton (Klein-Nishina with S(x,Z)), Rayleigh (form factors), pair production.
+- **Radionuclide sources** from ENDF/B-VIII.0 decay data (3821 nuclides), downloaded from the official source on first use — no third-party data is redistributed.
+- **Human-readable input** with units (`15 mm`, `3.7 GBq`), includes, and error messages that point at the line and suggest the fix.
+- **372 materials** from PNNL-15870 Rev. 1.
+- **Probes**: 3D dose maps (MetaImage), dose in volumes, fluence spectra — all with statistical uncertainties.
+- **Validated**: μ/ρ within 0.4 % of NIST XCOM; absorbed fractions in 231 spheres compared with Stabin & Konijnenberg (2000); exact energy conservation; results independent of the thread count.
 
-## Philosophy
+In development: voxelised phantoms (CT/DICOM), electron transport, CUDA backend, graphical interface.
 
-See [PHILOSOPHY.md](PHILOSOPHY.md).
-
-## Building
+## Install
 
 ```bash
-cargo build --release
-cargo test
+git clone https://github.com/HarlleyHauradou/guaraci
+cd guaraci
+cargo install --path crates/guaraci-cli
+guaraci run examples/thyroid_i131
 ```
+
+## Documentation
+
+The manual is online at **<https://harlleyhauradou.github.io/guaraci/>** (in Portuguese), in three volumes:
+
+| Volume | Contents |
+|---|---|
+| I — Technical Manual | physics, nuclear data, transport engine, statistics, validation |
+| II — User Manual | the `.gci` language, materials, sources, probes, commands, results |
+| III — Graphical Interface | the desktop program (in development) |
+
+## Repository
+
+| Folder | Contents |
+|---|---|
+| `crates/` | the Rust crates (`guaraci-units`, `-input`, `-data`, `-core`, `-cpu`, `-cli`) |
+| `data/` | material database |
+| `docs/` | documentation site sources (MkDocs Material) |
+| `examples/` | input files |
+| `validation/` | benchmarks and comparisons with GATE and MCNPX |
+| `tools/` | generators |
+
+See also the project [philosophy](PHILOSOPHY.md).

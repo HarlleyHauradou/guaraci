@@ -30,7 +30,7 @@ existe nas versões ICRP e ICRU, e por isso você escolhe explicitamente entre
 
 Por fração de massa (o Guaraci normaliza a soma para 1):
 
-```
+```ini
 [material MyGel]
 density = 1.05 g/cm3
 composition = { H = 0.10, C = 0.12, O = 0.75, N = 0.03 }
@@ -38,7 +38,7 @@ composition = { H = 0.10, C = 0.12, O = 0.75, N = 0.03 }
 
 Copiando outro material com outra densidade:
 
-```
+```ini
 [material Isopor]
 same_as = Polystyrene
 density = 0.03 g/cm3
@@ -64,7 +64,7 @@ Um material de um só elemento é definido como qualquer outro. Muitos
 elementos já estão no banco (`Lead`, `Aluminum`, `Iron`, `Gold`, `Tungsten`…);
 para os outros, dê a densidade:
 
-```
+```ini
 [material Iodine]
 density = 4.93 g/cm3
 composition = { I = 1 }

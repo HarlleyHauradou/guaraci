@@ -64,7 +64,7 @@ Numa fonte de F-18 em tecido com osso cortical:
 
 ## Dados de decaimento
 
-Veja o [capítulo 4](04-dados.md#testes-de-referência).
+Veja o [capítulo 4](04-dados.md#testes-de-referencia).
 
 ## Frações absorvidas em esferas (Stabin e Konijnenberg, 2000)
 

@@ -2,7 +2,7 @@
 
 Crie o arquivo `tireoide.gci`:
 
-```
+```ini
 # I-131 na tireoide, dentro de um pescoço simplificado.
 
 [run]
@@ -60,7 +60,7 @@ guaraci run tireoide
 Na primeira execução, o Guaraci baixa os dados do ENDF/B-VIII.0 (cerca de 50 MB, só
 uma vez). Depois ele mostra o progresso e, ao final, um resumo:
 
-```
+```text
 Done: 10000000 histories in 4s (2.594e6 histories/s, 4 threads)
   probe dose: maximum dose 8.2042e-3 Gy/s ± 1.18 % (among the 10564 voxels with uncertainty ≤ 10 %)
   probe organs:

@@ -22,7 +22,7 @@ O backend em GPU está **(em desenvolvimento)**.
 
 ## Princípios
 
-O Guaraci segue a [filosofia do projeto](../../../PHILOSOPHY.md). Duas regras
+O Guaraci segue a [filosofia do projeto](../filosofia.md). Duas regras
 práticas decorrem dela:
 
 - **Tudo que você não escreve tem um valor padrão conhecido**, e o

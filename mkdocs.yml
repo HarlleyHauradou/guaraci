@@ -1,0 +1,95 @@
+site_name: Guaraci
+site_description: Transporte de radiação por Monte Carlo em CPU e GPU — física médica e medicina nuclear
+site_url: https://harlleyhauradou.github.io/guaraci/
+repo_url: https://github.com/HarlleyHauradou/guaraci
+repo_name: HarlleyHauradou/guaraci
+edit_uri: edit/main/docs/
+copyright: Guaraci — Monte Carlo radiation transport on CPU and GPU
+
+theme:
+  name: material
+  language: pt-BR
+  icon:
+    logo: material/white-balance-sunny
+    repo: fontawesome/brands/github
+  favicon: assets/favicon.svg
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Modo escuro
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Modo claro
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - navigation.instant
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+    - toc.follow
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.snippets:
+      base_path: ["."]
+      check_paths: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+nav:
+  - Início:
+      - index.md
+      - Filosofia: filosofia.md
+      - Exemplos: exemplos.md
+  - "Volume I — Técnico":
+      - volume-1/index.md
+      - volume-1/01-arquitetura.md
+      - volume-1/02-unidades.md
+      - volume-1/03-entrada.md
+      - volume-1/04-dados.md
+      - volume-1/05-materiais.md
+      - volume-1/06-fisica.md
+      - volume-1/07-motor.md
+      - volume-1/08-validacao.md
+  - "Volume II — Usuário":
+      - volume-2/index.md
+      - volume-2/01-introducao.md
+      - volume-2/02-instalacao.md
+      - volume-2/03-primeira-simulacao.md
+      - volume-2/04-linguagem.md
+      - volume-2/05-secoes.md
+      - volume-2/06-materiais.md
+      - volume-2/07-fontes.md
+      - volume-2/08-probes.md
+      - volume-2/09-comandos.md
+      - volume-2/10-resultados.md
+  - "Volume III — Interface":
+      - volume-3/index.md
+  - Desenvolvimento: desenvolvimento.md

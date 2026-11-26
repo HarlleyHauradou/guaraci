@@ -5,7 +5,7 @@
 Um arquivo `.gci` é uma sequência de **seções**. Cada seção começa com um
 cabeçalho entre colchetes e tem linhas `chave = valor`:
 
-```
+```ini
 [volume lesion]        # tipo da seção e nome
 shape = sphere
 radius = 15 mm
@@ -35,7 +35,7 @@ Listas podem ocupar várias linhas.
 A unidade vem depois do número, com ou sem espaço. Numa lista, uma unidade
 depois do `]` vale para todos os elementos que não têm unidade própria:
 
-```
+```ini
 size  = [10, 10, 10] cm
 voxel = [2 mm, 2 mm, 0.25 cm]
 ```
@@ -67,7 +67,7 @@ para cada um.
 
 ## Incluir outros arquivos
 
-```
+```text
 include materials, geometry/body
 ```
 
@@ -80,7 +80,7 @@ lido uma vez só, e inclusões circulares são detectadas.
 O Guaraci lê o arquivo inteiro e mostra **todos** os problemas de uma vez,
 cada um apontando o trecho do texto:
 
-```
+```text
   × `radius`: expected length, but `keV` is a unit of energy
     ╭─[tireoide.gci:13:12]
  13 │ radius = 6 keV

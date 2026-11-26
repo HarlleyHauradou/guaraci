@@ -3,7 +3,7 @@
 Um **probe** mede algo durante a simulação. É o equivalente ao *tally* do MCNP
 e ao *actor* do GATE.
 
-```
+```ini
 [probe dose]
 type = dose_grid
 in = neck

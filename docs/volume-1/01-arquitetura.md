@@ -15,7 +15,7 @@ O Guaraci é um *workspace* Cargo com um crate por responsabilidade:
 
 ## Fluxo
 
-```
+```text
 arquivos .gci ──parser──▶ AST com posições ──leitor──▶ Config (unidades internas)
                                                               │
 dados ENDF (cache) ──────────────────────────────────────────▶ Problem ──▶ Backend (CPU/GPU) ──▶ probes
