@@ -47,6 +47,22 @@ the track-length estimator.
 The bin must be narrow: a 140–141 keV bin also receives forward Compton-scattered
 photons (θ < 9°) and overestimates the fluence by ~2 %.
 
+## Electron stopping power and range vs NIST ESTAR
+
+Liquid water (I = 75 eV from the Bragg rule), total stopping power in MeV cm²/g
+and CSDA range in g/cm²:
+
+| Energy | S (Guaraci) | S (ESTAR) | Deviation | R (Guaraci) | R (ESTAR) | Deviation |
+|---|---|---|---|---|---|---|
+| 10 keV | 22.546 | 22.56 | −0.06 % | — | — | — |
+| 100 keV | 4.1171 | 4.121 | −0.10 % | 1.4322×10⁻² | 1.431×10⁻² | +0.08 % |
+| 1 MeV | 1.8645 | 1.862 | +0.13 % | 0.43691 | 0.4367 | +0.05 % |
+| 10 MeV | 2.1753 | 2.151 | +1.13 % | 4.9220 | 4.975 | −1.07 % |
+
+The collision part is the Bethe formula, so the agreement checks the mean
+excitation energy and the density effect. At 10 MeV, the small excess comes
+from the radiative stopping power of EEDL. Tolerance of the test: 2 %.
+
 ## Compton sampling vs Klein-Nishina
 
 For S(x) = Z (free electrons), the distribution of cos θ in 20 bins is compared
@@ -139,6 +155,55 @@ Deviation from the recommended value (selected masses):
 The `stabin_spheres_selected` test, run with every `cargo test`, uses five cases
 of region 1 with a tolerance of 6 % + 3σ.
 
+## Electron absorbed fractions in spheres (Stabin and Konijnenberg, 2000)
+
+Table 1 of the same paper: uniform monoenergetic electron sources in the same
+spheres, from 0.01 to 1000 g and from 0.1 to 4 MeV (133 values, in
+`validation/stabin2000_electrons.csv`). The rows at 4 MeV came out scrambled
+in the text extraction of the PDF and were reassembled by hand; every row was
+checked against the EGS4/MCNP mean. The model is the one used for photons,
+with `particle = electron` and 10⁵ histories per case. The radius comes from
+the mass, since the table rounds it to 0.01 cm.
+
+```bash
+GUARACI_TEST_DATA=~/.local/share/guaraci cargo test --release -p guaraci-cpu stabin_electron_spheres_full -- --ignored --nocapture
+```
+
+Deviation from the recommended value (selected masses; all cases in
+`validation/stabin2000_electrons_comparison.csv`):
+
+| Energy | 0.01 g | 0.1 g | 1 g | 10 g | 100 g | 1000 g |
+|---|---|---|---|---|---|---|
+| 0.1 MeV | −0.5 % | −0.2 % | −0.2 % | −0.1 % | −0.1 % | 0.0 % |
+| 0.2 MeV | +0.5 % | +0.1 % | +0.1 % | −0.1 % | 0.0 % | +0.1 % |
+| 0.4 MeV | −0.1 % | −0.4 % | −0.1 % | +0.1 % | 0.0 % | 0.0 % |
+| 0.7 MeV | +2.1 % | −0.8 % | +0.1 % | 0.0 % | +0.1 % | +0.2 % |
+| 1 MeV | +5.4 % | +0.1 % | +0.2 % | +0.2 % | 0.0 % | +0.1 % |
+| 2 MeV | +5.0 % | +5.3 % | +2.6 % | +0.6 % | +0.5 % | +0.2 % |
+| 4 MeV | +4.7 % | +4.3 % | +6.3 % | +3.2 % | +1.2 % | +0.8 % |
+
+Over the 133 cases, the mean deviation is +0.7 % and the largest is 6.6 %.
+
+- **Up to 0.7 MeV, and above 10 g at any energy:** agreement within 1 %, except
+  one case at 2.1 %.
+- **Where the electron range is comparable to the sphere** (1–4 MeV, below 10 g):
+  the two reference codes differ from each other by 5 to 15 %, and the
+  recommended value is their mean. 123 of the 133 Guaraci values lie between
+  EGS4 and MCNP. The other 10 are 1 to 2 % above EGS4, with the largest
+  deviations at 4 MeV.
+
+Two corrections of this version came from this benchmark:
+
+1. The interpolation of the elastic angular data (chapter 7): with linear
+   interpolation, λ₁ was 2.5 times too short at 1 MeV, and the 0.1 g sphere at
+   1 MeV absorbed 12 % too much.
+2. The δ-rays and bremsstrahlung photons as discrete events: with the
+   continuous loss alone, the 0.01 g sphere at 2 MeV absorbed 11 % too much,
+   because these secondaries carry energy out of small spheres.
+
+The `stabin_electron_spheres_selected` test, run with every `cargo test`, uses
+five cases with a tolerance of 3 % + the EGS4–MCNP difference + 3σ.
+
 ## Comparison with other codes
 
 The [vial benchmark](../examples.md) provides equivalent inputs for Guaraci,
@@ -146,5 +211,5 @@ GATE 10 and MCNPX.
 
 ## Pending
 
-- Repeat the sphere benchmark with electron transport (photons and electrons).
 - Results of the GATE 10 and MCNPX comparisons.
+- Electron benchmarks in heterogeneous geometries (depth-dose curves, backscatter).
