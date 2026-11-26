@@ -148,13 +148,12 @@ impl<'a> Parser<'a> {
             match current.as_mut() {
                 Some(s) => s.entries.push(entry),
                 None => {
-                    return Err(Diagnostic::error(format!(
-                        "`{}` is outside any section",
-                        entry.key.node
-                    ))
-                    .at(self.span(start, entry.value.span.end))
-                    .label("which section does this belong to?")
-                    .help("start a section first, e.g. `[run]` or `[volume phantom]`"))
+                    return Err(
+                        Diagnostic::error(format!("`{}` is outside any section", entry.key.node))
+                            .at(self.span(start, entry.value.span.end))
+                            .label("which section does this belong to?")
+                            .help("start a section first, e.g. `[run]` or `[volume phantom]`"),
+                    )
                 }
             }
         }
@@ -166,11 +165,7 @@ impl<'a> Parser<'a> {
 
     fn at_keyword(&self, kw: &str) -> bool {
         let rest = &self.text[self.pos..];
-        rest.starts_with(kw)
-            && rest[kw.len()..]
-                .chars()
-                .next()
-                .is_none_or(|c| c == ' ' || c == '\t')
+        rest.starts_with(kw) && rest[kw.len()..].chars().next().is_none_or(|c| c == ' ' || c == '\t')
     }
 
     fn include(&mut self) -> Result<Vec<Include>, Diagnostic> {
@@ -368,13 +363,9 @@ impl<'a> Parser<'a> {
             }
         }
         let num_end = self.pos;
-        let raw: String = self.text[start..num_end]
-            .chars()
-            .filter(|&c| c != '_')
-            .collect();
+        let raw: String = self.text[start..num_end].chars().filter(|&c| c != '_').collect();
         let value: f64 = raw.parse().map_err(|_| {
-            Diagnostic::error(format!("`{}` is not a number", &self.text[start..num_end]))
-                .at(self.span(start, num_end))
+            Diagnostic::error(format!("`{}` is not a number", &self.text[start..num_end])).at(self.span(start, num_end))
         })?;
         let unit = self.maybe_unit();
         let end = unit.as_ref().map(|u| u.span.end).unwrap_or(num_end);

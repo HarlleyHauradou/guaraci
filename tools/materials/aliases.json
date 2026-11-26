@@ -1,0 +1,5 @@
+{"PMMA": "Lucite", "Perspex": "Lucite", "Plexiglass": "Lucite", "AcrylicGlass": "Lucite", "Acrylite": "Lucite",
+ "Pyrex": "Glass: Borosilicate", "MuriateOfPotash": "Fertilizer", "Mylar": "Polyethylene: Polyethylene Terephthalate",
+ "PolyvinylToluene": "Plastic Scintillator (PVT)", "PTFE": "Polytetrafluoroethylene", "Teflon": "Polytetrafluoroethylene",
+ "PVC": "Polyvinyl Chloride", "Polychloroprene": "Rubber: Neoprene", "Polyisobutylene": "Rubber: Butyl Rubber",
+ "Fricke": "Ferrous Sulfate", "Styrofoam": "Polystyrene"}

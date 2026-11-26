@@ -1,0 +1,768 @@
+# Guaraci material database
+#
+# Compositions are mass fractions; Guaraci normalises them to sum to one.
+# Source: R.G. Williams III, C.J. Gesh, R.T. Pagh, "Compendium of Material
+# Composition Data for Radiation Transport Modeling", PNNL-15870,
+# Pacific Northwest National Laboratory, April 2006.
+#
+# Densities are typical values; use the real density of your object when known:
+#   [material MyFoam]
+#   same_as = Polystyrene
+#   density = 0.05 g/cm3
+
+[material Air]
+title = "Air (Dry, near sea level)"
+density = 0.001205 g/cm3
+composition = { C = 0.000124, N = 0.755268, O = 0.231781, Ar = 0.012827 }
+reference = "http://physics.nist.gov/PhysRefData/XrayMassCoef/tab2.html"
+
+[material Aluminum]
+title = "Aluminum"
+density = 2.6989 g/cm3
+composition = { Al = 1 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=013"
+
+[material Bakelite]
+title = "Bakelite"
+density = 1.25 g/cm3
+composition = { H = 0.057444, C = 0.774589, O = 0.167968 }
+reference = "http://physics.nist.gov/PhysRefData/XrayMassCoef/tab2.html"
+
+[material Beryllium]
+title = "Beryllium"
+density = 1.848 g/cm3
+composition = { Be = 1 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=004"
+
+[material Bismuth]
+title = "Bismuth"
+density = 9.747 g/cm3
+composition = { Bi = 1 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=083"
+
+[material Borax]
+title = "Borax"
+density = 1.73 g/cm3
+composition = { H = 0.052859, B = 0.113391, O = 0.713187, Na = 0.120563 }
+reference = "\"Criticality Safety Analysis Resource Book, Part II: Atom Densities and Dimensional Parameters,\" August 1977, by E. B. Reppond."
+
+[material BoronCarbide]
+title = "Boron Carbide"
+density = 2.52 g/cm3
+composition = { B = 0.78261, C = 0.21739 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=121"
+
+[material SilicaBrick]
+title = "Bricks, Common Silica"
+density = 1.8 g/cm3
+composition = { O = 0.524858, Al = 0.005227, Si = 0.449011, Ca = 0.014419, Fe = 0.007213 }
+comment = "Weight Fractions are not normalized. The atom and weight fractions are calculated from the atom density in the reference."
+reference = "\"Criticality Safety Analysis Resource Book, Part II: Atom Densities and Dimensional Parameters,\" August 1977, by E. B. Reppond."
+
+[material Cadmium]
+title = "Cadmium"
+density = 8.65 g/cm3
+composition = { Cd = 1 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=048"
+
+[material CarbonAmorphous]
+title = "Carbon: Amorphous Carbon"
+density = 2 g/cm3
+composition = { C = 1 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=006"
+
+[material Graphite]
+title = "Carbon: Graphite"
+density = 1.7 g/cm3
+composition = { C = 1 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=906"
+
+[material CarbonTetrachloride]
+title = "Carbon Tetrachloride"
+density = 1.594 g/cm3
+composition = { C = 0.078083, Cl = 0.921917 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=135"
+
+[material CesiumIodide]
+title = "Cesium Iodide"
+density = 4.51 g/cm3
+composition = { I = 0.488451, Cs = 0.511549 }
+reference = "http://physics.nist.gov/PhysRefData/XrayMassCoef/tab2.html"
+
+[material Chromium]
+title = "Chromium"
+density = 7.18 g/cm3
+composition = { Cr = 1 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=024"
+
+[material Concrete]
+title = "Concrete: Ordinary Concrete"
+density = 2.3 g/cm3
+composition = { H = 0.0221, C = 0.002484, O = 0.57493, Na = 0.015208, Mg = 0.001266, Al = 0.019953, Si = 0.304627, K = 0.010045, Ca = 0.042951, Fe = 0.006435 }
+reference = "http://physics.nist.gov/PhysRefData/XrayMassCoef/tab2.html"
+
+[material Concrete_Barite]
+title = "Concrete: Barite Concrete (Type BA)"
+density = 3.35 g/cm3
+composition = { H = 0.003585, O = 0.311622, Mg = 0.001195, Al = 0.004183, Si = 0.010457, S = 0.107858, Ca = 0.050194, Fe = 0.047505, Ba = 0.4634 }
+reference = "http://physics.nist.gov/PhysRefData/XrayMassCoef/tab2.html"
+
+[material Concrete_Portland]
+title = "Concrete: Portland"
+density = 2.3 g/cm3
+composition = { H = 0.01, C = 0.001, O = 0.529107, Na = 0.016, Mg = 0.002, Al = 0.033872, Si = 0.337021, K = 0.013, Ca = 0.044, Fe = 0.014 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=144"
+
+[material Concrete_Type04]
+title = "Concrete: Type 04"
+density = 2.336 g/cm3
+composition = { H = 0.005567, O = 0.498825, Na = 0.017159, Mg = 0.002592, Al = 0.04584, Si = 0.315439, K = 0.019177, Ca = 0.082904, Fe = 0.012306 }
+comment = "Weight Fractions are not normalized. The atom and weight fractions are calculated from the atom density in the reference."
+reference = "\"Criticality Safety Analysis Resource Book, Part II: Atom Densities and Dimensional Parameters,\" August 1977, by E. B. Reppond."
+
+[material Concrete_LS]
+title = "Concrete: LS"
+density = 2.278 g/cm3
+composition = { H = 0.006262, C = 0.177318, O = 0.403413, Na = 0.000335, Mg = 0.032954, Al = 0.011112, Si = 0.034804, K = 0.00114, Ca = 0.325043, Fe = 0.007735 }
+comment = "Composite aggregate of limestone and silicates. Weight Fractions are not normalized. The atom and weight fractions are calculated from the atom density in the reference."
+reference = "\"Criticality Safety Analysis Resource Book, Part II: Atom Densities and Dimensional Parameters,\" August 1977, by E. B. Reppond."
+
+[material Concrete_L]
+title = "Concrete: L"
+density = 2.337 g/cm3
+composition = { H = 0.005135, C = 0.10025, O = 0.485288, Mg = 0.00171, Al = 0.005138, Si = 0.011974, Ca = 0.38259, Fe = 0.008134 }
+comment = "Principally limestone aggregate. Weight Fractions are not normalized. The atom and weight fractions are calculated from the atom density in the reference."
+reference = "\"Criticality Safety Analysis Resource Book, Part II: Atom Densities and Dimensional Parameters,\" August 1977, by E. B. Reppond."
+
+[material Concrete_ORNL]
+title = "Concrete: ORNL"
+density = 2.22 g/cm3
+composition = { H = 0.006488, O = 0.518069, Na = 0.016577, Al = 0.035137, Si = 0.349085, K = 0.015324, Ca = 0.045057, Fe = 0.014411 }
+comment = "Principally silicate aggregate also referred to as concrete S. Weight Fractions are not normalized. The atom and weight fractions are calculated from the atom density in the reference."
+reference = "\"Criticality Safety Analysis Resource Book, Part II: Atom Densities and Dimensional Parameters,\" August 1977, by E. B. Reppond."
+
+[material Concrete_RockyFlats]
+title = "Concrete: Rocky Flats"
+density = 2.321 g/cm3
+composition = { H = 0.0075, C = 0.055502, O = 0.492926, S = 0.179258, K = 0.007497, Ca = 0.229502, Fe = 0.008191 }
+comment = "Weight Fractions are not normalized. The atom and weight fractions are calculated from the atom density in the reference. Fractions in the source sum to 0.9804."
+reference = "\"Criticality Safety Analysis Resource Book, Part II: Atom Densities and Dimensional Parameters,\" August 1977, by E. B. Reppond."
+
+[material Concrete_Magnetite]
+title = "Concrete: Magnetite"
+density = 3.45 g/cm3
+composition = { H = 0.003, O = 0.32, Mg = 0.006, Al = 0.029, Si = 0.035, P = 0.0017, S = 0.0107, Ca = 0.007, Ti = 0.028, Mn = 0.0007, Fe = 0.505 }
+comment = "Magnetite concrete. Fractions in the source sum to 0.9461."
+reference = "H. E Hungerford, Reactor Handbook, Vol. I, Materials, C. R. Tipton, Jr. (Ed.), p. 1086, Interscience Publishers, a division of John Wiley & Sons, Inc., New York, 1960."
+
+[material Concrete_FerroPhosphorus]
+title = "Concrete: Ferro-phosphorus"
+density = 4.8 g/cm3
+composition = { H = 0.005, O = 0.104, Mg = 0.002, Al = 0.004, Si = 0.034, P = 0.197, Ca = 0.042, Fe = 0.612 }
+comment = "Ferro-phosphorus concrete."
+reference = "H. E Hungerford, Reactor Handbook, Vol. I, Materials, C. R. Tipton, Jr. (Ed.), p. 1086, Interscience Publishers, a division of John Wiley & Sons, Inc., New York, 1960."
+
+[material Concrete_IronLimonite]
+title = "Concrete: Iron-limonite"
+density = 4.27 g/cm3
+composition = { H = 0.0005, O = 0.18, Mg = 0.002, Al = 0.005, Si = 0.014, S = 0.001, Ca = 0.061, Mn = 0.016, Fe = 0.721 }
+comment = "Iron-limonite concrete."
+reference = "H. E Hungerford, Reactor Handbook, Vol. I, Materials, C. R. Tipton, Jr. (Ed.), p. 1086, Interscience Publishers, a division of John Wiley & Sons, Inc., New York, 1960."
+
+[material Concrete_IronPortland]
+title = "Concrete: Iron-portland"
+density = 5.8 g/cm3
+composition = { H = 0.0033, O = 0.0582, Mg = 0.0013, Al = 0.0033, Si = 0.0091, S = 0.0005, Ca = 0.0396, Mn = 0.0035, Fe = 0.875 }
+comment = "Iron-portland concrete. Fractions in the source sum to 0.9938."
+reference = "H. E Hungerford, Reactor Handbook, Vol. I, Materials, C. R. Tipton, Jr. (Ed.), p. 1086, Interscience Publishers, a division of John Wiley & Sons, Inc., New York, 1960."
+
+[material Concrete_ColemaniteBaryte]
+title = "Concrete: Colemanite-baryte"
+density = 3.2 g/cm3
+composition = { H = 0.0085, B = 0.0098, O = 0.3489, Na = 0.0011, Mg = 0.0022, Al = 0.0061, Si = 0.0176, S = 0.0963, Ca = 0.0846, Mn = 0.0001, Fe = 0.0103, Ba = 0.407 }
+comment = "Colemanite-baryte concrete. Fractions in the source sum to 0.9925."
+reference = "H. E Hungerford, Reactor Handbook, Vol. I, Materials, C. R. Tipton, Jr. (Ed.), p. 1086, Interscience Publishers, a division of John Wiley & Sons, Inc., New York, 1960."
+
+[material Concrete_BoronFritsBaryte]
+title = "Concrete: Boron Frits-baryte"
+density = 3.1 g/cm3
+composition = { H = 0.0056, B = 0.0104, O = 0.338, F = 0.0023, Na = 0.0121, Mg = 0.0023, Al = 0.0064, Si = 0.0331, S = 0.0915, K = 0.001, Ca = 0.0626, Mn = 0.0002, Fe = 0.0219, Zn = 0.0066, Ba = 0.4013 }
+comment = "Boron frits-baryte concrete. Fractions in the source sum to 0.9953."
+reference = "H. E Hungerford, Reactor Handbook, Vol. I, Materials, C. R. Tipton, Jr. (Ed.), p. 1086, Interscience Publishers, a division of John Wiley & Sons, Inc., New York, 1960."
+
+[material Concrete_LumniteColemaniteBaryte]
+title = "Concrete: Lumnite-colemanite-baryte"
+density = 3.1 g/cm3
+composition = { H = 0.0109, B = 0.0088, O = 0.3695, Na = 0.0011, Mg = 0.0014, Al = 0.0176, Si = 0.0096, S = 0.0906, Ca = 0.0548, Ti = 0.0127, Mn = 0.0012, Fe = 0.0307, Ba = 0.3859 }
+comment = "Lumnite-colemanite-baryte concrete. Fractions in the source sum to 0.9948."
+reference = "H. E Hungerford, Reactor Handbook, Vol. I, Materials, C. R. Tipton, Jr. (Ed.), p. 1086, Interscience Publishers, a division of John Wiley & Sons, Inc., New York, 1960."
+
+[material Concrete_LumnitePortlandColemaniteBaryte]
+title = "Concrete: Lumnite-portland-colemanite-baryte"
+density = 3.1 g/cm3
+composition = { H = 0.0011, B = 0.0102, O = 0.3698, Na = 0.0011, Mg = 0.002, Al = 0.0132, Si = 0.0149, S = 0.0897, Ca = 0.0767, Ti = 0.00071, Mn = 0.0004, Fe = 0.0187, Ba = 0.3803 }
+comment = "Lumnite-portland-colemanite-baryte concrete. Fractions in the source sum to 0.9788."
+reference = "H. E Hungerford, Reactor Handbook, Vol. I, Materials, C. R. Tipton, Jr. (Ed.), p. 1086, Interscience Publishers, a division of John Wiley & Sons, Inc., New York, 1960."
+
+[material ExplosiveCompounds_TNT]
+title = "Explosive Compounds: TNT"
+density = 1.654 g/cm3
+composition = { H = 0.022189, C = 0.37016, N = 0.185004, O = 0.422648 }
+comment = "TNT (2,4,6-Tinitrotoluene)"
+reference = "Modern Methods and Applications in Analysis of Explosives, Jehuda Yinon and Shmuel Zitrin, p. 3, John Wiley & Sons, Inc., New York, 1993."
+
+[material ExplosiveCompounds_RDX]
+title = "Explosive Compounds: RDX"
+density = 1.806 g/cm3
+composition = { H = 0.027227, C = 0.162222, N = 0.378361, O = 0.43219 }
+comment = "RDX (1,3,5-Tinitro-1,3,5-triazacyclohexane)"
+reference = "Modern Methods and Applications in Analysis of Explosives, Jehuda Yinon and Shmuel Zitrin, p. 5, John Wiley & Sons, Inc., New York, 1993."
+
+[material ExplosiveCompounds_HMX]
+title = "Explosive Compounds: HMX"
+density = 1.902 g/cm3
+composition = { H = 0.027227, C = 0.162222, N = 0.378361, O = 0.43219 }
+comment = "HMX (1,3,5,7-Tetranitro-1,3,5,7-tetrazacyclooctane)"
+reference = "Modern Methods and Applications in Analysis of Explosives, Jehuda Yinon and Shmuel Zitrin, p. 6, John Wiley & Sons, Inc., New York, 1993."
+
+[material ExplosiveCompounds_NG]
+title = "Explosive Compounds: NG ( Nitroglycerin)"
+density = 1.13 g/cm3
+composition = { H = 0.022193, C = 0.158671, N = 0.18504, O = 0.634096 }
+comment = "NG (Nitroglycerin) , Glycerol Trinitrate"
+reference = "Modern Methods and Applications in Analysis of Explosives, Jehuda Yinon and Shmuel Zitrin, p. 8, John Wiley & Sons, Inc., New York, 1993."
+
+[material ExplosiveCompounds_PETN]
+title = "Explosive Compounds: PETN"
+density = 1.773 g/cm3
+composition = { H = 0.025506, C = 0.189961, N = 0.177223, O = 0.60731 }
+comment = "PETN (Pentaerythritol Tetranitrate)"
+reference = "Modern Methods and Applications in Analysis of Explosives, Jehuda Yinon and Shmuel Zitrin, p. 9, John Wiley & Sons, Inc., New York, 1993."
+
+[material ExplosiveCompounds_EGDN]
+title = "Explosive Compounds: EGDN (Ethylene Glycol Dinitrate)"
+density = 1.49 g/cm3
+composition = { H = 0.026514, C = 0.15797, N = 0.184222, O = 0.631294 }
+comment = "EGDN (Ethylene Glycol Dinitrate)"
+reference = "Modern Methods and Applications in Analysis of Explosives, Jehuda Yinon and Shmuel Zitrin, p. 11, John Wiley & Sons, Inc., New York, 1993."
+
+[material ExplosiveCompounds_AN]
+title = "Explosive Compounds: AN (Ammonium Nitrate)"
+density = 1.73 g/cm3
+composition = { H = 0.05037, N = 0.349978, O = 0.599652 }
+comment = "AN (Ammonium Nitrate)"
+reference = "Modern Methods and Applications in Analysis of Explosives, Jehuda Yinon and Shmuel Zitrin, p. 12, John Wiley & Sons, Inc., New York, 1993."
+
+[material ExplosiveCompounds_NC]
+title = "Explosive Compounds: NC (Nitrocellulose)"
+density = 1.66 g/cm3
+composition = { H = 0.02832, C = 0.289258, N = 0.168664, O = 0.513758 }
+comment = "NC (Nitrocellulose)"
+reference = "Modern Methods and Applications in Analysis of Explosives, Jehuda Yinon and Shmuel Zitrin, p. 13, John Wiley & Sons, Inc., New York, 1993."
+
+[material FerrousSulfate]
+title = "Ferrous Sulfate"
+density = 1.024 g/cm3
+composition = { H = 0.108376, O = 0.878959, Na = 0.000022, S = 0.012553, Cl = 0.000035, Fe = 0.000055 }
+comment = "Standard Fricke"
+reference = "http://physics.nist.gov/PhysRefData/XrayMassCoef/tab2.html"
+
+[material Fertilizer]
+title = "Fertilizer"
+density = 0.99 g/cm3
+composition = { H = 0.00005, O = 0.000718, Na = 0.008735, Mg = 0.000206, S = 0.000159, Cl = 0.4778, K = 0.5117, Ca = 0.000276, Br = 0.00033 }
+comment = "Combination of “Evergro” and “Agrium”. Muriate of Potash."
+reference = "Pallet Load of Potash as NORM by E.R. Siciliano (Feb. 2006), http://www.agrium.com/uploads/muriate_potash_blender_coarse_grade_e.pdf, http://www.growercentral.com/UPLOADS/PDFS/0-0- 62%20muriate%20of%20potash%20fine%20label.pdf"
+
+[material Gadolinium]
+title = "Gadolinium"
+density = 7.9004 g/cm3
+composition = { Gd = 1 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=064"
+
+[material GalliumArsenide]
+title = "Gallium Arsenide"
+density = 5.31 g/cm3
+composition = { Ga = 0.48203, As = 0.51797 }
+reference = "http://physics.nist.gov/PhysRefData/XrayMassCoef/tab2.html"
+
+[material Gasoline]
+title = "Gasoline"
+density = 0.6837 g/cm3
+composition = { H = 0.16, C = 0.84 }
+comment = "Perry's Chemical Engineers Handbook, 4th edition, has gasoline constituents ranging from 83.5-85 wt% carbon, 15-15.8 wt% hydrogen with 0-1 wt% oxygen and nitrogen. Gasoline is a blend of many hydrocarbons and heptane is the primary constituent. This analysis will use heptane from the 74th CRC of Chem and Physics with a density of 0.6837. Heptane is C7 H16."
+reference = "Perry's Chemical Engineers Handbook, 4th edition"
+
+[material BorosilicateGlass]
+title = "Glass: Borosilicate"
+density = 2.23 g/cm3
+composition = { B = 0.040066, O = 0.539559, Na = 0.028191, Al = 0.011644, Si = 0.37722, K = 0.003321 }
+reference = "http://physics.nist.gov/PhysRefData/XrayMassCoef/tab2.html"
+
+[material LeadGlass]
+title = "Glass: Lead Glass"
+density = 6.22 g/cm3
+composition = { O = 0.156453, Si = 0.080866, Ti = 0.008092, As = 0.002651, Pb = 0.751938 }
+reference = "http://physics.nist.gov/PhysRefData/XrayMassCoef/tab2.html"
+
+[material PlateGlass]
+title = "Glass: Plate Glass"
+density = 2.4 g/cm3
+composition = { O = 0.4598, Na = 0.096441, Si = 0.336553, Ca = 0.107205 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=171"
+
+[material Granite]
+title = "Granite"
+density = 2.729 g/cm3
+composition = { H = 0.001325, C = 0.000292, O = 0.471188, Na = 0.028817, Mg = 0.021296, Al = 0.082089, Si = 0.280267, K = 0.026407, Ca = 0.036824, Fe = 0.05165 }
+comment = "Several densities for granite were found, with 2.729 being calculated based on the atom densities from the reference. Weight Fractions are not normalized. The atom and weight fractions are calculated from the atom density in the reference."
+reference = "\"Criticality Safety Analysis Resource Book, Part II: Atom Densities and Dimensional Parameters,\" August 1977, by E. B. Reppond."
+
+[material Inconel600]
+title = "Inconel-600"
+density = 8.43 g/cm3
+composition = { Cr = 0.180027, Fe = 0.100015, Ni = 0.719894 }
+comment = "Weight Fractions are not normalized. The atom and weight fractions are calculated from the atom density in the reference."
+reference = "\"Criticality Safety Analysis Resource Book, Part II: Atom Densities and Dimensional Parameters,\" August 1977, by E. B. Reppond."
+
+[material Incoloy800]
+title = "Incoloy-800"
+density = 8.01 g/cm3
+composition = { Cr = 0.210033, Fe = 0.470055, Ni = 0.31996 }
+comment = "Weight Fractions are not normalized. The atom and weight fractions are calculated from the atom density in the reference."
+reference = "\"Criticality Safety Analysis Resource Book, Part II: Atom Densities and Dimensional Parameters,\" August 1977, by E. B. Reppond."
+
+[material Iron]
+title = "Iron"
+density = 7.874 g/cm3
+composition = { Fe = 1 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=026"
+
+[material Kynar]
+title = "Kynar"
+density = 1.76 g/cm3
+composition = { H = 0.031496, C = 0.375314, F = 0.593668 }
+comment = "Weight Fractions are not normalized. The atom and weight fractions are calculated from the atom density in the reference."
+reference = "\"Criticality Safety Analysis Resource Book, Part II: Atom Densities and Dimensional Parameters,\" August 1977, by E. B. Reppond."
+
+[material Lead]
+title = "Lead"
+density = 11.35 g/cm3
+composition = { Pb = 1 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=082"
+
+[material Lithium]
+title = "Lithium"
+density = 0.534 g/cm3
+composition = { Li = 1 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=003"
+
+[material Lucite]
+title = "Lucite"
+density = 1.19 g/cm3
+composition = { H = 0.080538, C = 0.599848, O = 0.319614 }
+comment = "Acrylic glass, Acrylite, Perspex, Plexiglass, PMMA, Polymethyl methacrylate"
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=223"
+
+[material Magnesium]
+title = "Magnesium"
+density = 1.74 g/cm3
+composition = { Mg = 1 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=012"
+
+[material Masonite]
+title = "Masonite"
+density = 1.3 g/cm3
+composition = { H = 0.062198, C = 0.444603, O = 0.493545 }
+comment = "Weight Fractions are not normalized. The atom and weight fractions are calculated from the atom density in the reference."
+reference = "\"Criticality Safety Analysis Resource Book, Part II: Atom Densities and Dimensional Parameters,\" August 1977, by E. B. Reppond."
+
+[material Molybdenum]
+title = "Molybdenum"
+density = 10.22 g/cm3
+composition = { Mo = 1 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=042"
+
+[material Nickel]
+title = "Nickel"
+density = 8.902 g/cm3
+composition = { Ni = 1 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=028"
+
+[material Nylon_Type6AndType66]
+title = "Nylon: Nylon, Type 6 and Type 6/6"
+density = 1.14 g/cm3
+composition = { H = 0.097976, C = 0.636856, N = 0.123779, O = 0.141389 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=209"
+
+[material Nylon_DupontElvamide8062]
+title = "Nylon: Nylon, Dupont Elvamide 8062"
+density = 1.08 g/cm3
+composition = { H = 0.103509, C = 0.648415, N = 0.099536, O = 0.148539 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=208"
+
+[material Nylon_Type610]
+title = "Nylon: Nylon, Type 6/10"
+density = 1.14 g/cm3
+composition = { H = 0.107062, C = 0.680449, N = 0.099189, O = 0.1133 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=210"
+
+[material Nylon_Type11]
+title = "Nylon: Nylon, Type 11 (Rilsan)"
+density = 1.425 g/cm3
+composition = { H = 0.115476, C = 0.720819, N = 0.076417, O = 0.087289 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=211"
+
+[material Oil_Crude]
+title = "Oil: Crude Oil"
+density = 0.973 g/cm3
+composition = { H = 0.12, C = 0.85, N = 0.0105, O = 0.00775, S = 0.03025 }
+comment = "Average density of Mexican crude oil is 0.973 g/cc according to http://www.simetric.co.uk/si_liquids.htm . It varies depending upon the region. Fractions in the source sum to 1.0185."
+reference = "Handbook of Petroleum Analysis, Nov 5, 2004, published by John Wiley & Sons. Electronic ISBN: 1-59124-737-3 on Knovel Database"
+
+[material Oil_Hydraulic]
+title = "Oil: Hydraulic Oil"
+density = 1.28 g/cm3
+composition = { H = 0.040509, C = 0.585083, O = 0.078042, P = 0.037771, Cl = 0.258941 }
+comment = "Weight Fractions are not normalized. The atom and weight fractions are calculated from the atom density in the reference."
+reference = "\"Criticality Safety Analysis Resource Book, Part II: Atom Densities and Dimensional Parameters,\" August 1977, by E. B. Reppond."
+
+[material Oil_Lard]
+title = "Oil: Lard Oil"
+density = 0.915 g/cm3
+composition = { H = 0.117673, C = 0.779024, O = 0.103657 }
+comment = "Weight Fractions are not normalized. The atom and weight fractions are calculated from the atom density in the reference."
+reference = "\"Criticality Safety Analysis Resource Book, Part II: Atom Densities and Dimensional Parameters,\" August 1977, by E. B. Reppond."
+
+[material ParaffinWax]
+title = "Paraffin Wax"
+density = 0.93 g/cm3
+composition = { H = 0.148605, C = 0.851395 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=213"
+
+[material PhotographicEmulsion_KodakTypeAA]
+title = "Photographic Emulsion: Kodak Type AA"
+density = 2.2 g/cm3
+composition = { H = 0.0305, C = 0.2107, N = 0.0721, O = 0.1632, Br = 0.2228, Ag = 0.3007 }
+reference = "http://physics.nist.gov/PhysRefData/XrayMassCoef/tab2.html"
+
+[material PhotographicEmulsion_StandardNuclear]
+title = "Photographic Emulsion: Standard Nuclear"
+density = 3.815 g/cm3
+composition = { H = 0.0141, C = 0.072261, N = 0.01932, O = 0.066101, S = 0.00189, Br = 0.349104, Ag = 0.474105, I = 0.00312 }
+reference = "http://physics.nist.gov/PhysRefData/XrayMassCoef/tab2.html"
+
+[material PlasticScintillator]
+title = "Plastic Scintillator (PVT)"
+density = 1.032 g/cm3
+composition = { H = 0.085, C = 0.915 }
+comment = "Polyvinyl toluene"
+reference = "http://physics.nist.gov/PhysRefData/XrayMassCoef/tab2.html"
+
+[material Plutonium_DOE3013WGPu]
+title = "Plutonium: DOE 3013 WGPu"
+density = 19.84 g/cm3
+composition = { Pu = 1 }
+comment = "DOE 3013 WGPu. Isotopic composition summed by element (photon transport does not depend on the isotope)."
+reference = "DOE Standard Stabilization, Packaging, and Storage of Plutonium-Bearing Materials, DOE-STD-3013-2000, Table B-6, U.S. Department of Energy, September 2000."
+
+[material Plutonium_ShefelbineWGPu]
+title = "Plutonium: Shefelbine WGPu"
+density = 19.84 g/cm3
+composition = { Pu = 0.9996, Am = 0.0002 }
+comment = "Shefelbine WGPu. Weight Fractions are not normalized. The atom fraction and atom density are calculated from the weight fraction in the reference. Isotopic composition summed by element (photon transport does not depend on the isotope)."
+reference = "Preliminary Evaluation of the Characteristics of Defense Transuranic Wastes, SAND78-1850, Table 4, Sandia National Laboratory, November 1978."
+
+[material Plutonium_AgedWGPu_4to7]
+title = "Plutonium: Aged WGPu (4-7% Pu-240)"
+density = 19.84 g/cm3
+composition = { Pu = 1.0001, Am = 0.0014 }
+comment = "Aged WGPu (4-7% Pu-240). Weight Fractions are not normalized. The atom fraction and atom density are calculated from the weight fraction in the reference. Isotopic composition summed by element (photon transport does not depend on the isotope)."
+reference = "DOE Standard Stabilization, Packaging, and Storage of Plutonium-Bearing Materials, DOE-STD-3013-2000, Table B-6, U.S. Department of Energy, September 2000."
+
+[material Plutonium_AgedWGPu_10to13]
+title = "Plutonium: Aged WGPu (10-13% Pu-240)"
+density = 19.84 g/cm3
+composition = { Pu = 1.0001, Am = 0.0086 }
+comment = "Aged WGPu (10-13% Pu-240). Weight Fractions are not normalized. The atom fraction and atom density are calculated from the weight fraction in the reference. Isotopic composition summed by element (photon transport does not depend on the isotope). Fractions in the source sum to 1.0087."
+reference = "DOE Standard Stabilization, Packaging, and Storage of Plutonium-Bearing Materials, DOE-STD-3013-2000, Table B-6, U.S. Department of Energy, September 2000."
+
+[material Plutonium_AgedWGPu_16to19]
+title = "Plutonium: Aged WGPu (16-19% Pu-240)"
+density = 19.84 g/cm3
+composition = {  }
+comment = "Aged WGPu (16-19% Pu-240). Weight Fractions are not normalized. The atom fraction and atom density are calculated from the weight fraction in the reference. Fractions in the source sum to 0.0000."
+reference = "DOE Standard Stabilization, Packaging, and Storage of Plutonium-Bearing Materials, DOE-STD-3013-2000, Table B-6, U.S. Department of Energy, September 2000."
+
+[material Plutonium_FuelGrade]
+title = "Plutonium: Fuel Grade Plutonium"
+density = 19.84 g/cm3
+composition = { Pu = 1 }
+comment = "Fuel grade plutonium. Isotopic composition summed by element (photon transport does not depend on the isotope)."
+reference = "DOE Standard Stabilization, Packaging, and Storage of Plutonium-Bearing Materials, DOE-STD-3013-2000, Table B-6, U.S. Department of Energy, September 2000."
+
+[material Plutonium_PowerGrade]
+title = "Plutonium: Power Grade Plutonium"
+density = 19.84 g/cm3
+composition = { Pu = 1.01 }
+comment = "Power grade plutonium. Weight Fractions are not normalized. The atom fraction and atom density are calculated from the weight fraction in the reference. Isotopic composition summed by element (photon transport does not depend on the isotope). Fractions in the source sum to 1.0100."
+reference = "DOE Standard Stabilization, Packaging, and Storage of Plutonium-Bearing Materials, DOE-STD-3013-2000, Table B-6, U.S. Department of Energy, September 2000."
+
+[material Polyethylene]
+title = "Polyethylene: Normal Polyethylene"
+density = 0.93 g/cm3
+composition = { H = 0.143716, C = 0.856284 }
+reference = "http://physics.nist.gov/PhysRefData/XrayMassCoef/tab2.html"
+
+[material PolyethyleneTerephthalate]
+title = "Polyethylene: Polyethylene Terephthalate"
+density = 1.38 g/cm3
+composition = { H = 0.04196, C = 0.625016, O = 0.333024 }
+reference = "http://physics.nist.gov/PhysRefData/XrayMassCoef/tab2.html"
+
+[material Polyisocyanurate]
+title = "Polyiso(cyanurate)"
+density = 0.0321 g/cm3
+composition = { H = 0.040305, C = 0.719721, N = 0.112019, O = 0.127955 }
+comment = "MDI"
+reference = "http://en.wikipedia.org/wiki/Polyisocyanurate, M.A.L. Kelly, S.M. Otterside, D. Pemberton, Physical Properties of MDI and TDI: A Review, International Isocyanate Institute, Inc., III Report Reference Number 11272, June 1997."
+
+[material Polystyrene]
+title = "Polystyrene"
+density = 1.06 g/cm3
+composition = { H = 0.077421, C = 0.922579 }
+comment = "This is the solid form. The foamed form is Styrofoam with density of about 0.1 g/cm3. Density may vary by application."
+reference = "http://physics.nist.gov/PhysRefData/XrayMassCoef/tab2.html"
+
+[material Polytetrafluoroethylene]
+title = "Polytetrafluoroethylene"
+density = 2.25 g/cm3
+composition = { C = 0.240183, F = 0.759818 }
+comment = "PTFE, Teflon"
+reference = "http://physics.nist.gov/PhysRefData/XrayMassCoef/tab2.html"
+
+[material PolyurethaneFoam]
+title = "Polyurethane (Foam)"
+density = 0.021 g/cm3
+composition = { H = 0.041, C = 0.544, N = 0.121, O = 0.294 }
+comment = "Density may vary by application."
+reference = "“Criticality Calculations with MCNP5: A Primer 2nd Edition, Appendix C,” ed. Tim Goorley, Los Alamos Report LA-UR-04-0294,"
+
+[material PolyvinylChloride]
+title = "Polyvinyl Chloride"
+density = 1.406 g/cm3
+composition = { H = 0.048382, C = 0.384361, Cl = 0.567257 }
+comment = "PVC"
+reference = "http://physics.nist.gov/PhysRefData/XrayMassCoef/tab2.html"
+
+[material Propane]
+title = "Propane"
+density = 0.00187939 g/cm3
+composition = { H = 0.182855, C = 0.817145 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=238"
+
+[material RadiochromicDyeFilm]
+title = "Radiochromic Dye Film"
+density = 1.08 g/cm3
+composition = { H = 0.101996, C = 0.654396, N = 0.098915, O = 0.144693 }
+comment = "Nylon Base"
+reference = "http://physics.nist.gov/PhysRefData/XrayMassCoef/tab2.html"
+
+[material RockSalt]
+title = "Rock Salt"
+density = 2.18 g/cm3
+composition = { Na = 0.432538, Cl = 0.667026 }
+comment = "Weight Fractions are not normalized. The atom and weight fractions are calculated from the atom density in the reference. Fractions in the source sum to 1.0996."
+reference = "\"Criticality Safety Analysis Resource Book, Part II: Atom Densities and Dimensional Parameters,\" August 1977, by E. B. Reppond."
+
+[material Neoprene]
+title = "Rubber: Neoprene"
+density = 1.23 g/cm3
+composition = { H = 0.05692, C = 0.542646, Cl = 0.400434 }
+comment = "Polychloroprene rubber"
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=244"
+
+[material ButylRubber]
+title = "Rubber: Butyl Rubber"
+density = 0.92 g/cm3
+composition = { H = 0.143711, C = 0.856289 }
+comment = "Polyisobutylene"
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=242"
+
+[material NaturalRubber]
+title = "Rubber: Natural Rubber"
+density = 0.92 g/cm3
+composition = { H = 0.118371, C = 0.881629 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=243"
+
+[material SiliconeRubber]
+title = "Rubber: Silicone Rubber"
+density = 1.0185 g/cm3
+composition = { H = 0.0807, C = 0.3211, O = 0.2235, Si = 0.3745 }
+comment = "G.E. RTB12A"
+reference = "\"Criticality Calculations with MCNP: A Primer,\" LA-12827-M, August 1994, by C.D. Armon,II et al."
+
+[material CarbonSteel]
+title = "Steel: Carbon"
+density = 7.82 g/cm3
+composition = { C = 0.005, Fe = 0.995 }
+reference = "\"Criticality Calculations with MCNP: A Primer,\" LA-12827-M, August 1994, by C.D. Armon,II et al."
+
+[material Steel304]
+title = "Steel: Stainless 304"
+density = 7.92 g/cm3
+composition = { Cr = 0.19, Mn = 0.02, Fe = 0.695, Ni = 0.095 }
+reference = "\"Criticality Calculations with MCNP: A Primer,\" LA-12827-M, August 1994, by C.D. Armon,II et al."
+
+[material Steel316]
+title = "Steel: Stainless 316"
+density = 7.92 g/cm3
+composition = { Si = 0.01, Cr = 0.17, Mn = 0.02, Fe = 0.655, Ni = 0.12, Mo = 0.025 }
+reference = "\"Criticality Calculations with MCNP: A Primer,\" LA-12827-M, August 1994, by C.D. Armon,II et al."
+
+[material Steel347]
+title = "Steel: Stainless 347"
+density = 7.92 g/cm3
+composition = { Si = 0.01, Cr = 0.18, Mn = 0.02, Fe = 0.685, Ni = 0.105 }
+reference = "\"Criticality Calculations with MCNP: A Primer,\" LA-12827-M, August 1994, by C.D. Armon,II et al."
+
+[material SteelHT9]
+title = "Steel: HT9 Stainless"
+density = 7.874 g/cm3
+composition = { C = 0.002, Si = 0.004, P = 0.0003, S = 0.0002, V = 0.003, Cr = 0.115, Mn = 0.006, Fe = 0.8495, Ni = 0.005, Mo = 0.01, W = 0.005 }
+reference = "AFCI Materials Handbook, Rev. 4, Page 18-5. LA-CP-03-0868."
+
+[material Tantalum]
+title = "Tantalum"
+density = 16.654 g/cm3
+composition = { Ta = 1 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=073"
+
+[material Thorium]
+title = "Thorium"
+density = 11.72 g/cm3
+composition = { Th = 1 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=090"
+
+[material Titanium]
+title = "Titanium"
+density = 4.54 g/cm3
+composition = { Ti = 1 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=022"
+
+[material Uranium_USHEUAverage]
+title = "Uranium: US HEU Average"
+density = 18.95 g/cm3
+composition = { U = 1 }
+comment = "US HEU Average. Isotopic composition summed by element (photon transport does not depend on the isotope)."
+reference = "Personal communication with Andy Luksic based on Y-12 information."
+
+[material Uranium_RussianHEUAverage]
+title = "Uranium: Russian HEU Average"
+density = 18.95 g/cm3
+composition = { U = 1 }
+comment = "Russian HEU Average. Isotopic composition summed by element (photon transport does not depend on the isotope)."
+reference = "Personal communication with Andy Luksic based on Y-12 information."
+
+[material Uranium_HPSHEU]
+title = "Uranium: HPS HEU"
+density = 18.95 g/cm3
+composition = { U = 0.99999 }
+comment = "Health Physics Society HEU. Weight Fractions are not normalized. The atom fraction and atom density are calculated from the weight fraction in the reference. Isotopic composition summed by element (photon transport does not depend on the isotope)."
+reference = "Bioassay Programs for Uranium, HPS 13.22-1995, American National Standards Institute, Inc., October 1995."
+
+[material Uranium_Natural]
+title = "Uranium: Natural Uranium"
+density = 18.9 g/cm3
+composition = { U = 1 }
+comment = "Natural Uranium. Isotopic composition summed by element (photon transport does not depend on the isotope)."
+reference = "The Health Physics and Radiological Health Handbook, p. 286, B. Shleien, editor, Scinta, Inc., 1992."
+
+[material Uranium_TypicalDepleted]
+title = "Uranium: Typical Depleted Uranium"
+density = 18.9 g/cm3
+composition = { U = 1.00001 }
+comment = "Typical depleted uranium. Weight Fractions are not normalized. The atom fraction and atom density are calculated from the weight fraction in the reference. Isotopic composition summed by element (photon transport does not depend on the isotope)."
+reference = "The Health Physics and Radiological Health Handbook, p. 286, B. Shleien, editor, Scinta, Inc., 1992."
+
+[material Uranium_TypicalCommercialEnriched]
+title = "Uranium: Typical Commercial Enriched Uranium"
+density = 18.9 g/cm3
+composition = { U = 1 }
+comment = "Commercial enriched, typical. Isotopic composition summed by element (photon transport does not depend on the isotope)."
+reference = "The Health Physics and Radiological Health Handbook, p. 286, B. Shleien, editor, Scinta, Inc., 1992."
+
+[material Water]
+title = "Water: Water, Liquid"
+density = 1 g/cm3
+composition = { H = 0.111894, O = 0.888106 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=276"
+
+[material WaterVapor]
+title = "Water: Water, Vapor"
+density = 0.000756182 g/cm3
+composition = { H = 0.111894, O = 0.888106 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=277"
+
+[material Wood]
+title = "Wood"
+density = 0.705 g/cm3
+composition = { H = 0.057889, C = 0.482667, O = 0.459444 }
+comment = "Cherry wood density found at: http://www.mcelwee.net/html/densities_of_various_materials.html"
+reference = "The Chemistry of Solid Wood, Advances in Chemistry Series 207, Roger Rowell (Ed.), p. 58, American Chemical Society, 1983. See also http://en.wikipedia.org/wiki/Cellulose."
+
+[material Zirconium]
+title = "Zirconium"
+density = 6.506 g/cm3
+composition = { Zr = 1 }
+reference = "Taken from NIST Listings, “Compositions of Materials used in STAR Databases” webpage: http://physics.nist.gov/cgi-bin/Star/compos.pl?matno=040"
+
+# ---- other names used in the compendium ----
+
+[material PMMA]
+same_as = Lucite
+
+[material Perspex]
+same_as = Lucite
+
+[material Plexiglass]
+same_as = Lucite
+
+[material AcrylicGlass]
+same_as = Lucite
+
+[material Acrylite]
+same_as = Lucite
+
+[material Pyrex]
+same_as = BorosilicateGlass
+
+[material MuriateOfPotash]
+same_as = Fertilizer
+
+[material Mylar]
+same_as = PolyethyleneTerephthalate
+
+[material PolyvinylToluene]
+same_as = PlasticScintillator
+
+[material PTFE]
+same_as = Polytetrafluoroethylene
+
+[material Teflon]
+same_as = Polytetrafluoroethylene
+
+[material PVC]
+same_as = PolyvinylChloride
+
+[material Polychloroprene]
+same_as = Neoprene
+
+[material Polyisobutylene]
+same_as = ButylRubber
+
+[material Fricke]
+same_as = FerrousSulfate
+
+[material Styrofoam]
+same_as = Polystyrene

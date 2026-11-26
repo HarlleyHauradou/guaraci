@@ -47,12 +47,7 @@ impl Dim {
         )
     }
     pub const fn pow(self, n: i8) -> Dim {
-        Dim::new(
-            self.length * n,
-            self.mass * n,
-            self.time * n,
-            self.angle * n,
-        )
+        Dim::new(self.length * n, self.mass * n, self.time * n, self.angle * n)
     }
 }
 
@@ -214,8 +209,7 @@ impl Unit {
             let end = rest.find(['/', '*', '.', '·']).unwrap_or(rest.len());
             let atom = &rest[..end];
             rest = &rest[end..];
-            let (sym, exp) =
-                split_exponent(atom).ok_or_else(|| UnitError::Syntax(text.to_string()))?;
+            let (sym, exp) = split_exponent(atom).ok_or_else(|| UnitError::Syntax(text.to_string()))?;
             let def = lookup(sym)?;
             let e = exp * sign;
             factor *= def.factor.powi(e as i32);
@@ -228,11 +222,7 @@ impl Unit {
                 break;
             }
         }
-        Ok(Unit {
-            factor,
-            dim,
-            canonical,
-        })
+        Ok(Unit { factor, dim, canonical })
     }
 }
 
@@ -258,21 +248,13 @@ pub fn lookup(sym: &str) -> Result<&'static UnitDef, UnitError> {
         return Ok(d);
     }
     let lower = sym.to_lowercase();
-    let candidates: Vec<&UnitDef> = UNITS
-        .iter()
-        .filter(|d| d.symbol.to_lowercase() == lower)
-        .collect();
+    let candidates: Vec<&UnitDef> = UNITS.iter().filter(|d| d.symbol.to_lowercase() == lower).collect();
     match candidates.as_slice() {
         [] => {
             let max_dist = (lower.chars().count() / 3).max(1);
             let mut sugg: Vec<(usize, &str)> = UNITS
                 .iter()
-                .map(|d| {
-                    (
-                        strsim::levenshtein(&lower, &d.symbol.to_lowercase()),
-                        d.symbol,
-                    )
-                })
+                .map(|d| (strsim::levenshtein(&lower, &d.symbol.to_lowercase()), d.symbol))
                 .filter(|(dist, _)| *dist <= max_dist)
                 .collect();
             sugg.sort_by_key(|s| s.0);
@@ -285,10 +267,7 @@ pub fn lookup(sym: &str) -> Result<&'static UnitDef, UnitError> {
         [one] => Ok(one),
         many => {
             let first = many[0];
-            if many
-                .iter()
-                .all(|d| d.dim == first.dim && d.factor == first.factor)
-            {
+            if many.iter().all(|d| d.dim == first.dim && d.factor == first.factor) {
                 Ok(first)
             } else {
                 Err(UnitError::Ambiguous {
@@ -331,9 +310,7 @@ impl UnitError {
             UnitError::Unknown { suggestions, .. } if !suggestions.is_empty() => {
                 Some(format!("did you mean {}?", join_quoted(suggestions)))
             }
-            UnitError::Unknown { .. } => {
-                Some("run `guaraci info units` to see every known unit".into())
-            }
+            UnitError::Unknown { .. } => Some("run `guaraci info units` to see every known unit".into()),
             UnitError::Ambiguous { options, .. } => Some(format!(
                 "write it exactly: {}",
                 options
@@ -342,20 +319,14 @@ impl UnitError {
                     .collect::<Vec<_>>()
                     .join(" or ")
             )),
-            UnitError::Syntax(_) => {
-                Some("units look like `cm`, `g/cm3`, `MBq*h` or `kg*m^-3`".into())
-            }
+            UnitError::Syntax(_) => Some("units look like `cm`, `g/cm3`, `MBq*h` or `kg*m^-3`".into()),
             UnitError::WrongKind { .. } | UnitError::Empty => None,
         }
     }
 }
 
 fn join_quoted(items: &[&str]) -> String {
-    items
-        .iter()
-        .map(|s| format!("`{s}`"))
-        .collect::<Vec<_>>()
-        .join(", ")
+    items.iter().map(|s| format!("`{s}`")).collect::<Vec<_>>().join(", ")
 }
 
 /// A physical value: magnitude in SI base units plus its dimension.
@@ -368,11 +339,7 @@ pub struct Quantity {
 impl Quantity {
     /// Build a quantity from a number and an optional unit, checking that it is
     /// of the expected kind. A missing unit means the kind's default unit.
-    pub fn new(
-        value: f64,
-        unit: Option<&str>,
-        expected: Kind,
-    ) -> Result<(Quantity, Unit), UnitError> {
+    pub fn new(value: f64, unit: Option<&str>, expected: Kind) -> Result<(Quantity, Unit), UnitError> {
         let unit_text = unit.unwrap_or(expected.default_unit());
         let u = if unit_text.is_empty() {
             Unit {

@@ -112,6 +112,13 @@ pub enum Composition {
     Formula(Spanned<String>),
 }
 
+/// Where a material's composition comes from.
+#[derive(Debug, Clone)]
+enum CompSpec {
+    Own(Composition),
+    SameAs(Spanned<String>),
+}
+
 #[derive(Debug, Clone)]
 pub struct MaterialDef {
     pub name: Spanned<String>,
@@ -119,6 +126,24 @@ pub struct MaterialDef {
     pub density: f64,
     pub composition: Composition,
     pub builtin: bool,
+    /// Long descriptive name.
+    pub title: Option<String>,
+    pub comment: Option<String>,
+    pub reference: Option<String>,
+    /// Name of the material this one was copied from (`same_as`).
+    pub copied_from: Option<String>,
+}
+
+/// A material as written, before `same_as` is resolved.
+#[derive(Debug, Clone)]
+struct RawMaterial {
+    name: Spanned<String>,
+    density: Option<f64>,
+    comp: CompSpec,
+    builtin: bool,
+    title: Option<String>,
+    comment: Option<String>,
+    reference: Option<String>,
 }
 
 #[derive(Debug, Clone)]
@@ -151,10 +176,7 @@ pub struct Source {
 #[derive(Debug, Clone)]
 pub enum ProbeKind {
     /// 3D dose map over the bounding box of a volume.
-    DoseGrid {
-        region: Spanned<String>,
-        voxel: [f64; 3],
-    },
+    DoseGrid { region: Spanned<String>, voxel: [f64; 3] },
     /// Energy and mean dose in whole volumes.
     VolumeDose { volumes: Vec<Spanned<String>> },
     /// Photon fluence spectrum in a volume (track-length estimator).
@@ -188,9 +210,7 @@ pub struct Config {
     pub warnings: Vec<Diagnostic>,
 }
 
-const SECTIONS: &[&str] = &[
-    "run", "physics", "world", "volume", "material", "source", "probe",
-];
+const SECTIONS: &[&str] = &["run", "physics", "world", "volume", "material", "source", "probe"];
 
 fn cm(q: Quantity) -> f64 {
     q.to("cm")
@@ -207,7 +227,7 @@ impl Config {
         let mut physics = None;
         let mut world = None;
         let mut volumes = Vec::new();
-        let mut materials: Vec<MaterialDef> = Vec::new();
+        let mut raw_materials: Vec<RawMaterial> = Vec::new();
         let mut sources = Vec::new();
         let mut probes = Vec::new();
         let mut singles: HashMap<&str, Span> = HashMap::new();
@@ -252,33 +272,29 @@ impl Config {
                 "material" => {
                     if let Some(m) = read_material(s, builtin, &mut n) {
                         // user definitions replace built-in ones with the same name
-                        if let Some(i) = materials.iter().position(|o| o.name.node == m.name.node) {
-                            if materials[i].builtin {
-                                materials[i] = m;
+                        if let Some(i) = raw_materials.iter().position(|o| o.name.node == m.name.node) {
+                            if raw_materials[i].builtin && !m.builtin {
+                                raw_materials[i] = m;
                             } else {
                                 n.error(
-                                    Diagnostic::error(format!(
-                                        "material `{}` is defined twice",
-                                        m.name.node
-                                    ))
-                                    .at(m.name.span)
-                                    .related(materials[i].name.span, "first definition")
-                                    .help(format!(
-                                        "first defined at {}",
-                                        prog.sources.location(materials[i].name.span)
-                                    )),
+                                    Diagnostic::error(format!("material `{}` is defined twice", m.name.node))
+                                        .at(m.name.span)
+                                        .related(raw_materials[i].name.span, "first definition")
+                                        .help(format!(
+                                            "first defined at {}",
+                                            prog.sources.location(raw_materials[i].name.span)
+                                        )),
                                 );
                             }
                         } else {
-                            materials.push(m);
+                            raw_materials.push(m);
                         }
                     }
                 }
                 "source" => sources.extend(read_source(s, sources.len(), &mut n)),
                 "probe" => probes.extend(read_probe(s, &mut n)),
                 other => {
-                    let mut d =
-                        Diagnostic::error(format!("unknown section `[{other}]`")).at(s.kind.span);
+                    let mut d = Diagnostic::error(format!("unknown section `[{other}]`")).at(s.kind.span);
                     d = match suggest(other, SECTIONS.iter().copied()) {
                         Some(sug) => d.help(format!("did you mean `[{sug}]`?")),
                         None => d.help(format!("sections are: {}", SECTIONS.join(", "))),
@@ -291,9 +307,10 @@ impl Config {
         let run = run.unwrap_or_else(|| read_run(&empty("run"), &mut n));
         let physics = physics.unwrap_or_else(|| read_physics(&empty("physics"), &mut n));
         if world.is_none() && !singles.contains_key("world") {
-            n.error(Diagnostic::error("the simulation has no `[world]`").help(
-                "add the box that contains everything, e.g.\n[world]\nmaterial = Air\nsize = [1, 1, 1] m",
-            ));
+            n.error(
+                Diagnostic::error("the simulation has no `[world]`")
+                    .help("add the box that contains everything, e.g.\n[world]\nmaterial = Air\nsize = [1, 1, 1] m"),
+            );
         }
         if sources.is_empty() {
             n.error(
@@ -302,14 +319,8 @@ impl Config {
             );
         }
 
-        check_references(
-            &volumes,
-            &materials,
-            &sources,
-            &probes,
-            world.as_ref(),
-            &mut n,
-        );
+        let materials = resolve_materials(raw_materials, &mut n);
+        check_references(&volumes, &materials, &sources, &probes, world.as_ref(), &mut n);
 
         if n.has_errors() {
             return Err(n.diags);
@@ -382,10 +393,8 @@ fn read_run(s: &Section, n: &mut Notes) -> Run {
     let batches = r.count_or("batches", 10, n).max(1) as u32;
     if batches < 2 {
         n.diags.push(
-            Diagnostic::warning(
-                "with fewer than 2 batches no statistical uncertainty can be estimated",
-            )
-            .at(s.header_span),
+            Diagnostic::warning("with fewer than 2 batches no statistical uncertainty can be estimated")
+                .at(s.header_span),
         );
     }
     r.finish(n);
@@ -401,9 +410,7 @@ fn read_run(s: &Section, n: &mut Notes) -> Run {
 
 fn read_physics(s: &Section, n: &mut Notes) -> Physics {
     let mut r = Reader::new(s);
-    let list = r
-        .choice("list", &["photon_local"], "photon_local", n)
-        .to_string();
+    let list = r.choice("list", &["photon_local"], "photon_local", n).to_string();
     let data = r
         .choice("data", &["epics2017", "endfb8", "epdl97"], "epics2017", n)
         .to_string();
@@ -512,10 +519,7 @@ fn read_shape(r: &mut Reader, n: &mut Notes) -> Option<Shape> {
                 Diagnostic::error(format!("unknown shape `{}`", shape.node))
                     .at(shape.span)
                     .label(format!("shapes: {}", opts.join(", ")))
-                    .maybe_help(
-                        suggest(&shape.node, opts.iter().copied())
-                            .map(|s| format!("did you mean `{s}`?")),
-                    ),
+                    .maybe_help(suggest(&shape.node, opts.iter().copied()).map(|s| format!("did you mean `{s}`?"))),
             );
             None
         }
@@ -537,10 +541,7 @@ fn read_volume(s: &Section, n: &mut Notes) -> Option<Volume> {
     let parent = r.text("parent", n);
     let shape = read_shape(&mut r, n);
     let material = r.require_text("material", "Water", n);
-    let center = r
-        .vec3("center", Kind::Length, n)
-        .map(cm3)
-        .unwrap_or([0.0; 3]);
+    let center = r.vec3("center", Kind::Length, n).map(cm3).unwrap_or([0.0; 3]);
     r.finish(n);
     if name.node.eq_ignore_ascii_case("world") {
         n.error(Diagnostic::error("`world` is reserved for the `[world]` section").at(name.span));
@@ -554,63 +555,66 @@ fn read_volume(s: &Section, n: &mut Notes) -> Option<Volume> {
     })
 }
 
-fn read_material(s: &Section, builtin: bool, n: &mut Notes) -> Option<MaterialDef> {
+fn read_material(s: &Section, builtin: bool, n: &mut Notes) -> Option<RawMaterial> {
     let name = s.name.clone()?;
     let mut r = Reader::new(s);
-    let density = r
-        .require_quantity("density", Kind::Density, n)
-        .map(|q| q.to("g/cm3"));
-    let has_comp = r.has("composition");
-    let has_formula = r.has("formula");
-    let composition = match (has_comp, has_formula) {
-        (true, true) => {
+    let title = r.text("title", n).map(|t| t.node);
+    let comment = r.text("comment", n).map(|t| t.node);
+    let reference = r.text("reference", n).map(|t| t.node);
+    let given: Vec<&str> = ["composition", "formula", "same_as"]
+        .into_iter()
+        .filter(|k| r.has(k))
+        .collect();
+    let density = if r.has("same_as") {
+        r.quantity("density", Kind::Density, n).map(|q| q.to("g/cm3"))
+    } else {
+        Some(r.require_quantity("density", Kind::Density, n)?.to("g/cm3"))
+    };
+    let comp = match given.as_slice() {
+        [_, _, ..] => {
             n.error(
                 Diagnostic::error(format!(
-                    "material `{}` has both `composition` and `formula`",
-                    name.node
+                    "material `{}` has {}",
+                    name.node,
+                    given.iter().map(|g| format!("`{g}`")).collect::<Vec<_>>().join(" and ")
                 ))
                 .at(s.header_span)
-                .help("use only one: `formula = H2O` or `composition = { H = 0.112, O = 0.888 }`"),
+                .help("use only one: `formula = H2O`, `composition = { H = 0.112, O = 0.888 }` or `same_as = Water`"),
             );
             None
         }
-        (false, false) => {
+        [] => {
             n.error(
-                Diagnostic::error(format!("material `{}` needs `formula` or `composition`", name.node))
+                Diagnostic::error(format!("material `{}` needs `formula`, `composition` or `same_as`", name.node))
                     .at(s.header_span)
-                    .help("e.g. `formula = H2O` or `composition = { H = 0.112, O = 0.888 }` (mass fractions)"),
+                    .help("e.g. `formula = H2O`, `composition = { H = 0.112, O = 0.888 }` (mass fractions) or `same_as = Water`"),
             );
             None
         }
-        (false, true) => r.text("formula", n).map(Composition::Formula),
-        (true, false) => {
+        ["same_as"] => r.text("same_as", n).map(CompSpec::SameAs),
+        ["formula"] => r.text("formula", n).map(|f| CompSpec::Own(Composition::Formula(f))),
+        _ => {
             let e = r.entry("composition", n)?;
             match &e.value.kind {
                 ValueKind::Table(entries) => {
                     let mut out = Vec::new();
                     for en in entries {
-                        if let Some(q) =
-                            quantity_of(&en.value, None, Kind::Dimensionless, &en.key.node, n)
-                        {
+                        if let Some(q) = quantity_of(&en.value, None, Kind::Dimensionless, &en.key.node, n) {
                             if q.si <= 0.0 {
                                 n.error(
-                                    Diagnostic::error("mass fractions must be greater than zero")
-                                        .at(en.value.span),
+                                    Diagnostic::error("mass fractions must be greater than zero").at(en.value.span),
                                 );
                             }
                             out.push((en.key.clone(), q.si));
                         }
                     }
-                    Some(Composition::MassFractions(out))
+                    Some(CompSpec::Own(Composition::MassFractions(out)))
                 }
                 other => {
                     n.error(
-                        Diagnostic::error(format!(
-                            "`composition` should be a table, not {}",
-                            other.describe()
-                        ))
-                        .at(e.value.span)
-                        .help("write `composition = { H = 0.112, O = 0.888 }`"),
+                        Diagnostic::error(format!("`composition` should be a table, not {}", other.describe()))
+                            .at(e.value.span)
+                            .help("write `composition = { H = 0.112, O = 0.888 }`"),
                     );
                     None
                 }
@@ -618,16 +622,73 @@ fn read_material(s: &Section, builtin: bool, n: &mut Notes) -> Option<MaterialDe
         }
     };
     r.finish(n);
-    let density = density?;
-    if density <= 0.0 {
-        n.error(Diagnostic::error("density must be greater than zero").at(s.header_span));
+    if let Some(d) = density {
+        if d <= 0.0 {
+            n.error(Diagnostic::error("density must be greater than zero").at(s.header_span));
+        }
     }
-    Some(MaterialDef {
+    Some(RawMaterial {
         name,
         density,
-        composition: composition?,
+        comp: comp?,
         builtin,
+        title,
+        comment,
+        reference,
     })
+}
+
+/// Resolve `same_as` chains into complete material definitions.
+fn resolve_materials(raw: Vec<RawMaterial>, n: &mut Notes) -> Vec<MaterialDef> {
+    let names: Vec<&str> = raw.iter().map(|m| m.name.node.as_str()).collect();
+    let mut out = Vec::with_capacity(raw.len());
+    for m in &raw {
+        let mut cur = m;
+        let mut chain = vec![m.name.node.as_str()];
+        let mut density = m.density;
+        let mut title = m.title.clone();
+        let mut ok = true;
+        while let CompSpec::SameAs(target) = &cur.comp {
+            let Some(next) = raw.iter().find(|o| o.name.node == target.node) else {
+                let d = Diagnostic::error(format!(
+                    "`same_as = {}`: there is no material with that name",
+                    target.node
+                ))
+                .at(target.span)
+                .maybe_help(suggest(&target.node, names.iter().copied()).map(|s| format!("did you mean `{s}`?")));
+                n.error(d);
+                ok = false;
+                break;
+            };
+            if chain.contains(&next.name.node.as_str()) {
+                n.error(
+                    Diagnostic::error(format!("materials {} copy each other in a circle", chain.join(" -> ")))
+                        .at(target.span),
+                );
+                ok = false;
+                break;
+            }
+            chain.push(&next.name.node);
+            density = density.or(next.density);
+            title = title.or_else(|| next.title.clone());
+            cur = next;
+        }
+        if !ok {
+            continue;
+        }
+        let CompSpec::Own(comp) = &cur.comp else { unreachable!() };
+        out.push(MaterialDef {
+            name: m.name.clone(),
+            density: density.expect("the end of a same_as chain always has a density"),
+            composition: comp.clone(),
+            builtin: m.builtin,
+            title,
+            comment: m.comment.clone(),
+            reference: m.reference.clone().or_else(|| cur.reference.clone()),
+            copied_from: (chain.len() > 1).then(|| chain[1].to_string()),
+        });
+    }
+    out
 }
 
 fn read_source(s: &Section, index: usize, n: &mut Notes) -> Option<Source> {
@@ -644,8 +705,7 @@ fn read_source(s: &Section, index: usize, n: &mut Notes) -> Option<Source> {
         (Some(nu), None) => {
             if intensities.is_some() {
                 n.error(
-                    Diagnostic::error("`intensity` goes with `energy`, not with `nuclide`")
-                        .at(r_span(&r, "intensity")),
+                    Diagnostic::error("`intensity` goes with `energy`, not with `nuclide`").at(r_span(&r, "intensity")),
                 );
             }
             Some(Emission::Nuclide(nu))
@@ -662,21 +722,14 @@ fn read_source(s: &Section, index: usize, n: &mut Notes) -> Option<Source> {
             });
             if ints.len() != es.len() {
                 n.error(
-                    Diagnostic::error(format!(
-                        "{} energies but {} intensities",
-                        es.len(),
-                        ints.len()
-                    ))
-                    .at(r_span(&r, "intensity"))
-                    .help("give one intensity (photons per decay) for each energy"),
+                    Diagnostic::error(format!("{} energies but {} intensities", es.len(), ints.len()))
+                        .at(r_span(&r, "intensity"))
+                        .help("give one intensity (photons per decay) for each energy"),
                 );
                 None
             } else {
                 Some(Emission::Lines(
-                    es.iter()
-                        .zip(&ints)
-                        .map(|(e, i)| (e.to("MeV"), i.si))
-                        .collect(),
+                    es.iter().zip(&ints).map(|(e, i)| (e.to("MeV"), i.si)).collect(),
                 ))
             }
         }
@@ -715,9 +768,7 @@ fn read_source(s: &Section, index: usize, n: &mut Notes) -> Option<Source> {
             None
         }
     };
-    let activity = r
-        .quantity("activity", Kind::Activity, n)
-        .map(|q| q.to("Bq"));
+    let activity = r.quantity("activity", Kind::Activity, n).map(|q| q.to("Bq"));
     let duration = r.quantity("duration", Kind::Time, n).map(|q| q.to("s"));
     if duration.is_some() && activity.is_none() {
         n.error(Diagnostic::error("`duration` needs an `activity`").at(r_span(&r, "duration")));
@@ -744,10 +795,7 @@ fn read_probe(s: &Section, n: &mut Notes) -> Option<Probe> {
             let voxel = r.require_vec3("voxel", Kind::Length, n).map(cm3);
             if let Some(v) = voxel {
                 if v.iter().any(|&x| x <= 0.0) {
-                    n.error(
-                        Diagnostic::error("voxel size must be greater than zero")
-                            .at(r_span(&r, "voxel")),
-                    );
+                    n.error(Diagnostic::error("voxel size must be greater than zero").at(r_span(&r, "voxel")));
                 }
             }
             Some(ProbeKind::DoseGrid {
@@ -781,10 +829,7 @@ fn read_probe(s: &Section, n: &mut Notes) -> Option<Probe> {
                 Diagnostic::error(format!("unknown probe type `{other}`"))
                     .at(kind_word.span)
                     .label(format!("types: {}", types.join(", ")))
-                    .maybe_help(
-                        suggest(other, types.iter().copied())
-                            .map(|s| format!("did you mean `{s}`?")),
-                    ),
+                    .maybe_help(suggest(other, types.iter().copied()).map(|s| format!("did you mean `{s}`?"))),
             );
             None
         }
@@ -823,9 +868,7 @@ fn check_references(
                 .label("unknown volume");
             d = match suggest(&name.node, vol_names.iter().copied()) {
                 Some(s) => d.help(format!("did you mean `{s}`?")),
-                None if vol_names.is_empty() => {
-                    d.help("define it with a `[volume <name>]` section")
-                }
+                None if vol_names.is_empty() => d.help("define it with a `[volume <name>]` section"),
                 None => d.help(format!("volumes: {}", vol_names.join(", "))),
             };
             n.error(d);
@@ -838,9 +881,7 @@ fn check_references(
                 .label("unknown material");
             d = match suggest(&name.node, mat_names.iter().copied()) {
                 Some(s) => d.help(format!("did you mean `{s}`?")),
-                None => d.help(
-                    "define it with a `[material <name>]` section, or run `guaraci info materials`",
-                ),
+                None => d.help("define it with a `[material <name>]` section, or run `guaraci info materials`"),
             };
             n.error(d);
         }
@@ -875,11 +916,8 @@ fn check_references(
             };
             if seen.contains(&next.name.node.as_str()) {
                 n.error(
-                    Diagnostic::error(format!(
-                        "volumes `{}` are each other's parents",
-                        seen.join("`, `")
-                    ))
-                    .at(v.name.span),
+                    Diagnostic::error(format!("volumes `{}` are each other's parents", seen.join("`, `")))
+                        .at(v.name.span),
                 );
                 break;
             }
@@ -901,9 +939,7 @@ fn check_references(
             );
         }
         match &p.kind {
-            ProbeKind::DoseGrid { region, .. } | ProbeKind::Spectrum { region, .. } => {
-                check_vol(region, n, true)
-            }
+            ProbeKind::DoseGrid { region, .. } | ProbeKind::Spectrum { region, .. } => check_vol(region, n, true),
             ProbeKind::VolumeDose { volumes } => volumes.iter().for_each(|v| check_vol(v, n, true)),
         }
     }

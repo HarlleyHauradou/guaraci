@@ -110,10 +110,7 @@ impl miette::Diagnostic for Rendered<'_> {
         })
     }
     fn help<'b>(&'b self) -> Option<Box<dyn fmt::Display + 'b>> {
-        self.d
-            .help
-            .as_ref()
-            .map(|h| Box::new(h) as Box<dyn fmt::Display>)
+        self.d.help.as_ref().map(|h| Box::new(h) as Box<dyn fmt::Display>)
     }
     fn source_code(&self) -> Option<&dyn miette::SourceCode> {
         let span = self.d.span?;
@@ -121,17 +118,11 @@ impl miette::Diagnostic for Rendered<'_> {
     }
     fn labels(&self) -> Option<Box<dyn Iterator<Item = LabeledSpan> + '_>> {
         let span = self.d.span?;
-        let mut labels = vec![LabeledSpan::new_with_span(
-            self.d.label.clone(),
-            to_source_span(span),
-        )];
+        let mut labels = vec![LabeledSpan::new_with_span(self.d.label.clone(), to_source_span(span))];
         // miette renders one source per report; only show related spans from the same file.
         if let Some((r, l)) = &self.d.related {
             if r.file == span.file {
-                labels.push(LabeledSpan::new_with_span(
-                    Some(l.clone()),
-                    to_source_span(*r),
-                ));
+                labels.push(LabeledSpan::new_with_span(Some(l.clone()), to_source_span(*r)));
             }
         }
         Some(Box::new(labels.into_iter()))

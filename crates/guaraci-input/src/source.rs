@@ -32,11 +32,7 @@ pub struct SourceMap {
 impl SourceMap {
     pub fn add(&mut self, display: String, path: Option<PathBuf>, text: String) -> FileId {
         let named = NamedSource::new(display.clone(), text);
-        self.files.push(SourceFile {
-            display,
-            path,
-            named,
-        });
+        self.files.push(SourceFile { display, path, named });
         self.files.len() - 1
     }
     pub fn get(&self, id: FileId) -> &SourceFile {
@@ -49,21 +45,14 @@ impl SourceMap {
         &self.files
     }
     pub fn find_path(&self, path: &Path) -> Option<FileId> {
-        self.files
-            .iter()
-            .position(|f| f.path.as_deref() == Some(path))
+        self.files.iter().position(|f| f.path.as_deref() == Some(path))
     }
     /// `file:line:column` (1-based) of the start of a span.
     pub fn location(&self, span: Span) -> String {
         let f = &self.files[span.file];
         let before = &f.text()[..span.start.min(f.text().len())];
         let line = before.matches('\n').count() + 1;
-        let col = before
-            .rsplit('\n')
-            .next()
-            .map(|l| l.chars().count())
-            .unwrap_or(0)
-            + 1;
+        let col = before.rsplit('\n').next().map(|l| l.chars().count()).unwrap_or(0) + 1;
         format!("{}:{}:{}", f.display, line, col)
     }
     /// Text covered by a span.

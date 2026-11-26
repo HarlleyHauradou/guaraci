@@ -79,10 +79,7 @@ fn parses_example() {
     }
     assert_eq!(c.probes[0].output, "dose.mhd");
     // defaults are recorded for the report
-    assert!(c
-        .defaults
-        .iter()
-        .any(|d| d.key == "rng" && d.value == "philox"));
+    assert!(c.defaults.iter().any(|d| d.key == "rng" && d.value == "philox"));
     // `radius = 10` and `center = [3, 0, 0]` used the default unit
     assert!(c.implicit_units.len() >= 4);
 }
@@ -94,27 +91,12 @@ fn number_forms() {
         "[x]\na = 10cm\nb = -1.5e3 keV\nc = 10_000\nd = [1, 2, 3] mm\ne = 1.05 g/cm3\nf = 89 %\n",
     )
     .unwrap();
-    let Item::Section(s) = &f.items[0] else {
-        panic!()
-    };
-    let get = |k: &str| {
-        &s.entries
-            .iter()
-            .find(|e| e.key.node == k)
-            .unwrap()
-            .value
-            .kind
-    };
-    assert!(
-        matches!(get("a"), ValueKind::Number { value, unit: Some(u) } if *value == 10.0 && u.node == "cm")
-    );
-    assert!(
-        matches!(get("b"), ValueKind::Number { value, unit: Some(u) } if *value == -1500.0 && u.node == "keV")
-    );
+    let Item::Section(s) = &f.items[0] else { panic!() };
+    let get = |k: &str| &s.entries.iter().find(|e| e.key.node == k).unwrap().value.kind;
+    assert!(matches!(get("a"), ValueKind::Number { value, unit: Some(u) } if *value == 10.0 && u.node == "cm"));
+    assert!(matches!(get("b"), ValueKind::Number { value, unit: Some(u) } if *value == -1500.0 && u.node == "keV"));
     assert!(matches!(get("c"), ValueKind::Number { value, unit: None } if *value == 10000.0));
-    assert!(
-        matches!(get("d"), ValueKind::Array { items, unit: Some(u) } if items.len() == 3 && u.node == "mm")
-    );
+    assert!(matches!(get("d"), ValueKind::Array { items, unit: Some(u) } if items.len() == 3 && u.node == "mm"));
     assert!(matches!(get("e"), ValueKind::Number { unit: Some(u), .. } if u.node == "g/cm3"));
     assert!(matches!(get("f"), ValueKind::Number { unit: Some(u), .. } if u.node == "%"));
 }
@@ -122,9 +104,7 @@ fn number_forms() {
 #[test]
 fn multiline_list_and_comments() {
     let f = parser::parse(0, "[x]\na = [\n  1,  # one\n  2,\n] cm\n").unwrap();
-    let Item::Section(s) = &f.items[0] else {
-        panic!()
-    };
+    let Item::Section(s) = &f.items[0] else { panic!() };
     assert!(matches!(&s.entries[0].value.kind, ValueKind::Array { items, .. } if items.len() == 2));
 }
 
@@ -202,9 +182,7 @@ fn includes_from_disk() {
         "include geometry\n[world]\nmaterial = Air\nsize = 1 m\n[source]\nenergy = 140.5 keV\nin = phantom\n",
     )
     .unwrap();
-    let prog = load(&dir.join("main"), &[MATERIALS])
-        .map_err(|(_, d)| d)
-        .unwrap();
+    let prog = load(&dir.join("main"), &[MATERIALS]).map_err(|(_, d)| d).unwrap();
     let c = Config::from_program(&prog).unwrap();
     assert_eq!(c.volumes.len(), 1);
     // include cycle
@@ -223,4 +201,34 @@ fn error_render_points_at_text() {
     let out = errs[0].render(&prog.sources, false);
     assert!(out.contains("main.gci"), "{out}");
     assert!(out.contains("kev2"), "{out}");
+}
+
+const DATABASE: Builtin = Builtin { name: "materials", text: include_str!("../../../data/materials.gci") };
+
+#[test]
+fn builtin_database_loads() {
+    let text = "[world]\nmaterial = Air\nsize = 1 m\n[source]\nenergy = 140.5 keV\nposition = [0, 0, 0]\n";
+    let prog = load_str("main.gci", text, &[DATABASE]).map_err(|(_, d)| d).unwrap();
+    let c = Config::from_program(&prog).unwrap();
+    assert_eq!(c.materials.len(), 124);
+    let pmma = c.material("PMMA").unwrap();
+    assert_eq!(pmma.copied_from.as_deref(), Some("Lucite"));
+    assert!((pmma.density - 1.19).abs() < 1e-12);
+    assert!(c.material("Water").unwrap().title.as_deref() == Some("Water: Water, Liquid"));
+}
+
+#[test]
+fn same_as_with_new_density() {
+    let text = "[world]\nmaterial = Foam\nsize = 1 m\n[source]\nenergy = 140.5 keV\nposition = [0, 0, 0]\n\
+                [material Foam]\nsame_as = Polystyrene\ndensity = 0.05 g/cm3\n";
+    let prog = load_str("main.gci", text, &[DATABASE]).map_err(|(_, d)| d).unwrap();
+    let c = Config::from_program(&prog).unwrap();
+    let foam = c.material("Foam").unwrap();
+    assert!((foam.density - 0.05).abs() < 1e-12);
+    assert!(matches!(foam.composition, Composition::MassFractions(_)));
+    // unknown target
+    let bad = text.replace("same_as = Polystyrene", "same_as = Polystyren");
+    let prog = load_str("main.gci", &bad, &[DATABASE]).map_err(|(_, d)| d).unwrap();
+    let errs = Config::from_program(&prog).unwrap_err();
+    assert_eq!(errs[0].help.as_deref(), Some("did you mean `Polystyrene`?"));
 }

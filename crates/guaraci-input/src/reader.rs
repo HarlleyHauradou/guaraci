@@ -99,13 +99,7 @@ impl<'a> Reader<'a> {
     }
 
     /// A quantity, or `default` (expressed in the kind's default unit).
-    pub fn quantity_or(
-        &mut self,
-        key: &'a str,
-        kind: Kind,
-        default: f64,
-        notes: &mut Notes,
-    ) -> Quantity {
+    pub fn quantity_or(&mut self, key: &'a str, kind: Kind, default: f64, notes: &mut Notes) -> Quantity {
         if self.has(key) {
             if let Some(q) = self.quantity(key, kind, notes) {
                 return q;
@@ -114,9 +108,7 @@ impl<'a> Reader<'a> {
             self.used.push(key);
             self.default_note(
                 key,
-                format!("{} {}", default, kind.default_unit())
-                    .trim()
-                    .to_string(),
+                format!("{} {}", default, kind.default_unit()).trim().to_string(),
                 notes,
             );
         }
@@ -124,12 +116,7 @@ impl<'a> Reader<'a> {
     }
 
     /// A required quantity.
-    pub fn require_quantity(
-        &mut self,
-        key: &'a str,
-        kind: Kind,
-        notes: &mut Notes,
-    ) -> Option<Quantity> {
+    pub fn require_quantity(&mut self, key: &'a str, kind: Kind, notes: &mut Notes) -> Option<Quantity> {
         if !self.has(key) {
             self.missing(key, &format!("{} = <{}>", key, kind.name()), notes);
             self.used.push(key);
@@ -146,15 +133,9 @@ impl<'a> Reader<'a> {
             ValueKind::Array { items, unit } => {
                 if items.len() != 3 {
                     notes.error(
-                        Diagnostic::error(format!(
-                            "`{key}` needs 3 values (x, y, z), found {}",
-                            items.len()
-                        ))
-                        .at(e.value.span)
-                        .help(format!(
-                            "for example `{key} = [1, 2, 3] {}`",
-                            kind.default_unit()
-                        )),
+                        Diagnostic::error(format!("`{key}` needs 3 values (x, y, z), found {}", items.len()))
+                            .at(e.value.span)
+                            .help(format!("for example `{key} = [1, 2, 3] {}`", kind.default_unit())),
                     );
                     return None;
                 }
@@ -171,18 +152,9 @@ impl<'a> Reader<'a> {
         }
     }
 
-    pub fn require_vec3(
-        &mut self,
-        key: &'a str,
-        kind: Kind,
-        notes: &mut Notes,
-    ) -> Option<[Quantity; 3]> {
+    pub fn require_vec3(&mut self, key: &'a str, kind: Kind, notes: &mut Notes) -> Option<[Quantity; 3]> {
         if !self.has(key) {
-            self.missing(
-                key,
-                &format!("{key} = [x, y, z] {}", kind.default_unit()),
-                notes,
-            );
+            self.missing(key, &format!("{key} = [x, y, z] {}", kind.default_unit()), notes);
             self.used.push(key);
             return None;
         }
@@ -190,12 +162,7 @@ impl<'a> Reader<'a> {
     }
 
     /// A list of quantities of one kind.
-    pub fn quantity_list(
-        &mut self,
-        key: &'a str,
-        kind: Kind,
-        notes: &mut Notes,
-    ) -> Option<Vec<Quantity>> {
+    pub fn quantity_list(&mut self, key: &'a str, kind: Kind, notes: &mut Notes) -> Option<Vec<Quantity>> {
         let e = self.entry(key, notes)?;
         match &e.value.kind {
             ValueKind::Array { items, unit } => {
@@ -213,15 +180,10 @@ impl<'a> Reader<'a> {
     pub fn count(&mut self, key: &'a str, notes: &mut Notes) -> Option<u64> {
         let e = self.entry(key, notes)?;
         match &e.value.kind {
-            ValueKind::Number { value, unit: None }
-                if *value >= 0.0 && value.fract() == 0.0 && *value < 1.8e19 =>
-            {
+            ValueKind::Number { value, unit: None } if *value >= 0.0 && value.fract() == 0.0 && *value < 1.8e19 => {
                 Some(*value as u64)
             }
-            ValueKind::Number {
-                value,
-                unit: Some(u),
-            } => {
+            ValueKind::Number { value, unit: Some(u) } => {
                 notes.error(
                     Diagnostic::error(format!("`{key}` is a plain count and takes no unit"))
                         .at(u.span)
@@ -272,12 +234,7 @@ impl<'a> Reader<'a> {
         }
     }
 
-    pub fn require_text(
-        &mut self,
-        key: &'a str,
-        hint: &str,
-        notes: &mut Notes,
-    ) -> Option<Spanned<String>> {
+    pub fn require_text(&mut self, key: &'a str, hint: &str, notes: &mut Notes) -> Option<Spanned<String>> {
         if !self.has(key) {
             self.missing(key, &format!("{key} = {hint}"), notes);
             self.used.push(key);
@@ -328,10 +285,7 @@ impl<'a> Reader<'a> {
             Diagnostic::error(format!("`{}` is not a valid {key}", w.node))
                 .at(w.span)
                 .label(format!("options: {}", options.join(", ")))
-                .maybe_help(
-                    suggest(&w.node, options.iter().copied())
-                        .map(|s| format!("did you mean `{s}`?")),
-                ),
+                .maybe_help(suggest(&w.node, options.iter().copied()).map(|s| format!("did you mean `{s}`?"))),
         );
         default
     }
@@ -365,12 +319,9 @@ impl<'a> Reader<'a> {
     pub fn finish(self, notes: &mut Notes) {
         for e in &self.section.entries {
             if !self.used.contains(&e.key.node.as_str()) {
-                let mut d = Diagnostic::error(format!(
-                    "{} has no setting called `{}`",
-                    self.title, e.key.node
-                ))
-                .at(e.key.span)
-                .label("unknown setting");
+                let mut d = Diagnostic::error(format!("{} has no setting called `{}`", self.title, e.key.node))
+                    .at(e.key.span)
+                    .label("unknown setting");
                 let mut known: Vec<&str> = self.used.clone();
                 known.sort();
                 known.dedup();
@@ -393,12 +344,7 @@ pub fn quantity_of(
     notes: &mut Notes,
 ) -> Option<Quantity> {
     let ValueKind::Number { value, unit } = &v.kind else {
-        notes.error(type_error(
-            key,
-            &format!("a {}", kind.name()),
-            &v.kind,
-            v.span,
-        ));
+        notes.error(type_error(key, &format!("a {}", kind.name()), &v.kind, v.span));
         return None;
     };
     let unit = unit.as_ref().or(outer);
@@ -414,29 +360,18 @@ pub fn quantity_of(
             let span = unit.map(|u| u.span).unwrap_or(v.span);
             let help = e.help().or_else(|| match kind {
                 Kind::Dimensionless => Some(format!("`{key}` is a pure number; remove the unit")),
-                _ => Some(format!(
-                    "use a unit of {}, e.g. `{}`",
-                    kind.name(),
-                    kind.default_unit()
-                )),
+                _ => Some(format!("use a unit of {}, e.g. `{}`", kind.name(), kind.default_unit())),
             });
-            notes.error(
-                Diagnostic::error(format!("`{key}`: {e}"))
-                    .at(span)
-                    .maybe_help(help),
-            );
+            notes.error(Diagnostic::error(format!("`{key}`: {e}")).at(span).maybe_help(help));
             None
         }
     }
 }
 
 fn type_error(key: &str, expected: &str, found: &ValueKind, span: Span) -> Diagnostic {
-    Diagnostic::error(format!(
-        "`{key}` should be {expected}, not {}",
-        found.describe()
-    ))
-    .at(span)
-    .label("here")
+    Diagnostic::error(format!("`{key}` should be {expected}, not {}", found.describe()))
+        .at(span)
+        .label("here")
 }
 
 /// Closest option, if reasonably close.

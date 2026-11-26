@@ -51,12 +51,10 @@ pub fn load(path: &Path, builtins: &[Builtin]) -> Result<Program, (Program, Vec<
             .sources
             .add(format!("<built-in {}>", b.name), None, b.text.to_string());
         match parser::parse(id, b.text) {
-            Ok(f) => prog
-                .sections
-                .extend(f.items.into_iter().filter_map(|i| match i {
-                    Item::Section(s) => Some(s),
-                    Item::Include(_) => None,
-                })),
+            Ok(f) => prog.sections.extend(f.items.into_iter().filter_map(|i| match i {
+                Item::Section(s) => Some(s),
+                Item::Include(_) => None,
+            })),
             Err(d) => diags.push(d),
         }
     }
@@ -70,25 +68,17 @@ pub fn load(path: &Path, builtins: &[Builtin]) -> Result<Program, (Program, Vec<
     match source::resolve(&base, &name) {
         Ok(p) => {
             let mut stack = Vec::new();
-            load_file(
-                &mut prog,
-                &mut diags,
-                &p,
-                path.display().to_string(),
-                &mut stack,
-            );
+            load_file(&mut prog, &mut diags, &p, path.display().to_string(), &mut stack);
         }
         Err(tried) => diags.push(
-            Diagnostic::error(format!("cannot find input file `{}`", path.display())).help(
-                format!(
-                    "looked for: {}",
-                    tried
-                        .iter()
-                        .map(|t| t.display().to_string())
-                        .collect::<Vec<_>>()
-                        .join(", ")
-                ),
-            ),
+            Diagnostic::error(format!("cannot find input file `{}`", path.display())).help(format!(
+                "looked for: {}",
+                tried
+                    .iter()
+                    .map(|t| t.display().to_string())
+                    .collect::<Vec<_>>()
+                    .join(", ")
+            )),
         ),
     }
     if diags.iter().any(|d| d.is_error()) {
@@ -99,11 +89,7 @@ pub fn load(path: &Path, builtins: &[Builtin]) -> Result<Program, (Program, Vec<
 }
 
 /// Parse text that does not come from disk (tests, GUI editor buffers).
-pub fn load_str(
-    name: &str,
-    text: &str,
-    builtins: &[Builtin],
-) -> Result<Program, (Program, Vec<Diagnostic>)> {
+pub fn load_str(name: &str, text: &str, builtins: &[Builtin]) -> Result<Program, (Program, Vec<Diagnostic>)> {
     let mut prog = Program::default();
     let mut diags = Vec::new();
     for (n, t) in builtins

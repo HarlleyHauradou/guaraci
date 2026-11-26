@@ -27,8 +27,7 @@ fn default_units() {
 fn compound_units() {
     for s in ["g/cm3", "g/cm^3", "g/cc", "g*cm^-3", "g.cm-3"] {
         let s2 = s.replace("cm-3", "cm^-3");
-        let (q, _) =
-            Quantity::new(1.0, Some(&s2), Kind::Density).unwrap_or_else(|e| panic!("{s}: {e}"));
+        let (q, _) = Quantity::new(1.0, Some(&s2), Kind::Density).unwrap_or_else(|e| panic!("{s}: {e}"));
         assert!(close(q.to("kg/m3"), 1000.0), "{s}");
     }
     let u = Unit::parse("MBq*h").unwrap();
@@ -59,10 +58,7 @@ fn ambiguous_case_is_an_error() {
 fn wrong_kind() {
     let e = Quantity::new(5.0, Some("keV"), Kind::Length).unwrap_err();
     assert!(matches!(e, UnitError::WrongKind { .. }));
-    assert_eq!(
-        e.to_string(),
-        "expected length, but `keV` is a unit of energy"
-    );
+    assert_eq!(e.to_string(), "expected length, but `keV` is a unit of energy");
 }
 
 #[test]
@@ -85,12 +81,7 @@ fn table_has_no_case_conflicts_with_different_meaning() {
     for a in UNITS {
         for b in UNITS {
             if a.symbol != b.symbol && a.symbol.to_lowercase() == b.symbol.to_lowercase() {
-                assert!(
-                    a.dim == b.dim && a.factor == b.factor,
-                    "{} vs {}",
-                    a.symbol,
-                    b.symbol
-                );
+                assert!(a.dim == b.dim && a.factor == b.factor, "{} vs {}", a.symbol, b.symbol);
             }
         }
     }
