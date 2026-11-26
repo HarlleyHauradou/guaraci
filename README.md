@@ -13,12 +13,12 @@ Early development. Available so far:
 - **Photon transport on CPU** (multi-threaded): photoelectric effect, Compton scattering (Klein-Nishina with incoherent scattering function), Rayleigh scattering (form factors) and pair production. Electrons deposit their energy locally.
 - **Probes**: 3D dose grids (MetaImage `.mhd`), dose in volumes, photon fluence spectra — each with its statistical uncertainty.
 - **Radionuclide sources** from ENDF/B-VIII.0 decay data (3821 nuclides), user-defined photon lines, activity and duration.
-- **Validation**: μ/ρ within 0.4 % of NIST XCOM (10 keV–10 MeV), uncollided fluence within 0.25 % of the analytic value, exact energy conservation, results independent of the number of threads.
+- **Validation**: μ/ρ within 0.4 % of NIST XCOM (10 keV–10 MeV), uncollided fluence within 0.25 % of the analytic value, absorbed fractions in spheres compared with Stabin & Konijnenberg (2000) for 231 cases, exact energy conservation, results independent of the number of threads.
 - `guaraci check` explains what an input describes; `guaraci run` writes a readable report and a copy of the inputs.
 - Nuclear data downloaded from the official sources on first use (`guaraci data install endfb8`).
 - 372 materials from PNNL-15870 Rev. 1.
 
-Coming next: S-value benchmarks, voxelised phantoms, CUDA backend, electron transport, desktop interface.
+Coming next: voxelised phantoms, CUDA backend, electron transport, desktop interface.
 
 ## Quick start
 

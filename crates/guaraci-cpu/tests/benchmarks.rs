@@ -157,3 +157,124 @@ fn conservation_and_thread_independence() {
         t.emitted / n
     );
 }
+
+/// Reference rows of Stabin & Konijnenberg (2000), Tables 2 and 3.
+struct StabinRow {
+    mass: f64,
+    radius: f64,
+    energy: f64,
+    egs4: f64,
+    mcnp: f64,
+    recommended: f64,
+}
+
+fn stabin_rows() -> Vec<StabinRow> {
+    include_str!("../../../validation/stabin2000_photons.csv")
+        .lines()
+        .filter(|l| !l.starts_with('#') && !l.starts_with("mass"))
+        .map(|l| {
+            let v: Vec<f64> = l.split(',').map(|x| x.parse().unwrap()).collect();
+            StabinRow {
+                mass: v[0],
+                radius: v[1],
+                energy: v[2],
+                egs4: v[3],
+                mcnp: v[4],
+                recommended: v[5],
+            }
+        })
+        .collect()
+}
+
+/// Absorbed fraction for a uniform monoenergetic photon source in a sphere of
+/// soft tissue (unit density) inside a 1 m cube of the same tissue
+/// (the "infinite medium" of the reference). Returns (fraction, relative σ).
+fn absorbed_fraction(radius: f64, energy: f64, histories: u64) -> Option<(f64, f64)> {
+    let text = format!(
+        "[world]\nmaterial = Tissue_Soft_ICRP\nsize = 100 cm\n\
+         [volume sphere]\nshape = sphere\nradius = {radius} cm\nmaterial = Tissue_Soft_ICRP\n\
+         [source]\nenergy = {energy} MeV\nin = sphere\n\
+         [probe af]\ntype = volume_dose\nvolumes = [sphere]\n"
+    );
+    let p = problem(&text)?;
+    let r = run(&p, &options(histories, 0), &AtomicU64::new(0), &AtomicBool::new(false));
+    let (m, e) = r.mean_and_error(0, 0);
+    Some((m / energy, e / m))
+}
+
+/// A few spheres and energies, run with every `cargo test`.
+#[test]
+fn stabin_spheres_selected() {
+    if data().is_none() {
+        return;
+    }
+    let rows = stabin_rows();
+    for (mass, energy) in [
+        (10.0, 0.14),
+        (100.0, 0.364),
+        (1000.0, 0.662),
+        (100.0, 0.06),
+        (3000.0, 0.1),
+    ] {
+        let row = rows.iter().find(|r| r.mass == mass && r.energy == energy).unwrap();
+        let (af, rel) = absorbed_fraction(row.radius, energy, 200_000).unwrap();
+        let dev = (af - row.recommended) / row.recommended;
+        // the two reference codes differ by up to ~6 % (paper); the table is rounded to 3 digits
+        let tol = 0.06 + 3.0 * rel + 0.0005 / row.recommended;
+        eprintln!(
+            "{mass:>6} g {:>6.0} keV  Guaraci {af:.4} ± {:.2} %  ref {:.3}  {:+.1} %",
+            energy * 1e3,
+            rel * 100.0,
+            row.recommended,
+            dev * 100.0
+        );
+        assert!(
+            dev.abs() < tol,
+            "{mass} g, {energy} MeV: {af:.4} vs {} ({:+.1} %)",
+            row.recommended,
+            dev * 100.0
+        );
+    }
+}
+
+/// The whole table. Slow: run with
+/// `GUARACI_TEST_DATA=... cargo test --release -p guaraci-cpu stabin_spheres_full -- --ignored --nocapture`.
+/// Writes validation/stabin2000_comparison.csv.
+#[test]
+#[ignore]
+fn stabin_spheres_full() {
+    if data().is_none() {
+        return;
+    }
+    let mut out = String::from("mass_g,energy_MeV,guaraci,guaraci_rel_sigma,egs4,mcnp,recommended,deviation_percent\n");
+    let mut devs = Vec::new();
+    for row in stabin_rows() {
+        let (af, rel) = absorbed_fraction(row.radius, row.energy, 500_000).unwrap();
+        let dev = 100.0 * (af - row.recommended) / row.recommended;
+        devs.push((row.energy, row.mass, dev));
+        eprintln!(
+            "{:>6} g {:>6.0} keV  Guaraci {af:.4} ± {:.2} %  EGS4 {:.3}  MCNP {:.3}  rec {:.3}  {dev:+.1} %",
+            row.mass,
+            row.energy * 1e3,
+            rel * 100.0,
+            row.egs4,
+            row.mcnp,
+            row.recommended
+        );
+        out.push_str(&format!(
+            "{},{},{af:.5},{rel:.5},{},{},{},{dev:.2}\n",
+            row.mass, row.energy, row.egs4, row.mcnp, row.recommended
+        ));
+    }
+    let path = concat!(
+        env!("CARGO_MANIFEST_DIR"),
+        "/../../validation/stabin2000_comparison.csv"
+    );
+    std::fs::write(path, out).unwrap();
+    let mean = devs.iter().map(|d| d.2).sum::<f64>() / devs.len() as f64;
+    let max = devs.iter().map(|d| d.2.abs()).fold(0.0, f64::max);
+    eprintln!(
+        "{} cases: mean deviation {mean:+.2} %, largest |deviation| {max:.1} %",
+        devs.len()
+    );
+}
