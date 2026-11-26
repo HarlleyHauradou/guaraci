@@ -1,6 +1,5 @@
 ---
-hide:
-  - navigation
+html_theme.sidebar_secondary.remove: true
 ---
 
 # Guaraci
@@ -10,42 +9,39 @@ física médica e medicina nuclear.
 
 *Guaraci é o Sol na mitologia tupi, a fonte da radiação que dá vida a tudo.*
 
-<div class="grid cards" markdown>
+::::{grid} 1 2 2 2
+:gutter: 3
 
--   :material-download: **Instalar**
+:::{grid-item-card} {octicon}`download` Instalar
+:link: volume-2/02-instalacao
+:link-type: doc
 
-    ---
+Compile com Cargo. Os dados nucleares (ENDF/B-VIII.0) são baixados das
+fontes oficiais na primeira simulação.
+:::
 
-    Compile com Cargo. Os dados nucleares (ENDF/B-VIII.0) são baixados das
-    fontes oficiais na primeira simulação.
+:::{grid-item-card} {octicon}`play` Primeira simulação
+:link: volume-2/03-primeira-simulacao
+:link-type: doc
 
-    [:octicons-arrow-right-24: Instalação](volume-2/02-instalacao.md)
+I-131 na tireoide em 30 linhas legíveis, do arquivo de entrada ao mapa de dose.
+:::
 
--   :material-play-circle: **Primeira simulação**
+:::{grid-item-card} {octicon}`book` Volume II — Manual do Usuário
+:link: volume-2/index
+:link-type: doc
 
-    ---
+A linguagem `.gci`, materiais, fontes, probes, comandos e resultados.
+:::
 
-    I-131 na tireoide em 30 linhas legíveis, do arquivo de entrada ao mapa de dose.
+:::{grid-item-card} {octicon}`beaker` Volume I — Manual Técnico
+:link: volume-1/index
+:link-type: doc
 
-    [:octicons-arrow-right-24: Começar](volume-2/03-primeira-simulacao.md)
+Física, dados nucleares, motor de transporte, estatística e validação.
+:::
 
--   :material-book-open-variant: **Manual do Usuário**
-
-    ---
-
-    A linguagem `.gci`, materiais, fontes, probes, comandos e resultados.
-
-    [:octicons-arrow-right-24: Volume II](volume-2/index.md)
-
--   :material-atom: **Manual Técnico**
-
-    ---
-
-    Física, dados nucleares, motor de transporte, estatística e validação.
-
-    [:octicons-arrow-right-24: Volume I](volume-1/index.md)
-
-</div>
+::::
 
 ## Um arquivo de entrada
 
@@ -105,3 +101,15 @@ backend CUDA e a interface gráfica ([Volume III](volume-3/index.md)).
 | [**I — Manual Técnico**](volume-1/index.md) | quem quer saber *como* o Guaraci calcula: teoria, dados, métodos e validação |
 | [**II — Manual do Usuário**](volume-2/index.md) | quem monta e roda simulações; é por aqui que se aprende |
 | [**III — Interface Gráfica**](volume-3/index.md) | quem usa o programa gráfico (editor, visualização da geometria e dos resultados) |
+
+```{toctree}
+:hidden:
+:maxdepth: 2
+
+Vol. I · Técnico <volume-1/index>
+Vol. II · Usuário <volume-2/index>
+Vol. III · Interface <volume-3/index>
+Exemplos <exemplos>
+Desenvolvimento <desenvolvimento>
+Filosofia <filosofia>
+```

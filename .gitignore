@@ -7,3 +7,6 @@ validation/*/inputs/
 validation/*/*_results/
 validation/*/comparison.csv
 validation/**/__pycache__/
+
+# documentation build
+docs/_build/

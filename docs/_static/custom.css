@@ -1,0 +1,14 @@
+/* Guaraci colours: the sun (amber / orange) */
+html[data-theme="light"] {
+  --pst-color-primary: #b45309;
+  --pst-color-secondary: #d97706;
+  --pst-color-accent: #f59e0b;
+}
+html[data-theme="dark"] {
+  --pst-color-primary: #fbbf24;
+  --pst-color-secondary: #f59e0b;
+  --pst-color-accent: #fcd34d;
+}
+.bd-content table { font-size: 0.9rem; }
+.hero-title { font-size: 2.6rem; font-weight: 700; margin-bottom: 0; }
+.hero-subtitle { font-size: 1.25rem; opacity: 0.85; }

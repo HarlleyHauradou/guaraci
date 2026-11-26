@@ -11,7 +11,7 @@
 | `crates/guaraci-cpu` | motor paralelo em CPU |
 | `crates/guaraci-cli` | o programa `guaraci` |
 | `data/` | banco de materiais (`materials.gci`) |
-| `docs/` | este site (MkDocs Material) |
+| `docs/` | este site (Sphinx, PyData Sphinx Theme, MyST Markdown) |
 | `examples/` | arquivos de entrada de exemplo |
 | `tools/` | geradores (banco de materiais) |
 | `validation/` | benchmarks e comparações com outros códigos |
@@ -42,13 +42,16 @@ GUARACI_TEST_DATA=~/.local/share/guaraci cargo test --release -p guaraci-cpu sta
 
 ## Documentação
 
-O site é gerado a partir da pasta `docs/` com MkDocs Material e publicado no
-GitHub Pages a cada push na branch `main`. Para ver localmente:
+O site é gerado a partir da pasta `docs/` com Sphinx (PyData Sphinx Theme;
+páginas em Markdown com MyST) e publicado no Read the Docs a cada push na
+branch `main` (configuração em `.readthedocs.yaml`). Para ver localmente:
 
 ```bash
-pip install mkdocs-material
-mkdocs serve
+pip install -r docs/requirements.txt
+sphinx-build -W docs docs/_build/html
 ```
+
+Depois, abra `docs/_build/html/index.html` no navegador.
 
 ## Regras do projeto
 

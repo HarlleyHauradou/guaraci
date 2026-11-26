@@ -1,3 +1,2 @@
-# Filosofia
-
---8<-- "PHILOSOPHY.md"
+```{include} ../PHILOSOPHY.md
+```

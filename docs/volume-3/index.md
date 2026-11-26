@@ -1,10 +1,11 @@
 # Volume III — Interface Gráfica
 
-!!! info "Em desenvolvimento"
-    A interface gráfica ainda não existe. Esta página descreve o que ela vai
-    fazer e como este volume será organizado. Tudo o que a interface faz
-    também pode ser feito pelo terminal, com os comandos do
-    [Volume II](../volume-2/index.md).
+:::{note} Em desenvolvimento
+A interface gráfica ainda não existe. Esta página descreve o que ela vai
+fazer e como este volume será organizado. Tudo o que a interface faz
+também pode ser feito pelo terminal, com os comandos do
+[Volume II](../volume-2/index.md).
+:::
 
 A interface é um programa desktop escrito em Rust (egui), inspirado no Flair
 do FLUKA. Ela trabalha **sobre os mesmos arquivos `.gci`**: nada fica escondido
