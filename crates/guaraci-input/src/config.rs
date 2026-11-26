@@ -151,7 +151,10 @@ struct RawMaterial {
 
 #[derive(Debug, Clone)]
 pub enum Emission {
-    Nuclide(Spanned<String>),
+    Nuclide {
+        id: guaraci_data::NuclideId,
+        span: Span,
+    },
     /// (energy MeV, photons per decay)
     Lines(Vec<(f64, f64)>),
 }
@@ -323,7 +326,25 @@ impl Config {
         }
 
         let materials = resolve_materials(raw_materials, &mut n);
-        check_references(&volumes, &materials, &sources, &probes, world.as_ref(), &mut n);
+        // Names that were declared, even if their section had errors: references to
+        // them are not reported again (the section's own error is enough).
+        let declared = |kind: &str| -> Vec<String> {
+            prog.sections
+                .iter()
+                .filter(|s| s.kind.node == kind)
+                .filter_map(|s| s.name.as_ref().map(|n| n.node.clone()))
+                .collect()
+        };
+        let (declared_vols, declared_mats) = (declared("volume"), declared("material"));
+        check_references(
+            &volumes,
+            &materials,
+            &sources,
+            &probes,
+            world.as_ref(),
+            (&declared_vols, &declared_mats),
+            &mut n,
+        );
 
         if n.has_errors() {
             return Err(n.diags);
@@ -415,7 +436,7 @@ fn read_physics(s: &Section, n: &mut Notes) -> Physics {
     let mut r = Reader::new(s);
     let list = r.choice("list", &["photon_local"], "photon_local", n).to_string();
     let data = r
-        .choice("data", &["epics2017", "endfb8", "epdl97"], "epics2017", n)
+        .choice("data", &["endfb8", "epics2017", "epdl97"], "endfb8", n)
         .to_string();
     let data_path = r.text("data_path", n).map(|t| t.node);
     // Process switches: the list sets the defaults, the user may override them.
@@ -704,7 +725,7 @@ fn read_source(s: &Section, index: usize, n: &mut Notes) -> Option<Source> {
         .as_ref()
         .map(|n| n.node.clone())
         .unwrap_or_else(|| format!("source{}", index + 1));
-    let nuclide = r.text("nuclide", n);
+    let nuclide = read_nuclide(&mut r, n);
     let energies = r.quantity_list("energy", Kind::Energy, n);
     let intensities = r.quantity_list("intensity", Kind::Dimensionless, n);
     let emission = match (nuclide, energies) {
@@ -714,7 +735,10 @@ fn read_source(s: &Section, index: usize, n: &mut Notes) -> Option<Source> {
                     Diagnostic::error("`intensity` goes with `energy`, not with `nuclide`").at(r_span(&r, "intensity")),
                 );
             }
-            Some(Emission::Nuclide(nu))
+            Some(Emission::Nuclide {
+                id: nu.node,
+                span: nu.span,
+            })
         }
         (None, Some(es)) => {
             let ints = intensities.unwrap_or_else(|| {
@@ -790,6 +814,40 @@ fn read_source(s: &Section, index: usize, n: &mut Notes) -> Option<Source> {
     })
 }
 
+/// `nuclide = I-131` (also `I131`, `131I`, `Tc99m`, `99mTc`).
+fn read_nuclide(r: &mut Reader, n: &mut Notes) -> Option<Spanned<guaraci_data::NuclideId>> {
+    let e = r.entry("nuclide", n)?;
+    let text = match &e.value.kind {
+        ValueKind::Word(w) | ValueKind::Str(w) => w.clone(),
+        // `131I` and `99mTc` are read by the parser as a number followed by a unit
+        ValueKind::Number { value, unit: Some(u) } if value.fract() == 0.0 && *value > 0.0 => {
+            format!("{value}{}", u.node)
+        }
+        other => {
+            n.error(
+                Diagnostic::error(format!("`nuclide` should be a nuclide name, not {}", other.describe()))
+                    .at(e.value.span)
+                    .help("e.g. `nuclide = I-131` or `nuclide = Tc-99m`"),
+            );
+            return None;
+        }
+    };
+    match guaraci_data::NuclideId::parse(&text) {
+        Some(id) => Some(Spanned {
+            node: id,
+            span: e.value.span,
+        }),
+        None => {
+            n.error(
+                Diagnostic::error(format!("`{text}` is not a nuclide name"))
+                    .at(e.value.span)
+                    .help("write the element and the mass number: `I-131`, `Tc-99m`, `F-18`, `Lu-177`"),
+            );
+            None
+        }
+    }
+}
+
 fn read_probe(s: &Section, n: &mut Notes) -> Option<Probe> {
     let name = s.name.clone()?;
     let mut r = Reader::new(s);
@@ -859,13 +917,16 @@ fn check_references(
     sources: &[Source],
     probes: &[Probe],
     world: Option<&World>,
+    (declared_vols, declared_mats): (&[String], &[String]),
     n: &mut Notes,
 ) {
     let vol_names: Vec<&str> = volumes.iter().map(|v| v.name.node.as_str()).collect();
     let mat_names: Vec<&str> = materials.iter().map(|m| m.name.node.as_str()).collect();
+    let broken_vol = |name: &str| !vol_names.contains(&name) && declared_vols.iter().any(|d| d == name);
+    let broken_mat = |name: &str| !mat_names.contains(&name) && declared_mats.iter().any(|d| d == name);
 
     let check_vol = |name: &Spanned<String>, n: &mut Notes, allow_world: bool| {
-        if allow_world && name.node == "world" {
+        if (allow_world && name.node == "world") || broken_vol(&name.node) {
             return;
         }
         if !vol_names.contains(&name.node.as_str()) {
@@ -881,6 +942,9 @@ fn check_references(
         }
     };
     let check_mat = |name: &Spanned<String>, n: &mut Notes| {
+        if broken_mat(&name.node) {
+            return;
+        }
         if !mat_names.contains(&name.node.as_str()) {
             let mut d = Diagnostic::error(format!("there is no material called `{}`", name.node))
                 .at(name.span)

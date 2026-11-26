@@ -68,7 +68,12 @@ pub fn load(path: &Path, builtins: &[Builtin]) -> Result<Program, (Program, Vec<
     match source::resolve(&base, &name) {
         Ok(p) => {
             let mut stack = Vec::new();
-            load_file(&mut prog, &mut diags, &p, path.display().to_string(), &mut stack);
+            let shown = p
+                .strip_prefix(std::env::current_dir().unwrap_or_default())
+                .unwrap_or(&p)
+                .display()
+                .to_string();
+            load_file(&mut prog, &mut diags, &p, shown, &mut stack);
         }
         Err(tried) => diags.push(
             Diagnostic::error(format!("cannot find input file `{}`", path.display())).help(format!(

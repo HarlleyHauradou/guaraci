@@ -1,0 +1,36 @@
+# I-131 in the thyroid, inside a simple neck phantom.
+
+[run]
+histories = 1e7
+seed = 2026
+
+[world]
+material = Air
+size = [50, 50, 50] cm
+
+[volume neck]
+shape = cylinder
+radius = 6 cm
+height = 15 cm
+material = Tissue_Soft_ICRP
+
+[volume thyroid]
+parent = neck
+shape = ellipsoid
+semi_axes = [1, 1.5, 2.5] cm
+center = [0, 2, 0]
+material = Tissue_Soft_ICRP
+
+[source]
+nuclide = 131I
+in = thyroid
+activity = 3.7 GBq
+
+[probe dose]
+type = dose_grid
+in = neck
+voxel = [2, 2, 2] mm
+
+[probe organs]
+type = volume_dose
+volumes = [thyroid, neck]

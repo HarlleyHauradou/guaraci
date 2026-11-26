@@ -10,10 +10,16 @@ Focused initially on medical physics and nuclear medicine.
 
 Early development. Available so far:
 
-- `guaraci-units` — physical units with dimensional checking (`10 cm`, `[1, 2, 3] mm`, `1.05 g/cm3`, `370 MBq`).
-- `guaraci-input` — the `.gci` input language: parser, includes, typed configuration and error messages that point at the text.
+- `guaraci check <input>` — reads a `.gci` input, reports every problem with a pointer into the text, and describes the simulation (geometry tree, materials, nuclide emissions, defaults applied).
+- `guaraci data install endfb8` — downloads ENDF/B-VIII.0 (photo-atomic and decay data) from NNDC, verifies its SHA-256 and converts it locally.
+- `guaraci info units | materials | nuclide <name>`.
+- A database of 372 materials from PNNL-15870 Rev. 1.
 
-Coming next: photon transport on CPU (photoelectric, Compton, Rayleigh, pair production), dose grids with uncertainty, radionuclide sources, then a CUDA backend and a desktop interface.
+Coming next: photon transport on CPU (photoelectric, Compton, Rayleigh, pair production), dose grids with uncertainty, then a CUDA backend and a desktop interface.
+
+## Manual
+
+The manual has two volumes (in Portuguese for now): a [User Manual](docs/manual/usuario/README.md) and a [Technical Manual](docs/manual/tecnico/README.md).
 
 ## A taste of the input
 
@@ -36,7 +42,7 @@ center = [3, 0, 0]
 material = Water
 
 [source]
-nuclide = Tc99m
+nuclide = Tc-99m
 in = lesion
 activity = 370 MBq
 

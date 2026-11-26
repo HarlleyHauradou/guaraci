@@ -236,3 +236,30 @@ fn same_as_with_new_density() {
     let errs = Config::from_program(&prog).unwrap_err();
     assert_eq!(errs[0].help.as_deref(), Some("did you mean `Polystyrene`?"));
 }
+
+#[test]
+fn nuclide_spellings() {
+    for (spelling, expected) in [
+        ("I-131", "I-131"),
+        ("131I", "I-131"),
+        ("99mTc", "Tc-99m"),
+        ("Tc99m", "Tc-99m"),
+        ("\"Lu-177\"", "Lu-177"),
+    ] {
+        let c = config(&MAIN.replace("nuclide = Tc99m", &format!("nuclide = {spelling}"))).unwrap();
+        match &c.sources[0].emission {
+            Emission::Nuclide { id, .. } => assert_eq!(id.to_string(), expected, "{spelling}"),
+            other => panic!("{other:?}"),
+        }
+    }
+    let msg = first_error(&MAIN.replace("nuclide = Tc99m", "nuclide = Xy-12"));
+    assert!(msg.contains("not a nuclide name"), "{msg}");
+}
+
+#[test]
+fn no_cascade_from_a_broken_volume() {
+    let text = MAIN.replace("height = 20 cm", "height = 20 keV");
+    let errs = config(&text).unwrap_err();
+    let errors: Vec<_> = errs.iter().filter(|d| d.is_error()).collect();
+    assert_eq!(errors.len(), 1, "{errors:#?}");
+}

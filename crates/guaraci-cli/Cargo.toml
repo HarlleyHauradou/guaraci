@@ -1,0 +1,16 @@
+[package]
+name = "guaraci-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Guaraci command-line program"
+
+[[bin]]
+name = "guaraci"
+path = "src/main.rs"
+
+[dependencies]
+guaraci-input.workspace = true
+guaraci-data.workspace = true
+guaraci-units.workspace = true
+clap = { version = "4", features = ["derive"] }
