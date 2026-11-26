@@ -1,0 +1,42 @@
+# Tc-99m lesion inside a water cylinder (a simple SPECT phantom).
+# Results are per decay (no activity given).
+
+[run]
+histories = 2e6
+seed = 99
+
+[world]
+material = Air
+size = [60, 60, 60] cm
+
+[volume phantom]
+shape = cylinder
+radius = 10 cm
+height = 20 cm
+material = Water
+
+[volume lesion]
+parent = phantom
+shape = sphere
+radius = 15 mm
+center = [3, 0, 0] cm
+material = Tissue_Soft_ICRP
+
+[source]
+nuclide = Tc-99m
+in = lesion
+
+[probe dose]
+type = dose_grid
+in = phantom
+voxel = [4, 4, 4] mm
+
+[probe organs]
+type = volume_dose
+volumes = [lesion, phantom]
+
+[probe spectrum]
+type = spectrum
+in = phantom
+emax = 160 keV
+bins = 160

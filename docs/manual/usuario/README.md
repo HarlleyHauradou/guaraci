@@ -9,3 +9,4 @@
 7. [Fontes e radionuclídeos](07-fontes.md)
 8. [Probes](08-probes.md)
 9. [Comandos](09-comandos.md)
+10. [Resultados](10-resultados.md)

@@ -13,6 +13,8 @@ rust-version = "1.80"
 guaraci-units = { path = "crates/guaraci-units" }
 guaraci-input = { path = "crates/guaraci-input" }
 guaraci-data = { path = "crates/guaraci-data" }
+guaraci-core = { path = "crates/guaraci-core" }
+guaraci-cpu = { path = "crates/guaraci-cpu" }
 miette = { version = "7", features = ["fancy"] }
 thiserror = "2"
 strsim = "0.11"

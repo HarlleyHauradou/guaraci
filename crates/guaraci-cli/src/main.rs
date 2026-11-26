@@ -3,6 +3,7 @@
 mod check;
 mod data;
 mod info;
+mod run;
 
 use clap::{Parser, Subcommand};
 use guaraci_input::{Builtin, Diagnostic, SourceMap};
@@ -34,6 +35,23 @@ enum Command {
         /// Input file (`.gci` extension optional).
         input: PathBuf,
     },
+    /// Run a simulation.
+    Run {
+        /// Input file (`.gci` extension optional).
+        input: PathBuf,
+        /// Folder for the results (default: `<input>_results`).
+        #[arg(short, long)]
+        output: Option<PathBuf>,
+        /// Override the number of histories, e.g. `--histories 1e6`.
+        #[arg(long, value_parser = parse_count)]
+        histories: Option<u64>,
+        /// Number of CPU threads (default: all cores).
+        #[arg(long)]
+        threads: Option<usize>,
+        /// Never download data; fail if something is missing.
+        #[arg(long)]
+        offline: bool,
+    },
     /// Manage nuclear data libraries.
     Data {
         #[command(subcommand)]
@@ -50,6 +68,19 @@ fn main() -> ExitCode {
     let cli = Cli::parse();
     let result = match cli.command {
         Command::Check { input } => check::run(&input),
+        Command::Run {
+            input,
+            output,
+            histories,
+            threads,
+            offline,
+        } => run::run(run::RunArgs {
+            input,
+            output,
+            histories,
+            threads,
+            offline,
+        }),
         Command::Data { command } => data::run(command),
         Command::Info { command } => info::run(command),
     };
@@ -57,6 +88,17 @@ fn main() -> ExitCode {
         Ok(()) => ExitCode::SUCCESS,
         Err(()) => ExitCode::FAILURE,
     }
+}
+
+fn parse_count(s: &str) -> Result<u64, String> {
+    let v: f64 = s
+        .replace('_', "")
+        .parse()
+        .map_err(|_| format!("`{s}` is not a number"))?;
+    if v < 1.0 || v.fract() != 0.0 {
+        return Err(format!("`{s}` must be a whole number of at least 1"));
+    }
+    Ok(v as u64)
 }
 
 pub fn color() -> bool {

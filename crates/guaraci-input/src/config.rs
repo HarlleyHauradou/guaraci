@@ -177,6 +177,9 @@ pub struct Source {
     pub activity: Option<f64>,
     /// s; with `activity`, gives the number of decays
     pub duration: Option<f64>,
+    /// Deposit the energy of β particles and conversion/Auger electrons at the
+    /// decay point (`beta = local`, default) or ignore it (`beta = off`).
+    pub electrons_local: bool,
 }
 
 #[derive(Debug, Clone)]
@@ -798,6 +801,7 @@ fn read_source(s: &Section, index: usize, n: &mut Notes) -> Option<Source> {
             None
         }
     };
+    let electrons_local = r.choice("beta", &["local", "off"], "local", n) == "local";
     let activity = r.quantity("activity", Kind::Activity, n).map(|q| q.to("Bq"));
     let duration = r.quantity("duration", Kind::Time, n).map(|q| q.to("s"));
     if duration.is_some() && activity.is_none() {
@@ -811,6 +815,7 @@ fn read_source(s: &Section, index: usize, n: &mut Notes) -> Option<Source> {
         placement: placement?,
         activity,
         duration,
+        electrons_local,
     })
 }
 

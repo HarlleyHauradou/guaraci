@@ -51,4 +51,28 @@ A extensão `.gci` é opcional. A saída mostra:
 - os valores padrão aplicados;
 - os números escritos sem unidade e a unidade assumida para cada um.
 
-Para rodar: `guaraci run tireoide` **(em desenvolvimento)**.
+Para rodar:
+
+```bash
+guaraci run tireoide
+```
+
+Na primeira execução, o Guaraci baixa os dados do ENDF/B-VIII.0 (cerca de 50 MB, só
+uma vez). Depois ele mostra o progresso e, ao final, um resumo:
+
+```
+Done: 10000000 histories in 4s (2.594e6 histories/s, 4 threads)
+  probe dose: maximum dose 8.2042e-3 Gy/s ± 1.18 % (among the 10564 voxels with uncertainty ≤ 10 %)
+  probe organs:
+    thyroid          7.7560e-3 Gy/s  ± 4.1e-3 %
+    neck             2.4018e-5 Gy/s  ± 0.05 %
+```
+
+Como a fonte tem `activity`, os resultados são **taxas de dose** (Gy/s). Os
+arquivos ficam em `tireoide_results/` (veja o [capítulo 10](10-resultados.md)).
+
+Para um teste rápido, reduza as histórias sem editar o arquivo:
+
+```bash
+guaraci run tireoide --histories 1e5
+```

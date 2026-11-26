@@ -10,12 +10,23 @@ Focused initially on medical physics and nuclear medicine.
 
 Early development. Available so far:
 
-- `guaraci check <input>` — reads a `.gci` input, reports every problem with a pointer into the text, and describes the simulation (geometry tree, materials, nuclide emissions, defaults applied).
-- `guaraci data install endfb8` — downloads ENDF/B-VIII.0 (photo-atomic and decay data) from NNDC, verifies its SHA-256 and converts it locally.
-- `guaraci info units | materials | nuclide <name>`.
-- A database of 372 materials from PNNL-15870 Rev. 1.
+- **Photon transport on CPU** (multi-threaded): photoelectric effect, Compton scattering (Klein-Nishina with incoherent scattering function), Rayleigh scattering (form factors) and pair production. Electrons deposit their energy locally.
+- **Probes**: 3D dose grids (MetaImage `.mhd`), dose in volumes, photon fluence spectra — each with its statistical uncertainty.
+- **Radionuclide sources** from ENDF/B-VIII.0 decay data (3821 nuclides), user-defined photon lines, activity and duration.
+- **Validation**: μ/ρ within 0.4 % of NIST XCOM (10 keV–10 MeV), uncollided fluence within 0.25 % of the analytic value, exact energy conservation, results independent of the number of threads.
+- `guaraci check` explains what an input describes; `guaraci run` writes a readable report and a copy of the inputs.
+- Nuclear data downloaded from the official sources on first use (`guaraci data install endfb8`).
+- 372 materials from PNNL-15870 Rev. 1.
 
-Coming next: photon transport on CPU (photoelectric, Compton, Rayleigh, pair production), dose grids with uncertainty, then a CUDA backend and a desktop interface.
+Coming next: S-value benchmarks, voxelised phantoms, CUDA backend, electron transport, desktop interface.
+
+## Quick start
+
+```bash
+cargo install --path crates/guaraci-cli
+guaraci check examples/thyroid_i131
+guaraci run examples/thyroid_i131
+```
 
 ## Manual
 

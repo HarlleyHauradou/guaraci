@@ -14,3 +14,6 @@ guaraci-input.workspace = true
 guaraci-data.workspace = true
 guaraci-units.workspace = true
 clap = { version = "4", features = ["derive"] }
+guaraci-core.workspace = true
+guaraci-cpu.workspace = true
+ctrlc = "3"

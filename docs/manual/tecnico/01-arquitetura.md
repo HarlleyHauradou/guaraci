@@ -7,9 +7,9 @@ O Guaraci é um *workspace* Cargo com um crate por responsabilidade:
 | `guaraci-units` | grandezas físicas com dimensão; tabela de unidades | pronto |
 | `guaraci-input` | linguagem `.gci`: parser, `include`, diagnósticos, configuração tipada | pronto |
 | `guaraci-data` | leitor ENDF-6, download, conversão e cache de dados | pronto |
-| `guaraci-cli` | o programa `guaraci` | parcial |
-| `guaraci-core` | física, geometria, fontes, probes (sem E/S) | em desenvolvimento |
-| `guaraci-cpu` | motor paralelo em CPU | em desenvolvimento |
+| `guaraci-cli` | o programa `guaraci` | pronto |
+| `guaraci-core` | física, geometria, fontes, probes (sem E/S) | pronto (fótons) |
+| `guaraci-cpu` | motor paralelo em CPU | pronto |
 | `guaraci-cuda` | motor em GPU (CUDA) | planejado |
 | `guaraci-gui` | interface gráfica | planejado |
 

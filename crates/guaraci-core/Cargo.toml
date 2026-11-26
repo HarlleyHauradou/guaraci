@@ -1,0 +1,10 @@
+[package]
+name = "guaraci-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Guaraci physics, geometry, sources and probes (no I/O)"
+
+[dependencies]
+guaraci-input.workspace = true
+guaraci-data.workspace = true

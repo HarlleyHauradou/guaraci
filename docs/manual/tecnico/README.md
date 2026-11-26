@@ -5,5 +5,6 @@
 3. [Leitura da entrada](03-entrada.md)
 4. [Dados atômicos e nucleares](04-dados.md)
 5. [Banco de materiais](05-materiais.md)
-6. Física de fótons **(em desenvolvimento)**
-7. Validação **(em desenvolvimento)**
+6. [Física de fótons](06-fisica.md)
+7. [Motor de transporte e estatística](07-motor.md)
+8. [Validação](08-validacao.md)
