@@ -1,0 +1,95 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: pt_BR\n"
+
+msgid "1. Architecture"
+msgstr "1\\. Arquitetura"
+
+msgid "Guaraci is a Cargo *workspace* with one crate per responsibility:"
+msgstr "O Guaraci é um *workspace* Cargo com um crate por responsabilidade:"
+
+msgid "Crate"
+msgstr ""
+
+msgid "Role"
+msgstr "Papel"
+
+msgid "Status"
+msgstr "Situação"
+
+msgid "`guaraci-units`"
+msgstr ""
+
+msgid "physical quantities with dimensions; unit table"
+msgstr "grandezas físicas com dimensão; tabela de unidades"
+
+msgid "done"
+msgstr "pronto"
+
+msgid "`guaraci-input`"
+msgstr ""
+
+msgid "the `.gci` language: parser, `include`, diagnostics, typed configuration"
+msgstr "a linguagem `.gci`: parser, `include`, diagnósticos, configuração tipada"
+
+msgid "`guaraci-data`"
+msgstr ""
+
+msgid "ENDF-6 reader, download, conversion and cache of the data"
+msgstr "leitor ENDF-6, download, conversão e cache dos dados"
+
+msgid "`guaraci-cli`"
+msgstr ""
+
+msgid "the `guaraci` program"
+msgstr "o programa `guaraci`"
+
+msgid "`guaraci-core`"
+msgstr ""
+
+msgid "physics, geometry, sources, probes (no I/O)"
+msgstr "física, geometria, fontes, probes (sem E/S)"
+
+msgid "done (photons)"
+msgstr "pronto (fótons)"
+
+msgid "`guaraci-cpu`"
+msgstr ""
+
+msgid "parallel CPU engine"
+msgstr "motor paralelo em CPU"
+
+msgid "`guaraci-cuda`"
+msgstr ""
+
+msgid "GPU engine (CUDA)"
+msgstr "motor em GPU (CUDA)"
+
+msgid "planned"
+msgstr "planejado"
+
+msgid "`guaraci-gui`"
+msgstr ""
+
+msgid "graphical interface"
+msgstr "interface gráfica"
+
+msgid "Flow"
+msgstr "Fluxo"
+
+msgid "The `Config` uses fixed units: cm, MeV, g/cm³, s, Bq, rad."
+msgstr "A `Config` usa unidades fixas: cm, MeV, g/cm³, s, Bq, rad."
+
+msgid "The `Problem` is a flat structure, without pointers, that can be copied as is to the GPU. Both backends implement the same trait."
+msgstr "O `Problem` é uma estrutura \"achatada\", sem ponteiros, que pode ser copiada como está para a GPU. Os dois backends implementam o mesmo trait."
+
+msgid "Conventions"
+msgstr "Convenções"
+
+msgid "No third-party data is embedded in the code, except the material database generated from PNNL-15870 Rev. 1 (a project decision) and the element symbols."
+msgstr "Nenhum dado de terceiros é embutido no código, exceto o banco de materiais gerado do PNNL-15870 Rev. 1 (decisão do projeto) e os símbolos dos elementos."
+
+msgid "Every message to the user that refers to the input carries the position in the text (`Span`)."
+msgstr "Toda mensagem ao usuário que se refere à entrada carrega a posição no texto (`Span`)."
+

@@ -1,0 +1,143 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: pt_BR\n"
+
+msgid "10. Results"
+msgstr "10\\. Resultados"
+
+msgid "`guaraci run thyroid` creates the folder `thyroid_results/` with:"
+msgstr "`guaraci run thyroid` cria a pasta `thyroid_results/` com:"
+
+msgid "File"
+msgstr "Arquivo"
+
+msgid "Contents"
+msgstr "Conteúdo"
+
+msgid "`report.txt`"
+msgstr ""
+
+msgid "complete report of the simulation"
+msgstr "relatório completo da simulação"
+
+msgid "`input/`"
+msgstr ""
+
+msgid "copy of every input file used"
+msgstr "cópia de todos os arquivos de entrada usados"
+
+msgid "`<probe>.mhd` + `.raw`"
+msgstr ""
+
+msgid "dose map (`dose_grid`)"
+msgstr "mapa de dose (`dose_grid`)"
+
+msgid "`<probe>_uncertainty.mhd` + `.raw`"
+msgstr ""
+
+msgid "relative uncertainty (1σ) of every voxel"
+msgstr "incerteza relativa (1σ) de cada voxel"
+
+msgid "`<probe>.csv`"
+msgstr ""
+
+msgid "`volume_dose` and `spectrum`"
+msgstr "`volume_dose` e `spectrum`"
+
+msgid "Units of the results"
+msgstr "Unidades dos resultados"
+
+msgid "The unit depends on what the input says about the activity:"
+msgstr "A unidade depende do que a entrada diz sobre a atividade:"
+
+msgid "Sources"
+msgstr "Fontes"
+
+msgid "Result"
+msgstr "Resultado"
+
+msgid "Dose unit"
+msgstr "Unidade da dose"
+
+msgid "no `activity`"
+msgstr "sem `activity`"
+
+msgid "per decay"
+msgstr "por decaimento"
+
+msgid "Gy per decay"
+msgstr "Gy por decaimento"
+
+msgid "with `activity`"
+msgstr "com `activity`"
+
+msgid "rate"
+msgstr "taxa"
+
+msgid "Gy/s"
+msgstr ""
+
+msgid "with `activity` and `duration`"
+msgstr "com `activity` e `duration`"
+
+msgid "total"
+msgstr ""
+
+msgid "Gy"
+msgstr ""
+
+msgid "With several sources, each simulated decay comes from a source chosen in proportion to its activity (or activity × duration). Either every source has an `activity`, or none has."
+msgstr "Com várias fontes, cada decaimento simulado vem de uma fonte escolhida na proporção da sua atividade (ou atividade × duração). Ou todas as fontes têm `activity`, ou nenhuma tem."
+
+msgid "Uncertainty"
+msgstr "Incerteza"
+
+msgid "The histories are split into `batches` batches (default 10). The uncertainty is the standard deviation of the mean between batches (1σ)."
+msgstr "As histórias são divididas em `batches` lotes (padrão 10). A incerteza é o desvio padrão da média entre os lotes (1σ)."
+
+msgid "**Values above ~5 % call for more histories.** The uncertainty falls as 1/√N: 4× more histories halve it."
+msgstr "**Valores acima de ~5 % pedem mais histórias.** A incerteza cai com 1/√N: 4× mais histórias a reduzem à metade."
+
+msgid "**For dose maps, the summary shows the maximum only among the voxels with an uncertainty ≤ 10 %.** The raw maximum is almost always a voxel with very little mass and a single deposit."
+msgstr "**Nos mapas de dose, o resumo mostra o máximo só entre os voxels com incerteza ≤ 10 %.** O máximo bruto quase sempre é um voxel com muito pouca massa e um único depósito."
+
+msgid "The report"
+msgstr "O relatório"
+
+msgid "`report.txt` is meant to be read as a lab notebook:"
+msgstr "O `report.txt` foi feito para ser lido como um caderno de laboratório:"
+
+msgid "the whole simulation as Guaraci understood it (the same output as `check`);"
+msgstr "a simulação inteira como o Guaraci a entendeu (a mesma saída do `check`);"
+
+msgid "the origin of the data, with SHA-256 and installation date;"
+msgstr "a origem dos dados, com SHA-256 e data de instalação;"
+
+msgid "the normalisation used;"
+msgstr "a normalização usada;"
+
+msgid "the **energy balance**: emitted = deposited + escaped; the difference should be of the order of 10⁻¹⁰ % or less;"
+msgstr "o **balanço de energia**: emitida = depositada + escapada; a diferença deve ser da ordem de 10⁻¹⁰ % ou menor;"
+
+msgid "the results, the performance (histories/s) and the limitations of the version."
+msgstr "os resultados, o desempenho (histórias/s) e as limitações da versão."
+
+msgid "Opening the `.mhd` maps"
+msgstr "Abrir os mapas `.mhd`"
+
+msgid "**3D Slicer:** *File → Add Data*, choose the `.mhd`."
+msgstr "**3D Slicer:** *File → Add Data*, escolha o `.mhd`."
+
+msgid "**ImageJ/Fiji:** *File → Import → MHD/MHA* (or the *MetaImage* plugin)."
+msgstr "**ImageJ/Fiji:** *File → Import → MHD/MHA* (ou o plugin *MetaImage*)."
+
+msgid "**Amide:** *File → Import File (generic)*."
+msgstr ""
+
+msgid "**Python:**"
+msgstr ""
+
+msgid "Distances in the `.mhd` are in **mm**, as these programs expect, and the `Offset` is the centre of the first voxel."
+msgstr "As distâncias no `.mhd` estão em **mm**, como esses programas esperam, e o `Offset` é o centro do primeiro voxel."
+

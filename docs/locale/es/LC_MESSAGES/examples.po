@@ -1,0 +1,32 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: es\n"
+
+msgid "Examples"
+msgstr "Ejemplos"
+
+msgid "The files are in the [`examples/`](https://github.com/HarlleyHauradou/guaraci/tree/main/examples) folder of the repository."
+msgstr "Los archivos están en la carpeta [`examples/`](https://github.com/HarlleyHauradou/guaraci/tree/main/examples) del repositorio."
+
+msgid "I-131 in the thyroid"
+msgstr "I-131 en la tiroides"
+
+msgid "[`examples/thyroid_i131.gci`](https://github.com/HarlleyHauradou/guaraci/blob/main/examples/thyroid_i131.gci): an ellipsoidal thyroid inside a cylindrical neck of soft tissue, with 3.7 GBq of I-131."
+msgstr "[`examples/thyroid_i131.gci`](https://github.com/HarlleyHauradou/guaraci/blob/main/examples/thyroid_i131.gci): una tiroides elipsoidal dentro de un cuello cilíndrico de tejido blando, con 3,7 GBq de I-131."
+
+msgid "Result with 10⁷ decays: mean dose rate in the thyroid of 7.756×10⁻³ Gy/s, which is what the hand calculation gives: 3.7 GBq × 0.2055 MeV per decay ÷ 15.7 g."
+msgstr "Resultado con 10⁷ decaimientos: tasa de dosis media en la tiroides de 7,756×10⁻³ Gy/s, que es lo que da el cálculo a mano: 3,7 GBq × 0,2055 MeV por decaimiento ÷ 15,7 g."
+
+msgid "Tc-99m lesion in a water phantom"
+msgstr "Lesión de Tc-99m en un maniquí de agua"
+
+msgid "[`examples/tc99m_lesion.gci`](https://github.com/HarlleyHauradou/guaraci/blob/main/examples/tc99m_lesion.gci): a sphere of 15 mm radius in a water cylinder, with results per decay. It includes a fluence spectrum showing the 140.5 keV peak and the Compton continuum."
+msgstr "[`examples/tc99m_lesion.gci`](https://github.com/HarlleyHauradou/guaraci/blob/main/examples/tc99m_lesion.gci): una esfera de 15 mm de radio en un cilindro de agua, con resultados por decaimiento. Incluye un espectro de fluencia que muestra el pico de 140,5 keV y el continuo Compton."
+
+msgid "I-131 vial: Guaraci vs GATE 10 vs MCNPX"
+msgstr "Vial con I-131: Guaraci frente a GATE 10 y MCNPX"
+
+msgid "[`validation/vial_i131/`](https://github.com/HarlleyHauradou/guaraci/tree/main/validation/vial_i131): a 10 mL vial of water with I-131, photon transport only. A generator writes three equivalent inputs (Guaraci, GATE 10 and MCNPX), and a script compares the results."
+msgstr "[`validation/vial_i131/`](https://github.com/HarlleyHauradou/guaraci/tree/main/validation/vial_i131): un vial de 10 mL de agua con I-131, solo transporte de fotones. Un generador escribe tres entradas equivalentes (Guaraci, GATE 10 y MCNPX), y un script compara los resultados."
+

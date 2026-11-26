@@ -1,0 +1,71 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: pt_BR\n"
+
+msgid "Volume III — Graphical Interface"
+msgstr "Volume III — Interface Gráfica"
+
+msgid "In development The graphical interface does not exist yet. This page describes what it will do and how this volume will be organised. Everything the interface does can also be done from the terminal, with the commands of [Volume II](../volume-2/index.md)."
+msgstr "Em desenvolvimento A interface gráfica ainda não existe. Esta página descreve o que ela vai fazer e como este volume será organizado. Tudo o que a interface faz também pode ser feito pelo terminal, com os comandos do [Volume II](../volume-2/index.md)."
+
+msgid "The interface is a desktop program written in Rust (egui), inspired by Flair for FLUKA. It works **on the same `.gci` files**: nothing is hidden inside the interface, and the input file remains the lab notebook of the simulation."
+msgstr "A interface é um programa desktop escrito em Rust (egui), inspirado no Flair do FLUKA. Ela trabalha **sobre os mesmos arquivos `.gci`**: nada fica escondido dentro da interface, e o arquivo de entrada continua sendo o caderno de laboratório da simulação."
+
+msgid "Planned chapters"
+msgstr "Capítulos previstos"
+
+msgid "**Overview:** windows, projects and files."
+msgstr "**Visão geral:** janelas, projetos e arquivos."
+
+msgid "**Editor:**"
+msgstr ""
+
+msgid "syntax highlighting of `.gci`;"
+msgstr "destaque de sintaxe do `.gci`;"
+
+msgid "checking while typing, with the same messages as `guaraci check`;"
+msgstr "verificação enquanto se digita, com as mesmas mensagens do `guaraci check`;"
+
+msgid "completion of material, volume and nuclide names."
+msgstr "completar nomes de materiais, volumes e nuclídeos."
+
+msgid "**Geometry:**"
+msgstr "**Geometria:**"
+
+msgid "2D slices (axial, coronal, sagittal) coloured by material;"
+msgstr "cortes 2D (axial, coronal, sagital) coloridos por material;"
+
+msgid "3D view;"
+msgstr "vista 3D;"
+
+msgid "clicking a volume jumps to its section in the editor."
+msgstr "clicar num volume leva à seção dele no editor."
+
+msgid "**Materials and nuclides:** browsers of the material database and of the decay data (lines, half-life, mean energies)."
+msgstr "**Materiais e nuclídeos:** navegadores do banco de materiais e dos dados de decaimento (linhas, meia-vida, energias médias)."
+
+msgid "**Running:** start a simulation, follow its progress, read the log and stop it."
+msgstr "**Execução:** iniciar uma simulação, acompanhar o progresso, ler o registro e interrompê-la."
+
+msgid "**Results:**"
+msgstr "**Resultados:**"
+
+msgid "dose map over the geometry, with a colour scale;"
+msgstr "mapa de dose sobre a geometria, com escala de cores;"
+
+msgid "dose profiles;"
+msgstr "perfis de dose;"
+
+msgid "dose-volume histograms (DVH);"
+msgstr "histogramas dose-volume (DVH);"
+
+msgid "uncertainty map;"
+msgstr "mapa de incerteza;"
+
+msgid "spectra."
+msgstr "espectros."
+
+msgid "**Export:** figures, tables and reports."
+msgstr "**Exportação:** figuras, tabelas e relatórios."
+

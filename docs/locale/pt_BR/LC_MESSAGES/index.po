@@ -1,0 +1,134 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: pt_BR\n"
+
+msgid "Guaraci"
+msgstr ""
+
+msgid "**Monte Carlo radiation transport on CPU and GPU**, focused initially on medical physics and nuclear medicine."
+msgstr "**Transporte de radiação por Monte Carlo em CPU e GPU**, com foco inicial em física médica e medicina nuclear."
+
+msgid "*Guaraci is the Sun in Tupi mythology — the source of the radiation that gives life to everything.*"
+msgstr "*Guaraci é o Sol na mitologia tupi — a fonte da radiação que dá vida a tudo.*"
+
+msgid "Install"
+msgstr "Instalar"
+
+msgid "Build with Cargo. The nuclear data (ENDF/B-VIII.0) is downloaded from the official sources on the first simulation."
+msgstr "Compile com o Cargo. Os dados nucleares (ENDF/B-VIII.0) são baixados das fontes oficiais na primeira simulação."
+
+msgid "First simulation"
+msgstr "Primeira simulação"
+
+msgid "I-131 in the thyroid in 30 readable lines, from the input file to the dose map."
+msgstr "I-131 na tireoide em 30 linhas legíveis, do arquivo de entrada ao mapa de dose."
+
+msgid "Volume II — User Manual"
+msgstr "Volume II — Manual do Usuário"
+
+msgid "The `.gci` language, materials, sources, probes, commands and results."
+msgstr "A linguagem `.gci`, materiais, fontes, probes, comandos e resultados."
+
+msgid "Volume I — Technical Manual"
+msgstr "Volume I — Manual Técnico"
+
+msgid "Physics, nuclear data, transport engine, statistics and validation."
+msgstr "Física, dados nucleares, motor de transporte, estatística e validação."
+
+msgid "An input file"
+msgstr "Um arquivo de entrada"
+
+msgid "What works today"
+msgstr "O que já funciona"
+
+msgid "**Physics**"
+msgstr "**Física**"
+
+msgid "photoelectric effect, Compton (Klein-Nishina with S(x,Z)), Rayleigh (form factors), pair production"
+msgstr "efeito fotoelétrico, Compton (Klein-Nishina com S(x,Z)), Rayleigh (fatores de forma), produção de pares"
+
+msgid "**Sources**"
+msgstr "**Fontes**"
+
+msgid "3821 nuclides of ENDF/B-VIII.0, user-defined lines, activity and duration"
+msgstr "3821 nuclídeos do ENDF/B-VIII.0, linhas definidas pelo usuário, atividade e duração"
+
+msgid "**Geometry**"
+msgstr "**Geometria**"
+
+msgid "nested boxes, spheres, cylinders and ellipsoids, with overlap checks"
+msgstr "caixas, esferas, cilindros e elipsoides aninhados, com verificação de sobreposição"
+
+msgid "**Materials**"
+msgstr "**Materiais**"
+
+msgid "372 materials of PNNL-15870 Rev. 1, chemical formulas and custom compositions"
+msgstr "372 materiais do PNNL-15870 Rev. 1, fórmulas químicas e composições próprias"
+
+msgid "**Probes**"
+msgstr ""
+
+msgid "3D dose maps (`.mhd`), dose in volumes and fluence spectra, all with uncertainties"
+msgstr "mapas de dose 3D (`.mhd`), dose em volumes e espectros de fluência, todos com incerteza"
+
+msgid "**Performance**"
+msgstr "**Desempenho**"
+
+msgid "millions of histories per second on multi-core CPUs; identical results with any number of threads"
+msgstr "milhões de histórias por segundo em CPUs multinúcleo; resultados idênticos com qualquer número de threads"
+
+msgid "**Validation**"
+msgstr "**Validação**"
+
+msgid "μ/ρ within 0.4 % of NIST XCOM; absorbed fractions in 231 spheres compared with Stabin & Konijnenberg (2000)"
+msgstr "μ/ρ a menos de 0,4 % do NIST XCOM; frações absorvidas em 231 esferas comparadas com Stabin & Konijnenberg (2000)"
+
+msgid "In development: voxelised phantoms (CT/DICOM), electron transport, CUDA backend and the graphical interface ([Volume III](volume-3/index.md))."
+msgstr "Em desenvolvimento: fantomas voxelizados (CT/DICOM), transporte de elétrons, backend CUDA e a interface gráfica ([Volume III](volume-3/index.md))."
+
+msgid "The three volumes"
+msgstr "Os três volumes"
+
+msgid "Volume"
+msgstr ""
+
+msgid "For whom"
+msgstr "Para quem"
+
+msgid "[**I — Technical Manual**](volume-1/index.md)"
+msgstr "[**I — Manual Técnico**](volume-1/index.md)"
+
+msgid "those who want to know *how* Guaraci computes: theory, data, methods and validation"
+msgstr "quem quer saber *como* o Guaraci calcula: teoria, dados, métodos e validação"
+
+msgid "[**II — User Manual**](volume-2/index.md)"
+msgstr "[**II — Manual do Usuário**](volume-2/index.md)"
+
+msgid "those who set up and run simulations; this is where to learn"
+msgstr "quem monta e roda simulações; é por aqui que se aprende"
+
+msgid "[**III — Graphical Interface**](volume-3/index.md)"
+msgstr "[**III — Interface Gráfica**](volume-3/index.md)"
+
+msgid "users of the desktop program (editor, geometry and results viewers)"
+msgstr "quem usa o programa desktop (editor, visualização da geometria e dos resultados)"
+
+msgid "Vol. I · Technical"
+msgstr "Vol. I · Técnico"
+
+msgid "Vol. II · User"
+msgstr "Vol. II · Usuário"
+
+msgid "Vol. III · Interface"
+msgstr ""
+
+msgid "Examples"
+msgstr "Exemplos"
+
+msgid "Development"
+msgstr "Desenvolvimento"
+
+msgid "Philosophy"
+msgstr "Filosofia"
+

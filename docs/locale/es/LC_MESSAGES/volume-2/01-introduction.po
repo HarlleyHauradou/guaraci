@@ -1,0 +1,47 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: es\n"
+
+msgid "1. Introduction"
+msgstr "1\\. Introducción"
+
+msgid "Guaraci is a Monte Carlo code for radiation transport in matter, aimed first at medical physics and nuclear medicine. Like MCNP and GATE, it runs from the terminal with input files (`.gci`), and it can compute on CPU or GPU."
+msgstr "Guaraci es un código de Monte Carlo para el transporte de radiación en la materia, orientado inicialmente a la física médica y la medicina nuclear. Como MCNP y GATE, se ejecuta desde la terminal con archivos de entrada (`.gci`) y puede calcular en CPU o en GPU."
+
+msgid "What this version does"
+msgstr "Qué hace esta versión"
+
+msgid "Transports photons on the CPU, in parallel: photoelectric effect, Compton, Rayleigh and pair production (`guaraci run`)."
+msgstr "Transporta fotones en la CPU, en paralelo: efecto fotoeléctrico, Compton, Rayleigh y producción de pares (`guaraci run`)."
+
+msgid "Scores 3D dose grids, dose in volumes and fluence spectra, each with its statistical uncertainty."
+msgstr "Calcula mallas de dosis 3D, dosis en volúmenes y espectros de fluencia, cada uno con su incertidumbre estadística."
+
+msgid "Reads and checks input files, with error messages that point at the line and suggest the fix (`guaraci check`)."
+msgstr "Lee y verifica los archivos de entrada, con mensajes de error que señalan la línea y sugieren la corrección (`guaraci check`)."
+
+msgid "Downloads, verifies and converts the data libraries (ENDF/B-VIII.0)."
+msgstr "Descarga, verifica y convierte las bibliotecas de datos (ENDF/B-VIII.0)."
+
+msgid "Ships a database of 372 materials (PNNL-15870 Rev. 1)."
+msgstr "Incluye una base de 372 materiales (PNNL-15870 Rev. 1)."
+
+msgid "Knows the decay data of 3821 nuclides."
+msgstr "Conoce los datos de decaimiento de 3821 nucleidos."
+
+msgid "Electrons are not transported yet: they deposit their energy where they are created. The GPU backend is **in development**."
+msgstr "Los electrones todavía no se transportan: depositan su energía donde se crean. El backend en GPU está **en desarrollo**."
+
+msgid "Principles"
+msgstr "Principios"
+
+msgid "Guaraci follows the [project philosophy](../philosophy.md). Two practical rules come from it:"
+msgstr "Guaraci sigue la [filosofía del proyecto](../philosophy.md). De ella se derivan dos reglas prácticas:"
+
+msgid "**Everything you do not write has a known default value**, and `guaraci check` lists every one of them."
+msgstr "**Todo lo que usted no escribe tiene un valor por defecto conocido**, y `guaraci check` los enumera uno por uno."
+
+msgid "**Nothing is guessed.** An ambiguous name or unit is an error, with a suggestion."
+msgstr "**Nada se adivina.** Un nombre o una unidad ambigua es un error, con una sugerencia."
+

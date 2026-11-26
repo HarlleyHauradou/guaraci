@@ -1,0 +1,128 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: pt_BR\n"
+
+msgid "Development"
+msgstr "Desenvolvimento"
+
+msgid "Code organisation"
+msgstr "Organização do código"
+
+msgid "Folder"
+msgstr "Pasta"
+
+msgid "Contents"
+msgstr "Conteúdo"
+
+msgid "`crates/guaraci-units`"
+msgstr ""
+
+msgid "physical quantities and units"
+msgstr "grandezas físicas e unidades"
+
+msgid "`crates/guaraci-input`"
+msgstr ""
+
+msgid "the `.gci` language"
+msgstr "a linguagem `.gci`"
+
+msgid "`crates/guaraci-data`"
+msgstr ""
+
+msgid "ENDF-6 reader, download and cache of the data"
+msgstr "leitor ENDF-6, download e cache dos dados"
+
+msgid "`crates/guaraci-core`"
+msgstr ""
+
+msgid "physics, geometry, sources and probes"
+msgstr "física, geometria, fontes e probes"
+
+msgid "`crates/guaraci-cpu`"
+msgstr ""
+
+msgid "parallel CPU engine"
+msgstr "motor paralelo em CPU"
+
+msgid "`crates/guaraci-cli`"
+msgstr ""
+
+msgid "the `guaraci` program"
+msgstr "o programa `guaraci`"
+
+msgid "`data/`"
+msgstr ""
+
+msgid "material database (`materials.gci`)"
+msgstr "banco de materiais (`materials.gci`)"
+
+msgid "`docs/`"
+msgstr ""
+
+msgid "this website (Sphinx, PyData Sphinx Theme, MyST Markdown)"
+msgstr "este site (Sphinx, PyData Sphinx Theme, MyST Markdown)"
+
+msgid "`examples/`"
+msgstr ""
+
+msgid "example input files"
+msgstr "arquivos de entrada de exemplo"
+
+msgid "`tools/`"
+msgstr ""
+
+msgid "generators (material database)"
+msgstr "geradores (banco de materiais)"
+
+msgid "`validation/`"
+msgstr ""
+
+msgid "benchmarks and comparisons with other codes"
+msgstr "benchmarks e comparações com outros códigos"
+
+msgid "The details of each part are in [Volume I](volume-1/01-architecture.md)."
+msgstr "Os detalhes de cada parte estão no [Volume I](volume-1/01-architecture.md)."
+
+msgid "Building and testing"
+msgstr "Compilar e testar"
+
+msgid "Tests that need the real nuclear data are skipped unless this variable is set:"
+msgstr "Os testes que precisam dos dados nucleares reais são pulados se esta variável não estiver definida:"
+
+msgid "The complete sphere benchmark of Stabin & Konijnenberg (231 cases) takes about 1.5 minutes on 4 cores:"
+msgstr "O benchmark completo das esferas de Stabin & Konijnenberg (231 casos) leva cerca de 1,5 minuto em 4 núcleos:"
+
+msgid "Documentation"
+msgstr "Documentação"
+
+msgid "The website is built from the `docs/` folder with Sphinx (PyData Sphinx Theme; pages in Markdown with MyST) and published on GitHub Pages, in the three languages, at every push to `main` (workflow `.github/workflows/docs.yml`). To view it locally:"
+msgstr "O site é gerado a partir da pasta `docs/` com o Sphinx (PyData Sphinx Theme; páginas em Markdown com MyST) e publicado no GitHub Pages, nos três idiomas, a cada push na `main` (workflow `.github/workflows/docs.yml`). Para ver localmente:"
+
+msgid "Then open `docs/_build/html/index.html` in a browser."
+msgstr "Depois, abra `docs/_build/html/index.html` num navegador."
+
+msgid "English is the source language. The Portuguese and Spanish versions are translations kept as gettext files in `docs/locale/` (see [Translations](#translations)). To build another language, add `-D language=pt_BR` or `-D language=es`."
+msgstr "O inglês é o idioma-fonte. As versões em português e espanhol são traduções guardadas como arquivos gettext em `docs/locale/` (veja [Traduções](#translations)). Para gerar outro idioma, acrescente `-D language=pt_BR` ou `-D language=es`."
+
+msgid "Translations"
+msgstr "Traduções"
+
+msgid "When the English text changes, `sphinx-intl update` marks the affected entries as *fuzzy*, so it is always clear what must be revised."
+msgstr "Quando o texto em inglês muda, o `sphinx-intl update` marca as entradas afetadas como *fuzzy*, então sempre fica claro o que precisa ser revisto."
+
+msgid "Project rules"
+msgstr "Regras do projeto"
+
+msgid "No third-party data is redistributed with the code; the libraries are downloaded from the official sources. The exception, by project decision, is the material database generated from PNNL-15870 Rev. 1."
+msgstr "Nenhum dado de terceiros é redistribuído com o código; as bibliotecas são baixadas das fontes oficiais. A exceção, por decisão do projeto, é o banco de materiais gerado do PNNL-15870 Rev. 1."
+
+msgid "Code, messages, outputs, documentation and commits are written in English."
+msgstr "Código, mensagens, saídas, documentação e commits são escritos em inglês."
+
+msgid "Every new feature comes with tests and with the corresponding chapter of the manual."
+msgstr "Toda funcionalidade nova vem com testes e com o capítulo correspondente do manual."
+
+msgid "Every error message points at the line of the input and suggests the fix ([philosophy](philosophy.md), item 3)."
+msgstr "Toda mensagem de erro aponta a linha da entrada e sugere a correção ([filosofia](philosophy.md), item 3)."
+

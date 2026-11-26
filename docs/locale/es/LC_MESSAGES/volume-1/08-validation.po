@@ -1,0 +1,524 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: es\n"
+
+msgid "8. Validation"
+msgstr "8\\. Validación"
+
+msgid "The tests of `crates/guaraci-cpu/tests/benchmarks.rs` run with `GUARACI_TEST_DATA` pointing to a data folder where ENDF/B-VIII.0 is installed:"
+msgstr "Las pruebas de `crates/guaraci-cpu/tests/benchmarks.rs` se ejecutan con `GUARACI_TEST_DATA` apuntando a una carpeta de datos con ENDF/B-VIII.0 instalado:"
+
+msgid "Attenuation coefficients vs NIST XCOM"
+msgstr "Coeficientes de atenuación frente a NIST XCOM"
+
+msgid "Total μ/ρ with coherent scattering (cm²/g), computed from the material tables (ENDF/B-VIII.0 and PNNL-15870 Rev. 1 compositions):"
+msgstr "μ/ρ total con dispersión coherente (cm²/g), calculado a partir de las tablas de los materiales (ENDF/B-VIII.0 y composiciones de PNNL-15870 Rev. 1):"
+
+msgid "Material"
+msgstr ""
+
+msgid "Energy"
+msgstr "Energía"
+
+msgid "Guaraci"
+msgstr ""
+
+msgid "XCOM"
+msgstr ""
+
+msgid "Deviation"
+msgstr "Desviación"
+
+msgid "Water"
+msgstr "Agua"
+
+msgid "10 keV"
+msgstr ""
+
+msgid "5.3312"
+msgstr "5,3312"
+
+msgid "5.329"
+msgstr "5,329"
+
+msgid "+0.04 %"
+msgstr "+0,04 %"
+
+msgid "20 keV"
+msgstr ""
+
+msgid "0.81073"
+msgstr "0,81073"
+
+msgid "0.8096"
+msgstr "0,8096"
+
+msgid "+0.14 %"
+msgstr "+0,14 %"
+
+msgid "30 keV"
+msgstr ""
+
+msgid "0.37609"
+msgstr "0,37609"
+
+msgid "0.3756"
+msgstr "0,3756"
+
+msgid "+0.13 %"
+msgstr "+0,13 %"
+
+msgid "60 keV"
+msgstr ""
+
+msgid "0.20583"
+msgstr "0,20583"
+
+msgid "0.2059"
+msgstr "0,2059"
+
+msgid "−0.03 %"
+msgstr "−0,03 %"
+
+msgid "100 keV"
+msgstr ""
+
+msgid "0.17064"
+msgstr "0,17064"
+
+msgid "0.1707"
+msgstr "0,1707"
+
+msgid "−0.04 %"
+msgstr "−0,04 %"
+
+msgid "200 keV"
+msgstr ""
+
+msgid "0.13698"
+msgstr "0,13698"
+
+msgid "0.1370"
+msgstr "0,1370"
+
+msgid "−0.02 %"
+msgstr "−0,02 %"
+
+msgid "500 keV"
+msgstr ""
+
+msgid "0.09681"
+msgstr "0,09681"
+
+msgid "0.09687"
+msgstr "0,09687"
+
+msgid "−0.06 %"
+msgstr "−0,06 %"
+
+msgid "1 MeV"
+msgstr ""
+
+msgid "0.07064"
+msgstr "0,07064"
+
+msgid "0.07072"
+msgstr "0,07072"
+
+msgid "−0.12 %"
+msgstr "−0,12 %"
+
+msgid "2 MeV"
+msgstr ""
+
+msgid "0.04933"
+msgstr "0,04933"
+
+msgid "0.04942"
+msgstr "0,04942"
+
+msgid "−0.19 %"
+msgstr "−0,19 %"
+
+msgid "10 MeV"
+msgstr ""
+
+msgid "0.02214"
+msgstr "0,02214"
+
+msgid "0.02219"
+msgstr "0,02219"
+
+msgid "−0.25 %"
+msgstr "−0,25 %"
+
+msgid "Lead"
+msgstr "Plomo"
+
+msgid "5.5500"
+msgstr "5,5500"
+
+msgid "5.549"
+msgstr "5,549"
+
+msgid "+0.02 %"
+msgstr "+0,02 %"
+
+msgid "0.16119"
+msgstr "0,16119"
+
+msgid "0.1614"
+msgstr "0,1614"
+
+msgid "−0.13 %"
+msgstr "−0,13 %"
+
+msgid "0.07076"
+msgstr "0,07076"
+
+msgid "0.07102"
+msgstr "0,07102"
+
+msgid "−0.36 %"
+msgstr "−0,36 %"
+
+msgid "Test tolerances: 2 % (water) and 3 % (lead)."
+msgstr "Tolerancias de la prueba: 2 % (agua) y 3 % (plomo)."
+
+msgid "Uncollided fluence"
+msgstr "Fluencia no colisionada"
+
+msgid "A 140.5 keV point source at the centre of a water sphere of 10 cm radius, with Rayleigh scattering off, surrounded by a vacuum shell from 10 to 10.5 cm. The fluence of photons between 140.5 and 140.6 keV in the shell must be e^(−μR) · ΔR / V_shell per emitted photon."
+msgstr "Una fuente puntual de 140,5 keV en el centro de una esfera de agua de 10 cm de radio, con la dispersión Rayleigh desactivada, rodeada por una capa de vacío de 10 a 10,5 cm. La fluencia de fotones entre 140,5 y 140,6 keV en la capa debe ser e^(−μR) · ΔR / V_capa por fotón emitido."
+
+msgid "Analytic"
+msgstr "Analítico"
+
+msgid "Statistical σ"
+msgstr "σ estadística"
+
+msgid "1.68266×10⁻⁴ cm⁻²"
+msgstr "1,68266×10⁻⁴ cm⁻²"
+
+msgid "1.67848×10⁻⁴ cm⁻²"
+msgstr "1,67848×10⁻⁴ cm⁻²"
+
+msgid "+0.25 %"
+msgstr "+0,25 %"
+
+msgid "0.16 %"
+msgstr "0,16 %"
+
+msgid "This test exercises the geometry, the tables, the sampling of the free path and the track-length estimator."
+msgstr "Esta prueba ejercita la geometría, las tablas, el muestreo del recorrido libre y el estimador de longitud de trayectoria."
+
+msgid "The bin must be narrow: a 140–141 keV bin also receives forward Compton-scattered photons (θ < 9°) and overestimates the fluence by ~2 %."
+msgstr "El bin debe ser estrecho: un bin de 140–141 keV también recibe fotones dispersados por Compton hacia delante (θ < 9°) y sobreestima la fluencia en ~2 %."
+
+msgid "Compton sampling vs Klein-Nishina"
+msgstr "Muestreo Compton frente a Klein-Nishina"
+
+msgid "For S(x) = Z (free electrons), the distribution of cos θ in 20 bins is compared with the numerically integrated Klein-Nishina formula. The χ² test (19 degrees of freedom) must stay below 43.8 (99.9 %) at 30 keV, 140.5 keV, 511 keV and 2 MeV."
+msgstr "Para S(x) = Z (electrones libres), la distribución de cos θ en 20 bins se compara con la fórmula de Klein-Nishina integrada numéricamente. La prueba χ² (19 grados de libertad) debe quedar por debajo de 43,8 (99,9 %) a 30 keV, 140,5 keV, 511 keV y 2 MeV."
+
+msgid "Energy conservation and thread independence"
+msgstr "Conservación de la energía e independencia de los hilos"
+
+msgid "With an F-18 source in tissue containing cortical bone:"
+msgstr "Con una fuente de F-18 en tejido que contiene hueso cortical:"
+
+msgid "emitted − deposited − escaped < 10⁻¹⁰ of the emitted energy;"
+msgstr "emitida − depositada − escapada < 10⁻¹⁰ de la energía emitida;"
+
+msgid "the results with 1 and with 4 threads are identical (relative difference < 10⁻¹²)."
+msgstr "los resultados con 1 y con 4 hilos son idénticos (diferencia relativa < 10⁻¹²)."
+
+msgid "Decay data"
+msgstr "Datos de decaimiento"
+
+msgid "See [chapter 4](04-data.md#reference-tests)."
+msgstr "Vea el [capítulo 4](04-data.md#reference-tests)."
+
+msgid "Absorbed fractions in spheres (Stabin and Konijnenberg, 2000)"
+msgstr "Fracciones absorbidas en esferas (Stabin y Konijnenberg, 2000)"
+
+msgid "**Reference:** M.G. Stabin and M.W. Konijnenberg, *Re-evaluation of absorbed fractions for photons and electrons in spheres of various sizes*, J Nucl Med 2000;41:149–160, Tables 2 and 3. Unit-density spheres with a uniform monoenergetic photon source, inside an infinite unit-density medium. The recommended values are the mean of EGS4 and MCNP4B."
+msgstr "**Referencia:** M.G. Stabin y M.W. Konijnenberg, *Re-evaluation of absorbed fractions for photons and electrons in spheres of various sizes*, J Nucl Med 2000;41:149–160, tablas 2 y 3. Esferas de densidad 1 con una fuente de fotones monoenergética uniforme, dentro de un medio infinito de densidad 1. Los valores recomendados son la media de EGS4 y MCNP4B."
+
+msgid "The 231 values (21 masses from 1 to 6000 g; 12 energies from 20 keV to 2.75 MeV) are in `validation/stabin2000_photons.csv`. Rows garbled by the text extraction of the PDF were transcribed from the page images, and every row was checked in two ways: the radius matches unit density, and the recommended value is the EGS4/MCNP mean."
+msgstr "Los 231 valores (21 masas de 1 a 6000 g; 12 energías de 20 keV a 2,75 MeV) están en `validation/stabin2000_photons.csv`. Las filas desordenadas por la extracción del texto del PDF se transcribieron de las imágenes de las páginas, y cada fila se verificó de dos maneras: el radio corresponde a densidad 1, y el valor recomendado es la media EGS4/MCNP."
+
+msgid "**Model in Guaraci:**"
+msgstr "**Modelo en Guaraci:**"
+
+msgid "the sphere and the medium are `Tissue_Soft_ICRP` (density 1);"
+msgstr "la esfera y el medio son de `Tissue_Soft_ICRP` (densidad 1);"
+
+msgid "the infinite medium is a 1 m cube;"
+msgstr "el medio infinito es un cubo de 1 m;"
+
+msgid "absorbed fraction = energy deposited in the sphere ÷ energy emitted;"
+msgstr "fracción absorbida = energía depositada en la esfera ÷ energía emitida;"
+
+msgid "5×10⁵ histories per case; the statistical uncertainty is typically below 1 %."
+msgstr "5×10⁵ historias por caso; la incertidumbre estadística suele ser menor del 1 %."
+
+msgid "The case-by-case results are in `validation/stabin2000_comparison.csv`. To reproduce:"
+msgstr "Los resultados caso por caso están en `validation/stabin2000_comparison.csv`. Para reproducirlos:"
+
+msgid "Deviation from the recommended value (selected masses):"
+msgstr "Desviación respecto al valor recomendado (masas seleccionadas):"
+
+msgid "1 g"
+msgstr ""
+
+msgid "10 g"
+msgstr ""
+
+msgid "100 g"
+msgstr ""
+
+msgid "1000 g"
+msgstr ""
+
+msgid "6000 g"
+msgstr ""
+
+msgid "+7.6 %"
+msgstr "+7,6 %"
+
+msgid "+5.0 %"
+msgstr "+5,0 %"
+
+msgid "+3.2 %"
+msgstr "+3,2 %"
+
+msgid "+1.4 %"
+msgstr "+1,4 %"
+
+msgid "+0.6 %"
+msgstr "+0,6 %"
+
+msgid "+8.8 %"
+msgstr "+8,8 %"
+
+msgid "+6.7 %"
+msgstr "+6,7 %"
+
+msgid "+4.9 %"
+msgstr "+4,9 %"
+
+msgid "+2.6 %"
+msgstr "+2,6 %"
+
+msgid "+1.0 %"
+msgstr "+1,0 %"
+
+msgid "40 keV"
+msgstr ""
+
+msgid "+6.0 %"
+msgstr "+6,0 %"
+
+msgid "+6.5 %"
+msgstr "+6,5 %"
+
+msgid "+6.8 %"
+msgstr "+6,8 %"
+
+msgid "+2.5 %"
+msgstr "+2,5 %"
+
+msgid "+0.8 %"
+msgstr "+0,8 %"
+
+msgid "+3.5 %"
+msgstr "+3,5 %"
+
+msgid "+3.6 %"
+msgstr "+3,6 %"
+
+msgid "+6.1 %"
+msgstr "+6,1 %"
+
+msgid "+1.7 %"
+msgstr "+1,7 %"
+
+msgid "−0.1 %"
+msgstr "−0,1 %"
+
+msgid "80 keV"
+msgstr ""
+
+msgid "+4.0 %"
+msgstr "+4,0 %"
+
+msgid "+2.7 %"
+msgstr "+2,7 %"
+
+msgid "+4.3 %"
+msgstr "+4,3 %"
+
+msgid "0.0 %"
+msgstr "0,0 %"
+
+msgid "+1.9 %"
+msgstr "+1,9 %"
+
+msgid "+3.9 %"
+msgstr "+3,9 %"
+
+msgid "+0.3 %"
+msgstr "+0,3 %"
+
+msgid "140 keV"
+msgstr ""
+
+msgid "−2.0 %"
+msgstr "−2,0 %"
+
+msgid "+1.5 %"
+msgstr "+1,5 %"
+
+msgid "+3.4 %"
+msgstr "+3,4 %"
+
+msgid "—"
+msgstr ""
+
+msgid "160 keV"
+msgstr ""
+
+msgid "+0.4 %"
+msgstr "+0,4 %"
+
+msgid "−0.3 %"
+msgstr "−0,3 %"
+
+msgid "364 keV"
+msgstr ""
+
+msgid "+2.2 %"
+msgstr "+2,2 %"
+
+msgid "+3.1 %"
+msgstr "+3,1 %"
+
+msgid "+0.7 %"
+msgstr "+0,7 %"
+
+msgid "662 keV"
+msgstr ""
+
+msgid "+8.2 %"
+msgstr "+8,2 %"
+
+msgid "+4.2 %"
+msgstr "+4,2 %"
+
+msgid "+1.1 %"
+msgstr "+1,1 %"
+
+msgid "1460 keV"
+msgstr ""
+
+msgid "+48.6 %"
+msgstr "+48,6 %"
+
+msgid "+17.4 %"
+msgstr "+17,4 %"
+
+msgid "+7.7 %"
+msgstr "+7,7 %"
+
+msgid "+3.8 %"
+msgstr "+3,8 %"
+
+msgid "+1.8 %"
+msgstr "+1,8 %"
+
+msgid "2750 keV"
+msgstr ""
+
+msgid "+171.4 %"
+msgstr "+171,4 %"
+
+msgid "+46.9 %"
+msgstr "+46,9 %"
+
+msgid "+20.9 %"
+msgstr "+20,9 %"
+
+msgid "Reading the results"
+msgstr "Lectura de los resultados"
+
+msgid "**From 80 to 364 keV, and above 300 g at any energy up to 662 keV:** agreement within 0–4 %. The two reference codes differ from each other by up to about 6 % (as the paper points out, Table 3)."
+msgstr "**De 80 a 364 keV, y por encima de 300 g a cualquier energía hasta 662 keV:** concordancia del 0 al 4 %. Los dos códigos de referencia difieren entre sí hasta en un 6 % aproximadamente (como señala el propio artículo, tabla 3)."
+
+msgid "**Above 1 MeV, in small spheres:** Guaraci overestimates, from +8 % at 100 g to +171 % at 1 g and 2.75 MeV. The deviation falls with the size of the sphere, as expected. This is the limitation of the current version: Compton electrons (up to ~2.5 MeV, with a range of ~1 cm in tissue) are deposited on the spot, whereas the reference codes transport them and they escape from small spheres. The same effect, smaller, appears at 662 keV below 10 g. **This benchmark will be repeated with electron transport.**"
+msgstr "**Por encima de 1 MeV, en esferas pequeñas:** Guaraci sobreestima, desde +8 % en 100 g hasta +171 % en 1 g y 2,75 MeV. La desviación disminuye con el tamaño de la esfera, como se espera. Es la limitación de la versión actual: los electrones Compton (hasta ~2,5 MeV, con un alcance de ~1 cm en tejido) se depositan en el lugar, mientras que los códigos de referencia los transportan y escapan de las esferas pequeñas. El mismo efecto, menor, aparece a 662 keV por debajo de 10 g. **Este benchmark se repetirá con el transporte de electrones.**"
+
+msgid "**From 20 to 60 keV:** a systematic deviation of +3 to +8 % in small spheres. In this range the photoelectric effect dominates, and it is very sensitive to the composition. The paper uses the tissue of MIRD Pamphlets 3 and 8, whose composition is not given in the text. For a 10 g sphere at 30 keV:"
+msgstr "**De 20 a 60 keV:** una desviación sistemática de +3 a +8 % en esferas pequeñas. En este intervalo domina el efecto fotoeléctrico, muy sensible a la composición. El artículo usa el tejido de los MIRD Pamphlets 3 y 8, cuya composición no aparece en el texto. Para una esfera de 10 g a 30 keV:"
+
+msgid "Absorbed fraction"
+msgstr "Fracción absorbida"
+
+msgid "Tissue_Soft_ICRP"
+msgstr ""
+
+msgid "0.1523"
+msgstr "0,1523"
+
+msgid "Tissue_Soft_ICRUFourComponent"
+msgstr ""
+
+msgid "0.1507"
+msgstr "0,1507"
+
+msgid "+5.4 %"
+msgstr "+5,4 %"
+
+msgid "0.1612"
+msgstr "0,1612"
+
+msgid "+12.7 %"
+msgstr "+12,7 %"
+
+msgid "EGS4 (paper)"
+msgstr "EGS4 (artículo)"
+
+msgid "0.149"
+msgstr "0,149"
+
+msgid "MCNP (paper)"
+msgstr "MCNP (artículo)"
+
+msgid "0.137"
+msgstr "0,137"
+
+msgid "−4.2 %"
+msgstr "−4,2 %"
+
+msgid "Changing the material moves the result more than the observed deviation,    and Guaraci lies between the two reference codes, closer to EGS4."
+msgstr "Cambiar el material desplaza el resultado más que la desviación observada, y    Guaraci queda entre los dos códigos de referencia, más cerca de EGS4."
+
+msgid "The `stabin_spheres_selected` test, run with every `cargo test`, uses five cases of region 1 with a tolerance of 6 % + 3σ."
+msgstr "La prueba `stabin_spheres_selected`, ejecutada con cada `cargo test`, usa cinco casos de la región 1 con una tolerancia de 6 % + 3σ."
+
+msgid "Comparison with other codes"
+msgstr "Comparación con otros códigos"
+
+msgid "The [vial benchmark](../examples.md) provides equivalent inputs for Guaraci, GATE 10 and MCNPX."
+msgstr "El [benchmark del vial](../examples.md) ofrece entradas equivalentes para Guaraci, GATE 10 y MCNPX."
+
+msgid "Pending"
+msgstr "Pendiente"
+
+msgid "Repeat the sphere benchmark with electron transport (photons and electrons)."
+msgstr "Repetir el benchmark de esferas con el transporte de electrones (fotones y electrones)."
+
+msgid "Results of the GATE 10 and MCNPX comparisons."
+msgstr "Resultados de las comparaciones con GATE 10 y MCNPX."
+

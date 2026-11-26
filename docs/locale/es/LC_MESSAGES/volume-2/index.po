@@ -1,0 +1,11 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: es\n"
+
+msgid "Volume II — User Manual"
+msgstr "Volumen II — Manual del Usuario"
+
+msgid "Everything needed to set up, run and interpret a simulation. This is where to learn how to use Guaraci."
+msgstr "Todo lo necesario para preparar, ejecutar e interpretar una simulación. Aquí es donde se aprende a usar Guaraci."
+

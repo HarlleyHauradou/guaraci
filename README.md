@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <a href="https://guaraci.readthedocs.io/"><b>Documentation</b></a> ·
+  <a href="https://harlleyhauradou.github.io/guaraci/en/"><b>Documentation</b></a> ·
   <a href="docs/volume-2/03-first-simulation.md">First simulation</a> ·
   <a href="docs/volume-1/08-validation.md">Validation</a> ·
   <a href="examples/">Examples</a>
@@ -22,7 +22,7 @@
 
 <p align="center">
   <a href="https://github.com/HarlleyHauradou/guaraci/actions/workflows/ci.yml"><img src="https://github.com/HarlleyHauradou/guaraci/actions/workflows/ci.yml/badge.svg" alt="ci"></a>
-  <a href="https://guaraci.readthedocs.io/"><img src="https://readthedocs.org/projects/guaraci/badge/?version=latest" alt="docs"></a>
+  <a href="https://github.com/HarlleyHauradou/guaraci/actions/workflows/docs.yml"><img src="https://github.com/HarlleyHauradou/guaraci/actions/workflows/docs.yml/badge.svg" alt="docs"></a>
 </p>
 
 ---
@@ -74,7 +74,7 @@ guaraci run examples/thyroid_i131
 
 ## Documentation
 
-The manual is online at **<https://guaraci.readthedocs.io/>**, in three volumes:
+The manual is online, in English, Portuguese and Spanish, at **<https://harlleyhauradou.github.io/guaraci/en/>**, in three volumes:
 
 | Volume | Contents |
 |---|---|
@@ -88,7 +88,7 @@ The manual is online at **<https://guaraci.readthedocs.io/>**, in three volumes:
 |---|---|
 | `crates/` | the Rust crates (`guaraci-units`, `-input`, `-data`, `-core`, `-cpu`, `-cli`) |
 | `data/` | material database |
-| `docs/` | documentation sources (Sphinx + PyData theme, Markdown with MyST), built by Read the Docs |
+| `docs/` | documentation sources (Sphinx + PyData theme, Markdown with MyST), published on GitHub Pages |
 | `examples/` | input files |
 | `validation/` | benchmarks and comparisons with GATE and MCNPX |
 | `tools/` | generators |

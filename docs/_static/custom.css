@@ -12,3 +12,7 @@ html[data-theme="dark"] {
 .bd-content table { font-size: 0.9rem; }
 .hero-title { font-size: 2.6rem; font-weight: 700; margin-bottom: 0; }
 .hero-subtitle { font-size: 1.25rem; opacity: 0.85; }
+
+/* language menu in the top bar */
+.guaraci-language .btn { font-size: 0.9rem; padding: 0.25rem 0.5rem; color: var(--pst-color-text-muted); border: none; }
+.guaraci-language .btn:hover { color: var(--pst-color-primary); }

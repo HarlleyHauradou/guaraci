@@ -1,0 +1,278 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: es\n"
+
+msgid "5. Section reference"
+msgstr "5\\. Referencia de las secciones"
+
+msgid "Keys marked with * are required. The default value applies when the key is omitted."
+msgstr "Las claves marcadas con * son obligatorias. El valor por defecto se aplica cuando se omite la clave."
+
+msgid "`[run]` — the run"
+msgstr "`[run]` — la ejecución"
+
+msgid "Key"
+msgstr "Clave"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Default"
+msgstr "Por defecto"
+
+msgid "Description"
+msgstr "Descripción"
+
+msgid "`histories`"
+msgstr ""
+
+msgid "whole number"
+msgstr "número entero"
+
+msgid "1000000"
+msgstr ""
+
+msgid "histories (simulated decays)"
+msgstr "historias (decaimientos simulados)"
+
+msgid "`seed`"
+msgstr ""
+
+msgid "1"
+msgstr ""
+
+msgid "seed of the random number generator"
+msgstr "semilla del generador de números aleatorios"
+
+msgid "`rng`"
+msgstr ""
+
+msgid "`philox`, `xoshiro`, `pcg`, `mt19937`"
+msgstr ""
+
+msgid "`philox`"
+msgstr ""
+
+msgid "random number generator"
+msgstr "generador de números aleatorios"
+
+msgid "`backend`"
+msgstr ""
+
+msgid "`cpu`, `cuda`"
+msgstr ""
+
+msgid "`cpu`"
+msgstr ""
+
+msgid "where to compute"
+msgstr "dónde calcular"
+
+msgid "`threads`"
+msgstr ""
+
+msgid "0 (all cores)"
+msgstr "0 (todos los núcleos)"
+
+msgid "CPU threads"
+msgstr "hilos de la CPU"
+
+msgid "`batches`"
+msgstr ""
+
+msgid "10"
+msgstr ""
+
+msgid "batches used to estimate the uncertainty"
+msgstr "lotes usados para estimar la incertidumbre"
+
+msgid "`[physics]` — physics"
+msgstr "`[physics]` — la física"
+
+msgid "`list`"
+msgstr ""
+
+msgid "`photon_local`"
+msgstr ""
+
+msgid "ready-made physics list"
+msgstr "lista de física predefinida"
+
+msgid "`data`"
+msgstr ""
+
+msgid "`endfb8`, `epics2017`, `epdl97`"
+msgstr ""
+
+msgid "`endfb8`"
+msgstr ""
+
+msgid "photon interaction library"
+msgstr "biblioteca de interacciones de fotones"
+
+msgid "`photoelectric`"
+msgstr ""
+
+msgid "on/off"
+msgstr ""
+
+msgid "on"
+msgstr ""
+
+msgid "photoelectric effect"
+msgstr "efecto fotoeléctrico"
+
+msgid "`compton`"
+msgstr ""
+
+msgid "`klein_nishina_sf`, `klein_nishina`, `off`"
+msgstr ""
+
+msgid "`klein_nishina_sf`"
+msgstr ""
+
+msgid "Compton model"
+msgstr "modelo Compton"
+
+msgid "`rayleigh`"
+msgstr ""
+
+msgid "coherent scattering"
+msgstr "dispersión coherente"
+
+msgid "`pair`"
+msgstr ""
+
+msgid "pair production"
+msgstr "producción de pares"
+
+msgid "`photon_cut`"
+msgstr ""
+
+msgid "energy"
+msgstr "energía"
+
+msgid "1 keV"
+msgstr ""
+
+msgid "below this, a photon deposits its energy on the spot"
+msgstr "por debajo, el fotón deposita su energía en el lugar"
+
+msgid "`particles`"
+msgstr ""
+
+msgid "list"
+msgstr "lista"
+
+msgid "`[photon]`"
+msgstr ""
+
+msgid "transported particles (photons only in this version)"
+msgstr "partículas transportadas (solo fotones en esta versión)"
+
+msgid "The list sets the defaults, and any key written replaces them (like the MODE card of MCNP). `check` shows the physics actually used."
+msgstr "La lista define los valores por defecto, y cualquier clave escrita los reemplaza (como la tarjeta MODE de MCNP). `check` muestra la física realmente usada."
+
+msgid "`[world]` — the world"
+msgstr "`[world]` — el mundo"
+
+msgid "`material`*"
+msgstr ""
+
+msgid "name"
+msgstr "nombre"
+
+msgid "material filling the world"
+msgstr "material que llena el mundo"
+
+msgid "`size`*"
+msgstr ""
+
+msgid "length or list of 3"
+msgstr "longitud o lista de 3"
+
+msgid "sides of the box (centred at the origin)"
+msgstr "lados de la caja (centrada en el origen)"
+
+msgid "`[volume <name>]` — volumes"
+msgstr "`[volume <name>]` — volúmenes"
+
+msgid "`shape`*"
+msgstr ""
+
+msgid "`box`, `sphere`, `cylinder`, `ellipsoid`"
+msgstr ""
+
+msgid "shape"
+msgstr "forma"
+
+msgid "material"
+msgstr ""
+
+msgid "`parent`"
+msgstr ""
+
+msgid "the volume that contains this one (default: the world)"
+msgstr "el volumen que contiene a este (por defecto: el mundo)"
+
+msgid "`center`"
+msgstr ""
+
+msgid "list of 3 lengths"
+msgstr "lista de 3 longitudes"
+
+msgid "centre relative to the centre of the parent (default `[0, 0, 0]`)"
+msgstr "centro respecto al centro del padre (por defecto `[0, 0, 0]`)"
+
+msgid "Dimensions of each shape:"
+msgstr "Dimensiones de cada forma:"
+
+msgid "Shape"
+msgstr "Forma"
+
+msgid "Keys"
+msgstr "Claves"
+
+msgid "`box`"
+msgstr ""
+
+msgid "`size` (sides)"
+msgstr "`size` (lados)"
+
+msgid "`sphere`"
+msgstr ""
+
+msgid "`radius`"
+msgstr ""
+
+msgid "`cylinder`"
+msgstr ""
+
+msgid "`radius`, `height` (axis along z)"
+msgstr "`radius`, `height` (eje a lo largo de z)"
+
+msgid "`ellipsoid`"
+msgstr ""
+
+msgid "`semi_axes` (semi-axes along x, y, z)"
+msgstr "`semi_axes` (semiejes a lo largo de x, y, z)"
+
+msgid "`[material <name>]`"
+msgstr ""
+
+msgid "See [chapter 6](06-materials.md)."
+msgstr "Vea el [capítulo 6](06-materials.md)."
+
+msgid "`[source]` or `[source <name>]`"
+msgstr "`[source]` o `[source <name>]`"
+
+msgid "See [chapter 7](07-sources.md)."
+msgstr "Vea el [capítulo 7](07-sources.md)."
+
+msgid "`[probe <name>]`"
+msgstr ""
+
+msgid "See [chapter 8](08-probes.md)."
+msgstr "Vea el [capítulo 8](08-probes.md)."
+

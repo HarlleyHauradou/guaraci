@@ -1,0 +1,122 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: es\n"
+
+msgid "9. Commands"
+msgstr "9\\. Comandos"
+
+msgid "Command"
+msgstr "Comando"
+
+msgid "What it does"
+msgstr "Qué hace"
+
+msgid "`guaraci check <input>`"
+msgstr ""
+
+msgid "reads, checks and describes the simulation, without running it"
+msgstr "lee, verifica y describe la simulación, sin ejecutarla"
+
+msgid "`guaraci run <input>`"
+msgstr ""
+
+msgid "runs the simulation"
+msgstr "ejecuta la simulación"
+
+msgid "`guaraci run <input> -o folder`"
+msgstr ""
+
+msgid "writes the results in `folder` (default: `<input>_results`)"
+msgstr "escribe los resultados en `folder` (por defecto: `<input>_results`)"
+
+msgid "`guaraci run <input> --histories 1e6`"
+msgstr ""
+
+msgid "changes the number of histories without editing the file"
+msgstr "cambia el número de historias sin editar el archivo"
+
+msgid "`guaraci run <input> --threads 8`"
+msgstr ""
+
+msgid "number of threads (default: all cores)"
+msgstr "número de hilos (por defecto: todos los núcleos)"
+
+msgid "`guaraci run <input> --offline`"
+msgstr ""
+
+msgid "never downloads data; fails if something is missing"
+msgstr "nunca descarga datos; falla si falta alguno"
+
+msgid "`guaraci data list`"
+msgstr ""
+
+msgid "available and installed libraries"
+msgstr "bibliotecas disponibles e instaladas"
+
+msgid "`guaraci data install <library>`"
+msgstr ""
+
+msgid "downloads, checks and converts a library"
+msgstr "descarga, verifica y convierte una biblioteca"
+
+msgid "`guaraci data install <lib> --kind <photoatomic|decay> --from <file>`"
+msgstr ""
+
+msgid "installs from a file already downloaded"
+msgstr "instala a partir de un archivo ya descargado"
+
+msgid "`guaraci data path`"
+msgstr ""
+
+msgid "folder where the data is stored"
+msgstr "carpeta donde se guardan los datos"
+
+msgid "`guaraci info units`"
+msgstr ""
+
+msgid "every unit"
+msgstr "todas las unidades"
+
+msgid "`guaraci info materials [filter]`"
+msgstr ""
+
+msgid "materials of the database"
+msgstr "materiales de la base"
+
+msgid "`guaraci info nuclide <name> [--csv]`"
+msgstr ""
+
+msgid "decay data of a nuclide"
+msgstr "datos de decaimiento de un nucleido"
+
+msgid "Environment variables"
+msgstr "Variables de entorno"
+
+msgid "Variable"
+msgstr ""
+
+msgid "Effect"
+msgstr "Efecto"
+
+msgid "`GUARACI_DATA`"
+msgstr ""
+
+msgid "folder of the nuclear data"
+msgstr "carpeta de los datos nucleares"
+
+msgid "`GUARACI_OFFLINE`"
+msgstr ""
+
+msgid "same as `--offline`"
+msgstr "lo mismo que `--offline`"
+
+msgid "`NO_COLOR`"
+msgstr ""
+
+msgid "turns off colours in messages"
+msgstr "desactiva los colores de los mensajes"
+
+msgid "During a simulation, **Ctrl-C** finishes the current batch and writes the partial results. A second Ctrl-C quits immediately."
+msgstr "Durante una simulación, **Ctrl-C** termina el lote en curso y escribe los resultados parciales. Un segundo Ctrl-C sale de inmediato."
+

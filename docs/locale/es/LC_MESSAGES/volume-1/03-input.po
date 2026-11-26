@@ -1,0 +1,80 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: es\n"
+
+msgid "3. Reading the input"
+msgstr "3\\. Lectura de la entrada"
+
+msgid "Crate `guaraci-input`."
+msgstr ""
+
+msgid "Parser"
+msgstr ""
+
+msgid "A hand-written, line-oriented recursive-descent parser (`parser.rs`). Every node of the tree keeps a `Span` (file, start, end), used in every message."
+msgstr "Un parser descendente recursivo escrito a mano y orientado a líneas (`parser.rs`). Cada nodo del árbol guarda un `Span` (archivo, inicio, fin), usado en todos los mensajes."
+
+msgid "Relevant lexical rules:"
+msgstr "Reglas léxicas relevantes:"
+
+msgid "A number may be followed, on the same line, by a unit, with or without a space. A unit starts with a letter, `µ`, `°` or `%`."
+msgstr "Un número puede ir seguido, en la misma línea, de una unidad, con o sin espacio. Una unidad empieza por una letra, `µ`, `°` o `%`."
+
+msgid "The exponent `e` is part of the number only if digits follow it."
+msgstr "El exponente `e` forma parte del número solo si le siguen dígitos."
+
+msgid "Unquoted words accept letters, digits and `_ - . / +`, which covers names such as `Tc-99m` and `dose.mhd`."
+msgstr "Las palabras sin comillas aceptan letras, dígitos y `_ - . / +`, lo que cubre nombres como `Tc-99m` y `dose.mhd`."
+
+msgid "`131I` and `99mTc` are read by the parser as a number followed by a unit. The `nuclide` key rebuilds the text before interpreting the name."
+msgstr "`131I` y `99mTc` los lee el parser como un número seguido de una unidad. La clave `nuclide` reconstruye el texto antes de interpretar el nombre."
+
+msgid "`include`"
+msgstr ""
+
+msgid "Resolution is in `source.rs`:"
+msgstr "La resolución está en `source.rs`:"
+
+msgid "If the name has no extension, `name.gci` is tried first, then `name`."
+msgstr "Si el nombre no tiene extensión, se prueba primero `name.gci` y luego `name`."
+
+msgid "The path is relative to the file that contains the `include`."
+msgstr "La ruta es relativa al archivo que contiene el `include`."
+
+msgid "Files already read are skipped (diamond includes)."
+msgstr "Los archivos ya leídos se omiten (inclusiones en diamante)."
+
+msgid "An include stack detects cycles."
+msgstr "Una pila de inclusiones detecta los ciclos."
+
+msgid "Built-in files (the material database) are loaded before the user's file and marked as *built-in*. User definitions with the same name replace them."
+msgstr "Los archivos incluidos de fábrica (la base de materiales) se cargan antes del archivo del usuario y se marcan como *built-in*. Las definiciones del usuario con el mismo nombre los reemplazan."
+
+msgid "From the tree to the configuration"
+msgstr "Del árbol a la configuración"
+
+msgid "The section reader (`reader.rs`) offers typed reads (`quantity`, `vec3`, `choice`, `text_list`…) and:"
+msgstr "El lector de secciones (`reader.rs`) ofrece lecturas tipadas (`quantity`, `vec3`, `choice`, `text_list`…) y:"
+
+msgid "records every key read; the remaining ones become \"unknown setting\", with a suggestion based on Jaro-Winkler similarity;"
+msgstr "registra cada clave leída; las que sobran se convierten en \"unknown setting\", con una sugerencia basada en la similitud de Jaro-Winkler;"
+
+msgid "records every default value applied (`DefaultNote`);"
+msgstr "registra cada valor por defecto aplicado (`DefaultNote`);"
+
+msgid "accumulates errors instead of stopping at the first one."
+msgstr "acumula los errores en lugar de detenerse en el primero."
+
+msgid "Building the configuration (`config.rs`) also:"
+msgstr "La construcción de la configuración (`config.rs`) además:"
+
+msgid "resolves the `same_as` chains of materials, detecting cycles;"
+msgstr "resuelve las cadenas de `same_as` de los materiales, detectando ciclos;"
+
+msgid "checks every cross reference (volumes, materials, parents) and parent cycles;"
+msgstr "verifica todas las referencias cruzadas (volúmenes, materiales, padres) y los ciclos de parentesco;"
+
+msgid "does not repeat errors in cascade: if the section of a volume has an error, references to that volume are not reported again."
+msgstr "no repite errores en cascada: si la sección de un volumen tiene un error, las referencias a ese volumen no se vuelven a informar."
+

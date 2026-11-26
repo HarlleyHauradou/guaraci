@@ -1,0 +1,11 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: es\n"
+
+msgid "Volume I — Technical Manual"
+msgstr "Volumen I — Manual Técnico"
+
+msgid "How Guaraci computes: architecture, units, input reading, nuclear data, materials, physics, transport engine and validation."
+msgstr "Cómo calcula Guaraci: arquitectura, unidades, lectura de la entrada, datos nucleares, materiales, física, motor de transporte y validación."
+

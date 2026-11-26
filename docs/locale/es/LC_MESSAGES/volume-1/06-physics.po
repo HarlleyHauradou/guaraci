@@ -1,0 +1,158 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: es\n"
+
+msgid "6. Photon physics"
+msgstr "6\\. Física de fotones"
+
+msgid "Module `guaraci-core/src/physics.rs`. Units: MeV, cm, g/cm³, barn."
+msgstr "Módulo `guaraci-core/src/physics.rs`. Unidades: MeV, cm, g/cm³, barn."
+
+msgid "Tables per material"
+msgstr "Tablas por material"
+
+msgid "For each material used in the geometry, the macroscopic cross sections μ = Σᵢ nᵢ σᵢ(E) (cm⁻¹) are tabulated on a logarithmic energy grid with 1000 points per decade, from the energy cut-off up to 1.01 × the highest emitted energy. Between points, interpolation is linear in the logarithmic index."
+msgstr "Para cada material usado en la geometría, las secciones eficaces macroscópicas μ = Σᵢ nᵢ σᵢ(E) (cm⁻¹) se tabulan en una malla logarítmica de energía con 1000 puntos por década, desde el corte de energía hasta 1,01 × la mayor energía emitida. Entre los puntos, la interpolación es lineal en el índice logarítmico."
+
+msgid "**Atom density:** nᵢ = ρ wᵢ N_A / Aᵢ, with wᵢ the mass fraction and Aᵢ the atomic mass (from the ENDF AWR)."
+msgstr "**Densidad atómica:** nᵢ = ρ wᵢ N_A / Aᵢ, con wᵢ la fracción de masa y Aᵢ la masa atómica (del AWR de ENDF)."
+
+msgid "**Element cross sections:** read from the ENDF tables with linear-linear interpolation."
+msgstr "**Secciones eficaces de los elementos:** se leen de las tablas ENDF con interpolación lineal-lineal."
+
+msgid "**Process switched off:** with `rayleigh = off`, for example, the process is simply left out of μ, which is the same as removing it from the physics."
+msgstr "**Proceso desactivado:** con `rayleigh = off`, por ejemplo, el proceso simplemente queda fuera de μ, lo que equivale a quitarlo de la física."
+
+msgid "**Choice of the target atom:** the Compton and Rayleigh parts of each element are also stored. The atom is sampled with probability nᵢσᵢ(E)/Σⱼnⱼσⱼ(E)."
+msgstr "**Elección del átomo blanco:** también se guardan las partes Compton y Rayleigh de cada elemento. El átomo se sortea con probabilidad nᵢσᵢ(E)/Σⱼnⱼσⱼ(E)."
+
+msgid "Free path"
+msgstr "Recorrido libre"
+
+msgid "The distance to the next interaction is s = −ln(ξ)/μ(E). If s is larger than the distance to the next boundary, the photon moves to the boundary, crosses it and continues in the new medium. The process is memoryless, so the remaining path does not need to be kept."
+msgstr "La distancia hasta la siguiente interacción es s = −ln(ξ)/μ(E). Si s es mayor que la distancia hasta la siguiente frontera, el fotón llega a la frontera, la cruza y continúa en el nuevo medio. El proceso no tiene memoria, así que no hace falta guardar el recorrido restante."
+
+msgid "Photoelectric effect"
+msgstr "Efecto fotoeléctrico"
+
+msgid "The photon is absorbed and all its energy is deposited on the spot. This includes the binding energy, since fluorescence is not emitted in this version."
+msgstr "El fotón se absorbe y toda su energía se deposita en el lugar. Esto incluye la energía de ligadura, ya que en esta versión no se emite fluorescencia."
+
+msgid "Compton scattering"
+msgstr "Dispersión Compton"
+
+msgid "Sampling follows the Klein-Nishina formula, with the composition and rejection method of Geant4's `G4KleinNishinaCompton`. For ε = E′/E in [ε₀, 1], ε₀ = 1/(1 + 2k), k = E/mₑc²:"
+msgstr "El muestreo sigue la fórmula de Klein-Nishina, con el método de composición y rechazo de `G4KleinNishinaCompton` de Geant4. Para ε = E′/E en [ε₀, 1], ε₀ = 1/(1 + 2k), k = E/mₑc²:"
+
+msgid "With probability α₁/(α₁ + α₂), α₁ = −ln ε₀ and α₂ = (1 − ε₀²)/2, sample ε = ε₀^ξ; otherwise ε² is uniform in [ε₀², 1]."
+msgstr "Con probabilidad α₁/(α₁ + α₂), α₁ = −ln ε₀ y α₂ = (1 − ε₀²)/2, se sortea ε = ε₀^ξ; en caso contrario, ε² es uniforme en [ε₀², 1]."
+
+msgid "Accept with probability g = 1 − ε sin²θ / (1 + ε²)."
+msgstr "Se acepta con probabilidad g = 1 − ε sen²θ / (1 + ε²)."
+
+msgid "With `compton = klein_nishina_sf` (the default), a second rejection uses the incoherent scattering function: accept with probability S(x, Z)/Z, where x = (E/hc) sin(θ/2). This reduces scattering at small angles, where the binding of the electron matters. The energy E − E′ goes to the electron and is deposited on the spot. Doppler broadening is not simulated."
+msgstr "Con `compton = klein_nishina_sf` (el valor por defecto), un segundo rechazo usa la función de dispersión incoherente: se acepta con probabilidad S(x, Z)/Z, donde x = (E/hc) sen(θ/2). Esto reduce la dispersión a ángulos pequeños, donde importa la ligadura del electrón. La energía E − E′ va al electrón y se deposita en el lugar. El ensanchamiento Doppler no se simula."
+
+msgid "Rayleigh scattering"
+msgstr "Dispersión Rayleigh"
+
+msgid "Sampling follows dσ/dΩ ∝ (1 + cos²θ)/2 · F²(x, Z):"
+msgstr "El muestreo sigue dσ/dΩ ∝ (1 + cos²θ)/2 · F²(x, Z):"
+
+msgid "x² is sampled from the distribution F²(x²) between 0 and x²_max = (E/hc)², by inverting the cumulative integral ∫F² d(x²), precomputed with the trapezoidal rule for each element."
+msgstr "x² se sortea de la distribución F²(x²) entre 0 y x²_max = (E/hc)², invirtiendo la integral acumulada ∫F² d(x²), precalculada con la regla del trapecio para cada elemento."
+
+msgid "cos θ = 1 − 2 x²/x²_max."
+msgstr ""
+
+msgid "Accept with probability (1 + cos²θ)/2."
+msgstr "Se acepta con probabilidad (1 + cos²θ)/2."
+
+msgid "The photon keeps its energy."
+msgstr "El fotón conserva su energía."
+
+msgid "Pair production"
+msgstr "Producción de pares"
+
+msgid "The kinetic energy of the pair, E − 2mₑc², is deposited on the spot. Two photons of mₑc² leave in opposite, isotropic directions."
+msgstr "La energía cinética del par, E − 2mₑc², se deposita en el lugar. Dos fotones de mₑc² salen en direcciones opuestas e isótropas."
+
+msgid "Energy cut-off"
+msgstr "Corte de energía"
+
+msgid "A photon below `photon_cut` (default 1 keV) deposits its energy on the spot."
+msgstr "Un fotón por debajo de `photon_cut` (por defecto 1 keV) deposita su energía en el lugar."
+
+msgid "Emission of radioactive sources"
+msgstr "Emisión de las fuentes radiactivas"
+
+msgid "For each decay:"
+msgstr "Para cada decaimiento:"
+
+msgid "**Photon lines:** a line of intensity I (photons per decay) emits ⌊I⌋ photons, plus one with probability I − ⌊I⌋. Lines are independent of each other; γ-γ correlations are not reproduced."
+msgstr "**Líneas de fotones:** una línea de intensidad I (fotones por decaimiento) emite ⌊I⌋ fotones, más uno con probabilidad I − ⌊I⌋. Las líneas son independientes entre sí; las correlaciones γ-γ no se reproducen."
+
+msgid "**Annihilation:** the 511 keV photons leave in collinear pairs from the decay point (without the positron range)."
+msgstr "**Aniquilación:** los fotones de 511 keV salen en pares colineales desde el punto de decaimiento (sin el alcance del positrón)."
+
+msgid "**Electrons:** with `beta = local`, the mean energy per decay carried by light particles, ⟨E_LP⟩ from ENDF (β⁻, β⁺, Auger and conversion electrons), is deposited at the decay point."
+msgstr "**Electrones:** con `beta = local`, la energía media por decaimiento que llevan las partículas ligeras, ⟨E_LP⟩ de ENDF (electrones β⁻, β⁺, Auger y de conversión), se deposita en el punto de decaimiento."
+
+msgid "**Position and direction:**"
+msgstr "**Posición y dirección:**"
+
+msgid "for a source with `in = volume`, the position is uniform in the region of the volume (the solid minus its daughters), sampled by rejection in its bounding box;"
+msgstr "en una fuente con `in = volume`, la posición es uniforme en la región del volumen (el sólido menos sus hijos), muestreada por rechazo en la caja que lo envuelve;"
+
+msgid "the direction of each photon is isotropic."
+msgstr "la dirección de cada fotón es isótropa."
+
+msgid "Constants"
+msgstr "Constantes"
+
+msgid "Constant"
+msgstr "Constante"
+
+msgid "Value"
+msgstr "Valor"
+
+msgid "Source"
+msgstr "Fuente"
+
+msgid "mₑc²"
+msgstr ""
+
+msgid "0.51099895000 MeV"
+msgstr "0,51099895000 MeV"
+
+msgid "CODATA 2018"
+msgstr ""
+
+msgid "hc"
+msgstr ""
+
+msgid "1.239841984×10⁻¹⁰ MeV·cm"
+msgstr "1,239841984×10⁻¹⁰ MeV·cm"
+
+msgid "N_A"
+msgstr ""
+
+msgid "6.02214076×10²³ mol⁻¹"
+msgstr "6,02214076×10²³ mol⁻¹"
+
+msgid "SI 2019 (exact)"
+msgstr "SI 2019 (exacta)"
+
+msgid "1 MeV"
+msgstr ""
+
+msgid "1.602176634×10⁻¹³ J"
+msgstr "1,602176634×10⁻¹³ J"
+
+msgid "mₙ"
+msgstr ""
+
+msgid "1.00866491595 u"
+msgstr "1,00866491595 u"
+

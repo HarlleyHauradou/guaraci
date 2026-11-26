@@ -1,0 +1,116 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: es\n"
+
+msgid "7. Transport engine and statistics"
+msgstr "7\\. Motor de transporte y estadística"
+
+msgid "Geometry"
+msgstr "Geometría"
+
+msgid "Module `geometry.rs`. The volumes form a tree whose root is the world."
+msgstr "Módulo `geometry.rs`. Los volúmenes forman un árbol cuya raíz es el mundo."
+
+msgid "**Location:** starting from the world, the search goes down to the first daughter that contains the point, and so on. The point belongs to the deepest volume."
+msgstr "**Localización:** desde el mundo, la búsqueda baja al primer hijo que contiene el punto, y así sucesivamente. El punto pertenece al volumen más profundo."
+
+msgid "**Distance to the boundary:** in the region of volume V, it is the smallest of the exit distance from V and the entry distance into each daughter of V. The solids (box, sphere, cylinder, ellipsoid) compute these distances from the parametric interval of the ray inside them."
+msgstr "**Distancia a la frontera:** en la región del volumen V, es la menor entre la distancia de salida de V y la distancia de entrada en cada hijo de V. Los sólidos (caja, esfera, cilindro, elipsoide) calculan estas distancias a partir del intervalo paramétrico del rayo dentro de ellos."
+
+msgid "**Crossing:** the photon moves to the boundary plus a small push (10⁻⁹ × the size of the world) and is located again."
+msgstr "**Cruce:** el fotón avanza hasta la frontera más un pequeño empujón (10⁻⁹ × el tamaño del mundo) y se vuelve a localizar."
+
+msgid "**Overlap check:** before running, 5000 points of each surface are tested. A point outside the mother means the volume sticks out of its mother; a point inside a sister means an overlap. The idea is that of Geant4's `CheckOverlaps`."
+msgstr "**Verificación de solapamientos:** antes de ejecutar, se prueban 5000 puntos de cada superficie. Un punto fuera de la madre significa que el volumen se sale de su madre; un punto dentro de una hermana significa un solapamiento. La idea es la de `CheckOverlaps` de Geant4."
+
+msgid "Random number generators"
+msgstr "Generadores de números aleatorios"
+
+msgid "Module `rng.rs`. All of them produce uniform numbers in (0, 1) with 53 bits."
+msgstr "Módulo `rng.rs`. Todos producen números uniformes en (0, 1) con 53 bits."
+
+msgid "`rng`"
+msgstr ""
+
+msgid "Algorithm"
+msgstr "Algoritmo"
+
+msgid "Verification"
+msgstr "Verificación"
+
+msgid "`philox`"
+msgstr ""
+
+msgid "Philox4x32-10 (Salmon et al., 2011), counter-based"
+msgstr "Philox4x32-10 (Salmon et al., 2011), basado en contador"
+
+msgid "Random123 known-answer tests"
+msgstr "pruebas de respuesta conocida de Random123"
+
+msgid "`xoshiro`"
+msgstr ""
+
+msgid "Xoshiro256++ (Blackman and Vigna)"
+msgstr "Xoshiro256++ (Blackman y Vigna)"
+
+msgid "known output for the state [1, 2, 3, 4]"
+msgstr "salida conocida para el estado [1, 2, 3, 4]"
+
+msgid "`pcg`"
+msgstr ""
+
+msgid "PCG64 XSL-RR 128/64 (O'Neill)"
+msgstr ""
+
+msgid "statistical moments"
+msgstr "momentos estadísticos"
+
+msgid "`mt19937`"
+msgstr ""
+
+msgid "32-bit Mersenne Twister"
+msgstr "Mersenne Twister de 32 bits"
+
+msgid "10000th output for seed 5489 (C++ standard)"
+msgstr "salida número 10000 de la semilla 5489 (estándar de C++)"
+
+msgid "Parallelism and reproducibility"
+msgstr "Paralelismo y reproducibilidad"
+
+msgid "Histories are split into fixed blocks of 1000. Block b always uses stream b of the generator: for Philox, the counter (b, i) with the key equal to the seed; for the others, the state is derived from (seed, b) by SplitMix64. Therefore **the result does not depend on the number of threads**, and a test checks it. Blocks are distributed among threads with rayon. Each thread accumulates in a `Tally` of its own, and the tallies are summed at the end of each batch."
+msgstr "Las historias se dividen en bloques fijos de 1000. El bloque b siempre usa el flujo b del generador: en Philox, el contador (b, i) con la clave igual a la semilla; en los demás, el estado se deriva de (semilla, b) mediante SplitMix64. Por eso **el resultado no depende del número de hilos**, y una prueba lo verifica. Los bloques se reparten entre los hilos con rayon. Cada hilo acumula en un `Tally` propio, y los tallies se suman al final de cada lote."
+
+msgid "Uncertainty"
+msgstr "Incertidumbre"
+
+msgid "Blocks are grouped in B batches (`batches`). For every cell of every probe, the total sum and the sum of the squares of the per-history means of each batch are kept. The uncertainty of the mean is"
+msgstr "Los bloques se agrupan en B lotes (`batches`). Para cada celda de cada probe se guardan la suma total y la suma de los cuadrados de las medias por historia de cada lote. La incertidumbre de la media es"
+
+msgid "σ²(x̄) = [ (1/B) Σ x̄_b² − x̄² ] · B/(B − 1) / B"
+msgstr ""
+
+msgid "Scoring"
+msgstr "Puntuación"
+
+msgid "**Deposited energy:** goes to the grid cell where it falls and to the volume probes of the current region."
+msgstr "**Energía depositada:** va a la celda de la malla en la que cae y a los probes de volumen de la región actual."
+
+msgid "**Track length:** each path segment in a region is added to the energy bin of the `spectrum` probes of that region."
+msgstr "**Longitud de trayectoria:** cada tramo recorrido en una región se suma al bin de energía de los probes `spectrum` de esa región."
+
+msgid "**Balance:** the `Tally` also accumulates the energy emitted, deposited and escaped from the world, to check energy conservation."
+msgstr "**Balance:** el `Tally` también acumula la energía emitida, depositada y escapada del mundo, para verificar la conservación de la energía."
+
+msgid "Dose"
+msgstr "Dosis"
+
+msgid "D = E_dep / m, with E in J (1 MeV = 1.602176634×10⁻¹³ J) and m in kg."
+msgstr "D = E_dep / m, con E en J (1 MeV = 1,602176634×10⁻¹³ J) y m en kg."
+
+msgid "**Volumes:** m = ρ × (volume of the solid − volumes of the daughters), computed analytically."
+msgstr "**Volúmenes:** m = ρ × (volumen del sólido − volúmenes de los hijos), calculado analíticamente."
+
+msgid "**Voxels:** m = ⟨ρ⟩ × voxel volume, with ⟨ρ⟩ the mean over 3×3×3 points inside the voxel."
+msgstr "**Vóxeles:** m = ⟨ρ⟩ × volumen del vóxel, con ⟨ρ⟩ la media en 3×3×3 puntos dentro del vóxel."
+

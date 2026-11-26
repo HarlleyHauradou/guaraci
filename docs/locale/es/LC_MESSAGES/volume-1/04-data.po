@@ -1,0 +1,215 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: es\n"
+
+msgid "4. Atomic and nuclear data"
+msgstr "4\\. Datos atómicos y nucleares"
+
+msgid "Crate `guaraci-data`."
+msgstr ""
+
+msgid "Policy"
+msgstr "Política"
+
+msgid "Data files are not redistributed. Each library of the catalogue (`library.rs`) records:"
+msgstr "Los archivos de datos no se redistribuyen. Cada biblioteca del catálogo (`library.rs`) registra:"
+
+msgid "the official URL and the download page;"
+msgstr "la URL oficial y la página de descarga;"
+
+msgid "the expected SHA-256 and the size."
+msgstr "el SHA-256 esperado y el tamaño."
+
+msgid "The installation process:"
+msgstr "El proceso de instalación:"
+
+msgid "downloads the file (through `HTTPS_PROXY`, if set) or uses the file given with `--from`;"
+msgstr "descarga el archivo (a través de `HTTPS_PROXY`, si está definido) o usa el archivo dado con `--from`;"
+
+msgid "checks the SHA-256 (for automatic downloads only; a `--from` file that differs from the catalogue gives a warning, not an error);"
+msgstr "verifica el SHA-256 (solo en las descargas automáticas; un archivo `--from` distinto del catálogo da una advertencia, no un error);"
+
+msgid "converts the ENDF-6 files to serialised Rust structures (bincode);"
+msgstr "convierte los archivos ENDF-6 en estructuras de Rust serializadas (bincode);"
+
+msgid "writes `<GUARACI_DATA>/<library>/<kind>.bin`, with a provenance header (source, SHA-256, date, format version, number of entries);"
+msgstr "escribe `<GUARACI_DATA>/<library>/<kind>.bin`, con un encabezado de procedencia (fuente, SHA-256, fecha, versión del formato, número de entradas);"
+
+msgid "deletes the downloaded file."
+msgstr "borra el archivo descargado."
+
+msgid "Library"
+msgstr "Biblioteca"
+
+msgid "File"
+msgstr "Archivo"
+
+msgid "SHA-256"
+msgstr ""
+
+msgid "ENDF/B-VIII.0 photoat"
+msgstr ""
+
+msgid "`ENDF-B-VIII.0_photoat.zip` (35 776 679 B)"
+msgstr ""
+
+msgid "`61aee2b8…0248e835d`[^sha]"
+msgstr ""
+
+msgid "ENDF/B-VIII.0 decay"
+msgstr ""
+
+msgid "`ENDF-B-VIII.0_decay.zip` (14 173 710 B)"
+msgstr ""
+
+msgid "`9087395f…f8d03d5e`[^sha]"
+msgstr ""
+
+msgid "ENDF-6 reader"
+msgstr "Lector ENDF-6"
+
+msgid "`endf.rs` implements the CONT/HEAD, LIST and TAB1 records of the 80-column format:"
+msgstr "`endf.rs` implementa los registros CONT/HEAD, LIST y TAB1 del formato de 80 columnas:"
+
+msgid "Real numbers accept the compact form without `E` (`1.234567+5`) and blank fields (= 0)."
+msgstr "Los números reales aceptan la forma compacta sin `E` (`1.234567+5`) y los campos en blanco (= 0)."
+
+msgid "The file is split into `(MF, MT)` sections by columns 71–75."
+msgstr "El archivo se divide en secciones `(MF, MT)` según las columnas 71–75."
+
+msgid "Photo-atomic data (MF23, MF27)"
+msgstr "Datos fotoatómicos (MF23, MF27)"
+
+msgid "Section"
+msgstr "Sección"
+
+msgid "Quantity"
+msgstr "Magnitud"
+
+msgid "Unit in Guaraci"
+msgstr "Unidad en Guaraci"
+
+msgid "MF23 MT502"
+msgstr ""
+
+msgid "coherent (Rayleigh) cross section"
+msgstr "sección eficaz coherente (Rayleigh)"
+
+msgid "barn vs MeV"
+msgstr "barn frente a MeV"
+
+msgid "MF23 MT504"
+msgstr ""
+
+msgid "incoherent (Compton) cross section"
+msgstr "sección eficaz incoherente (Compton)"
+
+msgid "MF23 MT516"
+msgstr ""
+
+msgid "pair production (nuclear + electron field)"
+msgstr "producción de pares (campo nuclear + campo electrónico)"
+
+msgid "MF23 MT522"
+msgstr ""
+
+msgid "photoelectric, all shells"
+msgstr "fotoeléctrico, todas las capas"
+
+msgid "MF27 MT502"
+msgstr ""
+
+msgid "form factor F(x, Z)"
+msgstr "factor de forma F(x, Z)"
+
+msgid "x = sin(θ/2)/λ in cm⁻¹"
+msgstr "x = sen(θ/2)/λ en cm⁻¹"
+
+msgid "MF27 MT504"
+msgstr ""
+
+msgid "incoherent scattering function S(x, Z)"
+msgstr "función de dispersión incoherente S(x, Z)"
+
+msgid "same"
+msgstr "ídem"
+
+msgid "Energies are converted from eV to MeV."
+msgstr "Las energías se convierten de eV a MeV."
+
+msgid "The atomic mass comes from the AWR of the file: m = AWR × mₙ, with mₙ = 1.00866491595 u (CODATA 2018). No table of atomic masses is embedded."
+msgstr "La masa atómica viene del AWR del archivo: m = AWR × mₙ, con mₙ = 1,00866491595 u (CODATA 2018). No se incluye ninguna tabla de masas atómicas."
+
+msgid "Every table of ENDF/B-VIII.0 uses linear-linear interpolation (INT = 2). The converter rejects other laws rather than interpolating them wrongly."
+msgstr "Todas las tablas de ENDF/B-VIII.0 usan interpolación lineal-lineal (INT = 2). El conversor rechaza otras leyes en lugar de interpolarlas mal."
+
+msgid "Decay data (MF8 MT457)"
+msgstr "Datos de decaimiento (MF8 MT457)"
+
+msgid "For each nuclide, Guaraci keeps:"
+msgstr "De cada nucleido, Guaraci guarda:"
+
+msgid "the half-life and the decay modes (RTYP, branching ratio);"
+msgstr "el período de semidesintegración y los modos de decaimiento (RTYP, razón de ramificación);"
+
+msgid "the mean energies per decay: light particles ⟨E_LP⟩ (β⁻, β⁺, Auger and conversion electrons), electromagnetic ⟨E_EM⟩ and heavy particles ⟨E_HP⟩;"
+msgstr "las energías medias por decaimiento: partículas ligeras ⟨E_LP⟩ (electrones β⁻, β⁺, Auger y de conversión), electromagnética ⟨E_EM⟩ y partículas pesadas ⟨E_HP⟩;"
+
+msgid "the discrete photon lines, with absolute intensity = FD × RI:"
+msgstr "las líneas discretas de fotones, con intensidad absoluta = FD × RI:"
+
+msgid "STYP 0 becomes **gamma**;"
+msgstr "STYP 0 se convierte en **gamma**;"
+
+msgid "STYP 9 becomes **X-ray**, or **annihilation** when the energy is within 50 eV of 510.999 keV."
+msgstr "STYP 9 se convierte en **rayo X**, o en **aniquilación** cuando la energía está a menos de 50 eV de 510,999 keV."
+
+msgid "Continuous photon spectra (rare) are flagged but not used yet."
+msgstr "Los espectros continuos de fotones (poco frecuentes) se señalan, pero aún no se usan."
+
+msgid "Reference tests"
+msgstr "Pruebas de referencia"
+
+msgid "With `GUARACI_TEST_ENDF` pointing to the unpacked files, the tests check:"
+msgstr "Con `GUARACI_TEST_ENDF` apuntando a los archivos descomprimidos, las pruebas verifican:"
+
+msgid "Case"
+msgstr "Caso"
+
+msgid "Expected value"
+msgstr "Valor esperado"
+
+msgid "μ/ρ of water at 140 keV"
+msgstr "μ/ρ del agua a 140 keV"
+
+msgid "0.1538 cm²/g (NIST XCOM), 1 % tolerance"
+msgstr "0,1538 cm²/g (NIST XCOM), tolerancia del 1 %"
+
+msgid "I-131"
+msgstr ""
+
+msgid "T½ = 8.025 d; 364.49 keV with 81.5 %"
+msgstr "T½ = 8,025 d; 364,49 keV con 81,5 %"
+
+msgid "Tc-99m"
+msgstr ""
+
+msgid "T½ = 6.007 h; 140.51 keV with 88.5 %"
+msgstr "T½ = 6,007 h; 140,51 keV con 88,5 %"
+
+msgid "F-18"
+msgstr ""
+
+msgid "1.934 annihilation photons per decay"
+msgstr "1,934 fotones de aniquilación por decaimiento"
+
+msgid "C-14"
+msgstr ""
+
+msgid "no photons; ⟨E_LP⟩ = 49.5 keV"
+msgstr "ningún fotón; ⟨E_LP⟩ = 49,5 keV"
+
+msgid "The full values are in `crates/guaraci-data/src/library.rs`."
+msgstr "Los valores completos están en `crates/guaraci-data/src/library.rs`."
+

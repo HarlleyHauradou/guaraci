@@ -1,0 +1,77 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: pt_BR\n"
+
+msgid "8. Probes"
+msgstr ""
+
+msgid "A **probe** measures something during the simulation. It is the equivalent of the MCNP *tally* and the GATE *actor*."
+msgstr "Um **probe** mede algo durante a simulação. É o equivalente ao *tally* do MCNP e ao *actor* do GATE."
+
+msgid "`type`"
+msgstr ""
+
+msgid "Keys"
+msgstr "Chaves"
+
+msgid "Result"
+msgstr "Resultado"
+
+msgid "`dose_grid`"
+msgstr ""
+
+msgid "`in`*, `voxel`*"
+msgstr ""
+
+msgid "3D dose map over the bounding box of the volume (`.mhd` + `.raw`) and a map of the relative uncertainty"
+msgstr "mapa 3D de dose sobre a caixa que envolve o volume (`.mhd` + `.raw`) e mapa da incerteza relativa"
+
+msgid "`volume_dose`"
+msgstr ""
+
+msgid "`volumes`*"
+msgstr ""
+
+msgid "energy and mean dose in each volume (`.csv`)"
+msgstr "energia e dose média em cada volume (`.csv`)"
+
+msgid "`spectrum`"
+msgstr ""
+
+msgid "`in`*, `emax` (1000 keV), `bins` (200)"
+msgstr ""
+
+msgid "photon fluence spectrum in the volume (`.csv`)"
+msgstr "espectro de fluência de fótons no volume (`.csv`)"
+
+msgid "`output` changes the name of the output file (default: `<name>.mhd` or `<name>.csv`)."
+msgstr "`output` muda o nome do arquivo de saída (padrão: `<name>.mhd` ou `<name>.csv`)."
+
+msgid "Details"
+msgstr "Detalhes"
+
+msgid "**Region of a volume:** its solid **minus** its daughter volumes. The dose in `neck` does not include the thyroid, which is its daughter; to include it, list both."
+msgstr "**Região de um volume:** é o sólido dele **menos** os volumes filhos. A dose em `neck` não inclui a tireoide, que é filha dele; para incluí-la, liste os dois."
+
+msgid "**`dose_grid`:**"
+msgstr ""
+
+msgid "the grid covers the bounding box of the volume, including what lies outside the volume;"
+msgstr "a grade cobre a caixa que envolve o volume, inclusive o que fica fora dele;"
+
+msgid "the mass of each voxel is computed from 27 points inside it, so a voxel cut by a boundary gets the mass it really contains;"
+msgstr "a massa de cada voxel é calculada com 27 pontos internos, então um voxel cortado por uma fronteira recebe a massa que realmente contém;"
+
+msgid "the dose of a voxel is the mean over the materials inside it."
+msgstr "a dose de um voxel é a média sobre os materiais dentro dele."
+
+msgid "**`spectrum`:**"
+msgstr ""
+
+msgid "uses the track-length estimator (fluence = sum of track lengths ÷ volume);"
+msgstr "usa o estimador de comprimento de trajetória (fluência = soma dos comprimentos ÷ volume);"
+
+msgid "the `fluence_per_keV` column divides by the bin width."
+msgstr "a coluna `fluence_per_keV` divide pela largura do bin."
+

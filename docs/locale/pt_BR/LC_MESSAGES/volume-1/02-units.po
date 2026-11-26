@@ -1,0 +1,83 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: pt_BR\n"
+
+msgid "2. Units and dimensional analysis"
+msgstr "2\\. Unidades e análise dimensional"
+
+msgid "Crate `guaraci-units`."
+msgstr ""
+
+msgid "Dimensions"
+msgstr "Dimensões"
+
+msgid "Every value is stored in SI units together with its dimension, a vector of integer exponents `[L, M, T, A]`: length, mass, time and plane angle."
+msgstr "Cada valor é guardado em unidades SI junto com sua dimensão, um vetor de expoentes inteiros `[L, M, T, A]`: comprimento, massa, tempo e ângulo plano."
+
+msgid "Quantity"
+msgstr "Grandeza"
+
+msgid "Dimension"
+msgstr "Dimensão"
+
+msgid "energy"
+msgstr "energia"
+
+msgid "M L² T⁻²"
+msgstr ""
+
+msgid "activity"
+msgstr "atividade"
+
+msgid "T⁻¹"
+msgstr ""
+
+msgid "absorbed dose"
+msgstr "dose absorvida"
+
+msgid "L² T⁻² (J/kg)"
+msgstr ""
+
+msgid "density"
+msgstr "densidade"
+
+msgid "M L⁻³"
+msgstr ""
+
+msgid "The angle is a dimension of its own (in SI it is dimensionless), so that `radius = 30 deg` is rejected."
+msgstr "O ângulo é uma dimensão própria (no SI ele é adimensional), para que `radius = 30 deg` seja recusado."
+
+msgid "Unit table"
+msgstr "Tabela de unidades"
+
+msgid "The table (`table.rs`) lists **only** units in common use in radiation transport. An unusual symbol (such as the megametre) is more likely a typo than an intention, so it is not accepted. Exact factors: 1 eV = 1.602176634×10⁻¹⁹ J (SI 2019) and 1 Ci = 3.7×10¹⁰ Bq; the year is the Julian year (365.25 d)."
+msgstr "A tabela (`table.rs`) lista **apenas** unidades de uso comum em transporte de radiação. Um símbolo incomum (como o megâmetro) é mais provavelmente um erro de digitação do que uma intenção, então não é aceito. Fatores exatos: 1 eV = 1,602176634×10⁻¹⁹ J (SI 2019) e 1 Ci = 3,7×10¹⁰ Bq; o ano é o ano juliano (365,25 d)."
+
+msgid "Resolving a symbol"
+msgstr "Resolução de um símbolo"
+
+msgid "The exact spelling comes first."
+msgstr "A grafia exata vem primeiro."
+
+msgid "Without an exact match, symbols equal up to letter case are searched. The symbol is accepted if there is a single candidate, or if all candidates have the same factor and dimension (`l`/`L`)."
+msgstr "Sem correspondência exata, procuram-se os símbolos iguais a menos de maiúsculas e minúsculas. O símbolo é aceito se houver um só candidato, ou se todos os candidatos tiverem o mesmo fator e a mesma dimensão (`l`/`L`)."
+
+msgid "If candidates have different meanings, it is an error, and the message lists the options."
+msgstr "Se os candidatos tiverem significados diferentes, é um erro, e a mensagem lista as opções."
+
+msgid "A test guarantees that the current table has no pair of symbols that differ only by case and have different meanings."
+msgstr "Um teste garante que a tabela atual não tem nenhum par de símbolos que difira só pela caixa e tenha significados diferentes."
+
+msgid "Compound units"
+msgstr "Unidades compostas"
+
+msgid "An expression is a product of atoms separated by `*`, `.` or `·`, or a quotient separated by `/`. Each atom may have an integer exponent (`cm3`, `cm^3`, `m^-3`). Each `/` inverts only the next atom, so `a/b/c` = a·b⁻¹·c⁻¹."
+msgstr "Uma expressão é um produto de átomos separados por `*`, `.` ou `·`, ou um quociente separado por `/`. Cada átomo pode ter um expoente inteiro (`cm3`, `cm^3`, `m^-3`). Cada `/` inverte só o átomo seguinte, então `a/b/c` = a·b⁻¹·c⁻¹."
+
+msgid "Values without a unit"
+msgstr "Valores sem unidade"
+
+msgid "Each input key declares the quantity it expects (`Kind`). A number without a unit gets the default unit of that quantity, and every occurrence is recorded (`implicit_units`) so that it appears in `check` and in the report."
+msgstr "Cada chave da entrada declara a grandeza que espera (`Kind`). Um número sem unidade recebe a unidade padrão dessa grandeza, e cada ocorrência é registrada (`implicit_units`) para aparecer no `check` e no relatório."
+

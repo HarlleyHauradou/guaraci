@@ -1,0 +1,188 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: pt_BR\n"
+
+msgid "4. The `.gci` input language"
+msgstr "4\\. A linguagem de entrada `.gci`"
+
+msgid "Structure"
+msgstr "Estrutura"
+
+msgid "A `.gci` file is a sequence of **sections**. Each section starts with a header in square brackets, followed by `key = value` lines:"
+msgstr "Um arquivo `.gci` é uma sequência de **seções**. Cada seção começa com um cabeçalho entre colchetes, seguido de linhas `key = value`:"
+
+msgid "Comments start with `#` and run to the end of the line."
+msgstr "Comentários começam com `#` e vão até o fim da linha."
+
+msgid "One setting per line."
+msgstr "Uma configuração por linha."
+
+msgid "`run`, `physics` and `world` appear once and have no name."
+msgstr "`run`, `physics` e `world` aparecem uma vez e não têm nome."
+
+msgid "`volume`, `material` and `probe` need a name; the name of a `source` is optional."
+msgstr "`volume`, `material` e `probe` precisam de nome; o nome de uma `source` é opcional."
+
+msgid "Values"
+msgstr "Valores"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Examples"
+msgstr "Exemplos"
+
+msgid "number"
+msgstr "número"
+
+msgid "`10`, `-1.5e3`, `1e7`, `10_000_000`"
+msgstr ""
+
+msgid "number with unit"
+msgstr "número com unidade"
+
+msgid "`10 cm`, `10cm`, `140.5 keV`, `1.05 g/cm3`, `89 %`"
+msgstr ""
+
+msgid "word"
+msgstr "palavra"
+
+msgid "`Water`, `sphere`, `I-131`"
+msgstr ""
+
+msgid "text"
+msgstr "texto"
+
+msgid "`\"Tissue, Soft (ICRP)\"` (use quotes for spaces or commas)"
+msgstr "`\"Tissue, Soft (ICRP)\"` (use aspas se houver espaços ou vírgulas)"
+
+msgid "yes/no"
+msgstr "sim/não"
+
+msgid "`on`/`off`, `yes`/`no`, `true`/`false`"
+msgstr ""
+
+msgid "list"
+msgstr "lista"
+
+msgid "`[3, 0, 0]`, `[1 cm, 2cm, 30 mm]`, `[lesion, liver]`"
+msgstr ""
+
+msgid "table"
+msgstr "tabela"
+
+msgid "`{ H = 0.112, O = 0.888 }`"
+msgstr ""
+
+msgid "Lists may span several lines."
+msgstr "Listas podem ocupar várias linhas."
+
+msgid "Units"
+msgstr "Unidades"
+
+msgid "The unit comes after the number, with or without a space. In a list, a unit after the `]` applies to every element that has no unit of its own:"
+msgstr "A unidade vem depois do número, com ou sem espaço. Numa lista, uma unidade depois do `]` vale para todos os elementos que não têm unidade própria:"
+
+msgid "**Without a unit, the default unit of the quantity applies:**"
+msgstr "**Sem unidade, vale a unidade padrão da grandeza:**"
+
+msgid "Quantity"
+msgstr "Grandeza"
+
+msgid "Default"
+msgstr "Padrão"
+
+msgid "Other units"
+msgstr "Outras unidades"
+
+msgid "length"
+msgstr "comprimento"
+
+msgid "cm"
+msgstr ""
+
+msgid "nm, um, mm, m"
+msgstr ""
+
+msgid "energy"
+msgstr "energia"
+
+msgid "keV"
+msgstr ""
+
+msgid "eV, MeV, GeV, J"
+msgstr ""
+
+msgid "activity"
+msgstr "atividade"
+
+msgid "MBq"
+msgstr ""
+
+msgid "Bq, kBq, GBq, TBq, uCi, mCi, Ci"
+msgstr ""
+
+msgid "time"
+msgstr "tempo"
+
+msgid "s"
+msgstr ""
+
+msgid "ns, us, ms, min, h, d, y"
+msgstr ""
+
+msgid "density"
+msgstr "densidade"
+
+msgid "g/cm3"
+msgstr ""
+
+msgid "kg/m3, g/cc, mg/cm3…"
+msgstr ""
+
+msgid "angle"
+msgstr "ângulo"
+
+msgid "deg"
+msgstr ""
+
+msgid "rad, mrad"
+msgstr ""
+
+msgid "`guaraci info units` gives the complete list. Compound units are accepted: `g/cm3`, `g/cm^3`, `kg*m^-3`, `MBq*h`."
+msgstr "O `guaraci info units` dá a lista completa. Unidades compostas são aceitas: `g/cm3`, `g/cm^3`, `kg*m^-3`, `MBq*h`."
+
+msgid "`guaraci check` lists every number written without a unit, with the unit assumed for it."
+msgstr "O `guaraci check` lista todo número escrito sem unidade, com a unidade assumida para ele."
+
+msgid "**Upper and lower case:**"
+msgstr "**Maiúsculas e minúsculas:**"
+
+msgid "The exact spelling comes first."
+msgstr "A grafia exata vem primeiro."
+
+msgid "`CM` and `KEV` are accepted because no other unit has those letters."
+msgstr "`CM` e `KEV` são aceitos porque nenhuma outra unidade tem essas letras."
+
+msgid "If changing the case changed the meaning, the exact spelling would be required."
+msgstr "Se a troca de maiúsculas e minúsculas mudasse o significado, a grafia exata seria obrigatória."
+
+msgid "**Units are checked:** `radius = 5 keV` is an error (\"expected length\")."
+msgstr "**As unidades são conferidas:** `radius = 5 keV` é um erro (\"expected length\")."
+
+msgid "Including other files"
+msgstr "Incluir outros arquivos"
+
+msgid "This reads `materials.gci` and `geometry/body.gci`; the extension is optional. The path is relative to the file that contains the `include`. A file included twice is read only once, and circular includes are detected."
+msgstr "Isso lê `materials.gci` e `geometry/body.gci`; a extensão é opcional. O caminho é relativo ao arquivo que contém o `include`. Um arquivo incluído duas vezes é lido uma vez só, e inclusões circulares são detectadas."
+
+msgid "Errors"
+msgstr "Erros"
+
+msgid "Guaraci reads the whole file and reports **every** problem at once, each one pointing at the text:"
+msgstr "O Guaraci lê o arquivo inteiro e mostra **todos** os problemas de uma vez, cada um apontando o trecho do texto:"
+
+msgid "Misspelt names get suggestions: `in = thyriod` → *did you mean `thyroid`?*"
+msgstr "Nomes com erro de digitação recebem sugestões: `in = thyriod` → *did you mean `thyroid`?*"
+

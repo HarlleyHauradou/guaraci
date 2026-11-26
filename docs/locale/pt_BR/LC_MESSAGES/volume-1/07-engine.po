@@ -1,0 +1,116 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: pt_BR\n"
+
+msgid "7. Transport engine and statistics"
+msgstr "7\\. Motor de transporte e estatística"
+
+msgid "Geometry"
+msgstr "Geometria"
+
+msgid "Module `geometry.rs`. The volumes form a tree whose root is the world."
+msgstr "Módulo `geometry.rs`. Os volumes formam uma árvore cuja raiz é o mundo."
+
+msgid "**Location:** starting from the world, the search goes down to the first daughter that contains the point, and so on. The point belongs to the deepest volume."
+msgstr "**Localização:** a partir do mundo, a busca desce ao primeiro filho que contém o ponto, e assim por diante. O ponto pertence ao volume mais profundo."
+
+msgid "**Distance to the boundary:** in the region of volume V, it is the smallest of the exit distance from V and the entry distance into each daughter of V. The solids (box, sphere, cylinder, ellipsoid) compute these distances from the parametric interval of the ray inside them."
+msgstr "**Distância à fronteira:** na região do volume V, é o menor valor entre a distância de saída de V e a distância de entrada em cada filho de V. Os sólidos (caixa, esfera, cilindro, elipsoide) calculam essas distâncias a partir do intervalo paramétrico da reta dentro deles."
+
+msgid "**Crossing:** the photon moves to the boundary plus a small push (10⁻⁹ × the size of the world) and is located again."
+msgstr "**Travessia:** o fóton vai até a fronteira mais um pequeno empurrão (10⁻⁹ × o tamanho do mundo) e é localizado de novo."
+
+msgid "**Overlap check:** before running, 5000 points of each surface are tested. A point outside the mother means the volume sticks out of its mother; a point inside a sister means an overlap. The idea is that of Geant4's `CheckOverlaps`."
+msgstr "**Verificação de sobreposição:** antes de rodar, 5000 pontos de cada superfície são testados. Um ponto fora do pai significa que o volume vaza do pai; um ponto dentro de um irmão significa sobreposição. A ideia é a do `CheckOverlaps` do Geant4."
+
+msgid "Random number generators"
+msgstr "Geradores de números aleatórios"
+
+msgid "Module `rng.rs`. All of them produce uniform numbers in (0, 1) with 53 bits."
+msgstr "Módulo `rng.rs`. Todos produzem números uniformes em (0, 1) com 53 bits."
+
+msgid "`rng`"
+msgstr ""
+
+msgid "Algorithm"
+msgstr "Algoritmo"
+
+msgid "Verification"
+msgstr "Verificação"
+
+msgid "`philox`"
+msgstr ""
+
+msgid "Philox4x32-10 (Salmon et al., 2011), counter-based"
+msgstr "Philox4x32-10 (Salmon et al., 2011), baseado em contador"
+
+msgid "Random123 known-answer tests"
+msgstr "testes de resposta conhecida do Random123"
+
+msgid "`xoshiro`"
+msgstr ""
+
+msgid "Xoshiro256++ (Blackman and Vigna)"
+msgstr "Xoshiro256++ (Blackman e Vigna)"
+
+msgid "known output for the state [1, 2, 3, 4]"
+msgstr "saída conhecida para o estado [1, 2, 3, 4]"
+
+msgid "`pcg`"
+msgstr ""
+
+msgid "PCG64 XSL-RR 128/64 (O'Neill)"
+msgstr ""
+
+msgid "statistical moments"
+msgstr "momentos estatísticos"
+
+msgid "`mt19937`"
+msgstr ""
+
+msgid "32-bit Mersenne Twister"
+msgstr "Mersenne Twister de 32 bits"
+
+msgid "10000th output for seed 5489 (C++ standard)"
+msgstr "10000ª saída da semente 5489 (padrão C++)"
+
+msgid "Parallelism and reproducibility"
+msgstr "Paralelismo e reprodutibilidade"
+
+msgid "Histories are split into fixed blocks of 1000. Block b always uses stream b of the generator: for Philox, the counter (b, i) with the key equal to the seed; for the others, the state is derived from (seed, b) by SplitMix64. Therefore **the result does not depend on the number of threads**, and a test checks it. Blocks are distributed among threads with rayon. Each thread accumulates in a `Tally` of its own, and the tallies are summed at the end of each batch."
+msgstr "As histórias são divididas em blocos fixos de 1000. O bloco b sempre usa o fluxo b do gerador: no Philox, o contador (b, i) com a chave igual à semente; nos demais, o estado é derivado de (semente, b) por SplitMix64. Por isso **o resultado não depende do número de threads**, e um teste verifica isso. Os blocos são distribuídos entre as threads com rayon. Cada thread acumula num `Tally` próprio, e os tallies são somados ao fim de cada lote."
+
+msgid "Uncertainty"
+msgstr "Incerteza"
+
+msgid "Blocks are grouped in B batches (`batches`). For every cell of every probe, the total sum and the sum of the squares of the per-history means of each batch are kept. The uncertainty of the mean is"
+msgstr "Os blocos são agrupados em B lotes (`batches`). Para cada célula de cada probe, guardam-se a soma total e a soma dos quadrados das médias por história de cada lote. A incerteza da média é"
+
+msgid "σ²(x̄) = [ (1/B) Σ x̄_b² − x̄² ] · B/(B − 1) / B"
+msgstr ""
+
+msgid "Scoring"
+msgstr "Pontuação"
+
+msgid "**Deposited energy:** goes to the grid cell where it falls and to the volume probes of the current region."
+msgstr "**Energia depositada:** vai para a célula da grade em que cai e para os probes de volume da região atual."
+
+msgid "**Track length:** each path segment in a region is added to the energy bin of the `spectrum` probes of that region."
+msgstr "**Comprimento de trajetória:** cada trecho percorrido numa região é somado ao bin de energia dos probes `spectrum` daquela região."
+
+msgid "**Balance:** the `Tally` also accumulates the energy emitted, deposited and escaped from the world, to check energy conservation."
+msgstr "**Balanço:** o `Tally` também acumula a energia emitida, depositada e escapada do mundo, para conferir a conservação de energia."
+
+msgid "Dose"
+msgstr ""
+
+msgid "D = E_dep / m, with E in J (1 MeV = 1.602176634×10⁻¹³ J) and m in kg."
+msgstr "D = E_dep / m, com E em J (1 MeV = 1,602176634×10⁻¹³ J) e m em kg."
+
+msgid "**Volumes:** m = ρ × (volume of the solid − volumes of the daughters), computed analytically."
+msgstr "**Volumes:** m = ρ × (volume do sólido − volumes dos filhos), calculado analiticamente."
+
+msgid "**Voxels:** m = ⟨ρ⟩ × voxel volume, with ⟨ρ⟩ the mean over 3×3×3 points inside the voxel."
+msgstr "**Voxels:** m = ⟨ρ⟩ × volume do voxel, com ⟨ρ⟩ a média em 3×3×3 pontos dentro do voxel."
+

@@ -1,4 +1,11 @@
-# Sphinx configuration of the Guaraci documentation (Read the Docs).
+# Sphinx configuration of the Guaraci documentation.
+#
+# English is the source language; Portuguese and Spanish are gettext
+# translations in locale/. Each language is built separately:
+#   sphinx-build docs site/en
+#   sphinx-build -D language=pt_BR docs site/pt-br
+#   sphinx-build -D language=es docs site/es
+# and published on GitHub Pages (.github/workflows/docs.yml).
 
 project = "Guaraci"
 author = "Harlley Hauradou"
@@ -28,6 +35,8 @@ html_title = "Guaraci"
 html_logo = "_static/logo.svg"
 html_favicon = "_static/logo.svg"
 html_static_path = ["_static"]
+templates_path = ["_templates"]
+exclude_patterns += ["_static/root-index.html"]
 html_css_files = ["custom.css"]
 html_show_sourcelink = False
 
@@ -36,7 +45,7 @@ html_theme_options = {
     "github_url": "https://github.com/HarlleyHauradou/guaraci",
     "header_links_before_dropdown": 6,
     "navbar_align": "left",
-    "navbar_end": ["theme-switcher", "navbar-icon-links"],
+    "navbar_end": ["language-switcher", "theme-switcher", "navbar-icon-links"],
     "secondary_sidebar_items": ["page-toc", "edit-this-page"],
     "use_edit_page_button": True,
     "show_toc_level": 2,

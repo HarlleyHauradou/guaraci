@@ -1,0 +1,137 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: es\n"
+
+msgid "7. Sources and radionuclides"
+msgstr "7\\. Fuentes y radionucleidos"
+
+msgid "What it emits"
+msgstr "Qué emite"
+
+msgid "Choose **one** of:"
+msgstr "Elija **una** de las opciones:"
+
+msgid "Key"
+msgstr "Clave"
+
+msgid "Example"
+msgstr "Ejemplo"
+
+msgid "Description"
+msgstr "Descripción"
+
+msgid "`nuclide`"
+msgstr ""
+
+msgid "`I-131`"
+msgstr ""
+
+msgid "emissions of the nuclide, from the ENDF/B-VIII.0 decay library"
+msgstr "emisiones del nucleido, de la biblioteca de decaimiento ENDF/B-VIII.0"
+
+msgid "`energy` (+ `intensity`)"
+msgstr ""
+
+msgid "`energy = [140.5, 364.5] keV`, `intensity = [0.89, 0.81]`"
+msgstr ""
+
+msgid "lines of your own (intensity = photons per decay; default 1)"
+msgstr "líneas definidas por usted (intensidad = fotones por decaimiento; por defecto 1)"
+
+msgid "The nuclide name can be written in several equivalent ways: `I-131`, `I131`, `131I`, `i-131`; for isomers, `Tc-99m`, `Tc99m`, `99mTc`. To see the data of a nuclide:"
+msgstr "El nombre del nucleido puede escribirse de varias formas equivalentes: `I-131`, `I131`, `131I`, `i-131`; para isómeros, `Tc-99m`, `Tc99m`, `99mTc`. Para ver los datos de un nucleido:"
+
+msgid "Any nuclide of the decay library can be used (3821 in ENDF/B-VIII.0)."
+msgstr "Se puede usar cualquier nucleido de la biblioteca de decaimiento (3821 en ENDF/B-VIII.0)."
+
+msgid "Where it is"
+msgstr "Dónde está"
+
+msgid "`in = <volume>`"
+msgstr ""
+
+msgid "spread uniformly over the volume (its region: the solid minus its daughters)"
+msgstr "distribuida uniformemente en el volumen (en su región: el sólido menos sus hijos)"
+
+msgid "`position = [x, y, z]`"
+msgstr ""
+
+msgid "point source"
+msgstr "fuente puntual"
+
+msgid "The material of the volume and the nuclide are independent: the volume says where the activity is, and the material says what the medium is made of."
+msgstr "El material del volumen y el nucleido son independientes: el volumen indica dónde está la actividad, y el material indica de qué está hecho el medio."
+
+msgid "How much"
+msgstr "Cuánto"
+
+msgid "`activity`"
+msgstr ""
+
+msgid "activity (default unit: MBq)"
+msgstr "actividad (unidad por defecto: MBq)"
+
+msgid "`duration`"
+msgstr ""
+
+msgid "acquisition/exposure time; with `activity`, it gives the number of decays"
+msgstr "tiempo de adquisición/exposición; con `activity`, da el número de decaimientos"
+
+msgid "Without `activity`, results are per decay."
+msgstr "Sin `activity`, los resultados son por decaimiento."
+
+msgid "Electrons"
+msgstr "Electrones"
+
+msgid "Default"
+msgstr "Por defecto"
+
+msgid "`beta`"
+msgstr ""
+
+msgid "`local`"
+msgstr ""
+
+msgid "`local`: the mean energy of β⁻, β⁺, Auger and conversion electrons is deposited at the decay point; `off`: ignored (to separate the photon contribution)"
+msgstr "`local`: la energía media de los electrones β⁻, β⁺, Auger y de conversión se deposita en el punto de decaimiento; `off`: se ignora (para separar la contribución de los fotones)"
+
+msgid "How emissions are treated in this version"
+msgstr "Cómo se tratan las emisiones en esta versión"
+
+msgid "Emission"
+msgstr "Emisión"
+
+msgid "Treatment"
+msgstr "Tratamiento"
+
+msgid "gamma and X-rays"
+msgstr "gamma y rayos X"
+
+msgid "I-131 364 keV, Tc-99m 140 keV"
+msgstr ""
+
+msgid "transported"
+msgstr "transportados"
+
+msgid "positron annihilation"
+msgstr "aniquilación de positrones"
+
+msgid "F-18, Ga-68"
+msgstr ""
+
+msgid "back-to-back 511 keV photons transported from the decay point"
+msgstr "fotones de 511 keV en direcciones opuestas, transportados desde el punto de decaimiento"
+
+msgid "β⁻, β⁺ (kinetic energy), Auger and conversion electrons"
+msgstr "β⁻, β⁺ (energía cinética), electrones Auger y de conversión"
+
+msgid "I-131, Lu-177, C-14"
+msgstr ""
+
+msgid "energy deposited at the emission point"
+msgstr "energía depositada en el punto de emisión"
+
+msgid "Local deposition is a good approximation when the voxel is much larger than the electron range (about 0.3 mm for C-14 and up to 2–3 mm for I-131 in tissue). Electron transport will come in a future version."
+msgstr "La deposición local es una buena aproximación cuando el vóxel es mucho mayor que el alcance del electrón (unos 0,3 mm para el C-14 y hasta 2–3 mm para el I-131 en tejido). El transporte de electrones llegará en una versión futura."
+

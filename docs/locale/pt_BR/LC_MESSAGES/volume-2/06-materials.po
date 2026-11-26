@@ -1,0 +1,125 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: pt_BR\n"
+
+msgid "6. Materials"
+msgstr "6\\. Materiais"
+
+msgid "Built-in database"
+msgstr "Banco embutido"
+
+msgid "Guaraci ships the 372 materials of the *Compendium of Material Composition Data for Radiation Transport Modeling* (PNNL-15870 Rev. 1, 2011), plus 147 alternative names. To search it:"
+msgstr "O Guaraci traz os 372 materiais do *Compendium of Material Composition Data for Radiation Transport Modeling* (PNNL-15870 Rev. 1, 2011), além de 147 nomes alternativos. Para pesquisar:"
+
+msgid "Some examples:"
+msgstr "Alguns exemplos:"
+
+msgid "Use"
+msgstr "Uso"
+
+msgid "Names"
+msgstr "Nomes"
+
+msgid "tissues"
+msgstr "tecidos"
+
+msgid "`Tissue_Soft_ICRP`, `Tissue_Soft_ICRUFourComponent`, `Tissue_Lung`, `Tissue_Adipose`, `Tissue_Breast`, `Blood`, `Brain`, `EyeLens`, `Skin`, `Muscle_Skeletal`"
+msgstr ""
+
+msgid "bone"
+msgstr "osso"
+
+msgid "`Bone_Cortical`, `Bone_Compact`"
+msgstr ""
+
+msgid "phantoms"
+msgstr "simuladores"
+
+msgid "`Water`, `PMMA` (= `Lucite`), `A150TissueEquivalentPlastic`, `BoneEquivalentPlastic_B100`"
+msgstr ""
+
+msgid "detectors"
+msgstr "detectores"
+
+msgid "`NaI`, `CsI`, `BGO`, `LYSO`, `LSO`, `GSO`, `CdTe`"
+msgstr ""
+
+msgid "shielding"
+msgstr "blindagem"
+
+msgid "`Lead`, `Tungsten`, `Concrete_Ordinary_NIST`, `Steel_Stainless304`"
+msgstr ""
+
+msgid "Ambiguous names of the compendium did not become shortcuts. \"Soft Tissue\", for example, exists in an ICRP and an ICRU version, so you choose explicitly between `Tissue_Soft_ICRP` and `Tissue_Soft_ICRUFourComponent`."
+msgstr "Nomes ambíguos do compêndio não viraram atalhos. \"Soft Tissue\", por exemplo, existe numa versão ICRP e numa ICRU, então você escolhe explicitamente entre `Tissue_Soft_ICRP` e `Tissue_Soft_ICRUFourComponent`."
+
+msgid "Defining a material"
+msgstr "Definir um material"
+
+msgid "By mass fractions (Guaraci normalises the sum to 1):"
+msgstr "Por frações de massa (o Guaraci normaliza a soma para 1):"
+
+msgid "By chemical formula:"
+msgstr "Por fórmula química:"
+
+msgid "Copying another material with a different density:"
+msgstr "Copiando outro material com outra densidade:"
+
+msgid "A definition of yours with the same name as a database material **replaces** the database one. To use your definitions in several simulations, put them in a file of your own and `include` it."
+msgstr "Uma definição sua com o mesmo nome de um material do banco **substitui** o do banco. Para usar suas definições em várias simulações, coloque-as num arquivo seu e faça `include` dele."
+
+msgid "Keys"
+msgstr "Chaves"
+
+msgid "Key"
+msgstr "Chave"
+
+msgid "Description"
+msgstr "Descrição"
+
+msgid "`density`"
+msgstr ""
+
+msgid "density (required, except with `same_as`)"
+msgstr "densidade (obrigatória, exceto com `same_as`)"
+
+msgid "`composition`"
+msgstr ""
+
+msgid "table `{ element = mass fraction }`"
+msgstr "tabela `{ element = mass fraction }`"
+
+msgid "`formula`"
+msgstr ""
+
+msgid "chemical formula, e.g. `H2O`, `Ca(OH)2`; atomic masses come from the data library"
+msgstr "fórmula química, ex. `H2O`, `Ca(OH)2`; as massas atômicas vêm da biblioteca de dados"
+
+msgid "`same_as`"
+msgstr ""
+
+msgid "copies the composition (and the density, if not given) of another material"
+msgstr "copia a composição (e a densidade, se não for dada) de outro material"
+
+msgid "`title`, `comment`, `reference`, `number`"
+msgstr ""
+
+msgid "descriptive information, shown in the reports"
+msgstr "informação descritiva, mostrada nos relatórios"
+
+msgid "Pure elements"
+msgstr "Elementos puros"
+
+msgid "A single-element material is defined like any other. Many elements are already in the database (`Lead`, `Aluminum`, `Iron`, `Gold`, `Tungsten`…); for the others, give the density:"
+msgstr "Um material de um só elemento é definido como qualquer outro. Muitos elementos já estão no banco (`Lead`, `Aluminum`, `Iron`, `Gold`, `Tungsten`…); para os outros, informe a densidade:"
+
+msgid "Isotopes"
+msgstr "Isótopos"
+
+msgid "In photon transport only the atomic number matters: C-14 attenuates like ordinary carbon. Isotopes are accepted in compositions (`{ C-14 = 1 }`) and treated as the element; the compositions of the database given by isotope (U, Pu, Li, B…) were summed by element."
+msgstr "No transporte de fótons só o número atômico importa: o C-14 atenua como o carbono comum. Isótopos são aceitos nas composições (`{ C-14 = 1 }`) e tratados como o elemento; as composições do banco dadas por isótopo (U, Pu, Li, B…) foram somadas por elemento."
+
+msgid "The radioactive nuclide of a source does **not** go into the material; that is done in the `[source]` section ([chapter 7](07-sources.md))."
+msgstr "O nuclídeo radioativo de uma fonte **não** entra no material; isso é feito na seção `[source]` ([capítulo 7](07-sources.md))."
+

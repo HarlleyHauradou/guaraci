@@ -1,0 +1,80 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: es\n"
+
+msgid "2. Installation and nuclear data"
+msgstr "2\\. Instalación y datos nucleares"
+
+msgid "Building"
+msgstr "Compilación"
+
+msgid "You need [Rust](https://www.rust-lang.org/tools/install) (1.80 or newer)."
+msgstr "Se necesita [Rust](https://www.rust-lang.org/tools/install) (1.80 o más reciente)."
+
+msgid "The `guaraci` command is then available in the terminal."
+msgstr "El comando `guaraci` queda disponible en la terminal."
+
+msgid "Nuclear data"
+msgstr "Datos nucleares"
+
+msgid "Guaraci **does not redistribute** third-party data libraries. They are downloaded from the official sources on your machine, checked by SHA-256 and converted to an internal format."
+msgstr "Guaraci **no redistribuye** bibliotecas de datos de terceros. Se descargan de las fuentes oficiales en su máquina, se verifican con SHA-256 y se convierten a un formato interno."
+
+msgid "In practice there is nothing to do: the first simulation that needs a library that is not installed yet says so and downloads it. To download in advance (for example, on a machine that will later be offline):"
+msgstr "En la práctica no hay que hacer nada: la primera simulación que necesite una biblioteca aún no instalada lo avisa y la descarga. Para descargarla antes (por ejemplo, en una máquina que luego no tendrá internet):"
+
+msgid "Library"
+msgstr "Biblioteca"
+
+msgid "Contents"
+msgstr "Contenido"
+
+msgid "Source"
+msgstr "Fuente"
+
+msgid "Download"
+msgstr "Descarga"
+
+msgid "`endfb8` (default)"
+msgstr "`endfb8` (por defecto)"
+
+msgid "photon interactions and radioactive decay"
+msgstr "interacciones de fotones y decaimiento radiactivo"
+
+msgid "NNDC/BNL, ENDF/B-VIII.0"
+msgstr ""
+
+msgid "automatic (36 MB + 14 MB)"
+msgstr "automática (36 MB + 14 MB)"
+
+msgid "`epics2017`"
+msgstr ""
+
+msgid "photon interactions"
+msgstr "interacciones de fotones"
+
+msgid "IAEA"
+msgstr ""
+
+msgid "manual"
+msgstr ""
+
+msgid "`epdl97`"
+msgstr ""
+
+msgid "The IAEA website blocks automatic downloads. For EPICS2017 and EPDL97, download the file with a web browser and install it with:"
+msgstr "El sitio de la IAEA bloquea las descargas automáticas. Para EPICS2017 y EPDL97, descargue el archivo con el navegador e instálelo con:"
+
+msgid "`--from` accepts a `.zip` file or a folder with the ENDF files."
+msgstr "`--from` acepta un archivo `.zip` o una carpeta con los archivos ENDF."
+
+msgid "Where the data is stored"
+msgstr "Dónde se guardan los datos"
+
+msgid "By default in `~/.local/share/guaraci` (Linux). To use another place, such as a shared disk of a cluster, set the `GUARACI_DATA` variable."
+msgstr "Por defecto en `~/.local/share/guaraci` (Linux). Para usar otro lugar, como un disco compartido de un clúster, defina la variable `GUARACI_DATA`."
+
+msgid "What is installed"
+msgstr "Qué está instalado"
+

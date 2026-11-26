@@ -1,0 +1,24 @@
+{# Language menu: links to the same page in the other languages (see conf.py) #}
+{%- set labels = {"en": "English", "pt_BR": "Português", "es": "Español"} %}
+<div class="dropdown guaraci-language">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Language">
+    <i class="fa-solid fa-language"></i>
+    <span>{{ labels.get(language, "English") }}</span>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><a class="dropdown-item" href="#" data-lang-slug="en">English</a></li>
+    <li><a class="dropdown-item" href="#" data-lang-slug="pt-br">Português</a></li>
+    <li><a class="dropdown-item" href="#" data-lang-slug="es">Español</a></li>
+  </ul>
+</div>
+<script>
+  document.querySelectorAll(".guaraci-language [data-lang-slug]").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+      var slug = a.getAttribute("data-lang-slug");
+      var path = window.location.pathname;
+      var next = /\/(en|pt-br|es)\//.test(path) ? path.replace(/\/(en|pt-br|es)\//, "/" + slug + "/") : "/" + slug + "/";
+      window.location.href = next + window.location.hash;
+    });
+  });
+</script>

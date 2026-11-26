@@ -1,0 +1,44 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: pt_BR\n"
+
+msgid "3. First simulation"
+msgstr "3\\. Primeira simulação"
+
+msgid "Create the file `thyroid.gci`:"
+msgstr "Crie o arquivo `thyroid.gci`:"
+
+msgid "Check what Guaraci understood, without running:"
+msgstr "Confira o que o Guaraci entendeu, sem rodar:"
+
+msgid "The `.gci` extension is optional. The output shows:"
+msgstr "A extensão `.gci` é opcional. A saída mostra:"
+
+msgid "the geometry as a tree;"
+msgstr "a geometria em forma de árvore;"
+
+msgid "the materials, with composition and origin;"
+msgstr "os materiais, com composição e origem;"
+
+msgid "the gamma lines of I-131 from ENDF/B-VIII.0;"
+msgstr "as linhas gama do I-131 vindas do ENDF/B-VIII.0;"
+
+msgid "the default values that were applied;"
+msgstr "os valores padrão que foram aplicados;"
+
+msgid "the numbers written without a unit, and the unit assumed for each."
+msgstr "os números escritos sem unidade e a unidade assumida para cada um."
+
+msgid "To run:"
+msgstr "Para rodar:"
+
+msgid "On the first run, Guaraci downloads the ENDF/B-VIII.0 data (about 50 MB, only once). It then shows the progress and, at the end, a summary:"
+msgstr "Na primeira execução, o Guaraci baixa os dados do ENDF/B-VIII.0 (cerca de 50 MB, uma única vez). Depois mostra o progresso e, ao final, um resumo:"
+
+msgid "Because the source has an `activity`, the results are **dose rates** (Gy/s). The files are in `thyroid_results/` (see [chapter 10](10-results.md))."
+msgstr "Como a fonte tem `activity`, os resultados são **taxas de dose** (Gy/s). Os arquivos ficam em `thyroid_results/` (veja o [capítulo 10](10-results.md))."
+
+msgid "For a quick test, reduce the number of histories without editing the file:"
+msgstr "Para um teste rápido, reduza o número de histórias sem editar o arquivo:"
+

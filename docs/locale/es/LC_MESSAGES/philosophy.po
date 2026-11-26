@@ -1,0 +1,41 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: es\n"
+
+msgid "Philosophy"
+msgstr "Filosofía"
+
+msgid "Input is written for humans; let the machine do the work."
+msgstr "La entrada se escribe para humanos; que la máquina haga el esfuerzo."
+
+msgid "Readable beats clever."
+msgstr "Lo legible vence a lo ingenioso."
+
+msgid "Errors should teach."
+msgstr "Los errores deben enseñar."
+
+msgid "Simple on the surface, rigorous underneath."
+msgstr "Simple en la superficie, riguroso por dentro."
+
+msgid "Users think in organs and activities, not in surfaces and cards."
+msgstr "El usuario piensa en órganos y actividades, no en superficies y tarjetas."
+
+msgid "Two physicists reading the same file should picture the same experiment."
+msgstr "Dos físicos que lean el mismo archivo deben imaginar el mismo experimento."
+
+msgid "When in doubt, the code asks; it never guesses."
+msgstr "Ante la duda, el código pregunta; nunca adivina."
+
+msgid "The input file is the simulation's lab notebook."
+msgstr "El archivo de entrada es el cuaderno de laboratorio de la simulación."
+
+msgid "Output should be as clear as the input; numbers without explanation are just a pile of data."
+msgstr "La salida debe ser tan clara como la entrada; números sin explicación son solo un montón de datos."
+
+msgid "Writing may need the manual; reading should not."
+msgstr "Escribir puede requerir el manual; leer, no."
+
+msgid "Ten clear lines are worth more than one magic line."
+msgstr "Diez líneas claras valen más que una línea mágica."
+

@@ -42,8 +42,9 @@ GUARACI_TEST_DATA=~/.local/share/guaraci cargo test --release -p guaraci-cpu sta
 ## Documentation
 
 The website is built from the `docs/` folder with Sphinx (PyData Sphinx
-Theme; pages in Markdown with MyST) and published on Read the Docs at every
-push to `main` (configuration in `.readthedocs.yaml`). To view it locally:
+Theme; pages in Markdown with MyST) and published on GitHub Pages, in the
+three languages, at every push to `main` (workflow `.github/workflows/docs.yml`).
+To view it locally:
 
 ```bash
 pip install -r docs/requirements.txt
@@ -54,6 +55,7 @@ Then open `docs/_build/html/index.html` in a browser.
 
 English is the source language. The Portuguese and Spanish versions are
 translations kept as gettext files in `docs/locale/` (see [Translations](#translations)).
+To build another language, add `-D language=pt_BR` or `-D language=es`.
 
 ## Translations
 
