@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/favicon.svg" width="90" alt="">
+  <img src="docs/_static/logo.svg" width="90" alt="">
 </p>
 
 <h1 align="center">Guaraci</h1>
