@@ -1,7 +1,7 @@
 # 8. Probes
 
-Um **probe** mede algo durante a simulação. É o equivalente ao *tally* do MCNP
-e ao *actor* do GATE.
+A **probe** measures something during the simulation. It is the equivalent of
+the MCNP *tally* and the GATE *actor*.
 
 ```ini
 [probe dose]
@@ -10,23 +10,24 @@ in = neck
 voxel = [2, 2, 2] mm
 ```
 
-| `type` | Chaves | Resultado |
+| `type` | Keys | Result |
 |---|---|---|
-| `dose_grid` | `in`*, `voxel`* | mapa 3D de dose sobre a caixa que envolve o volume (`.mhd` + `.raw`) e mapa da incerteza relativa |
-| `volume_dose` | `volumes`* | energia e dose média em cada volume (`.csv`) |
-| `spectrum` | `in`*, `emax` (1000 keV), `bins` (200) | espectro de fluência de fótons no volume (`.csv`) |
+| `dose_grid` | `in`*, `voxel`* | 3D dose map over the bounding box of the volume (`.mhd` + `.raw`) and a map of the relative uncertainty |
+| `volume_dose` | `volumes`* | energy and mean dose in each volume (`.csv`) |
+| `spectrum` | `in`*, `emax` (1000 keV), `bins` (200) | photon fluence spectrum in the volume (`.csv`) |
 
-`output` muda o nome do arquivo de saída (padrão: `<nome>.mhd` ou `<nome>.csv`).
+`output` changes the name of the output file (default: `<name>.mhd` or `<name>.csv`).
 
-## Detalhes
+## Details
 
-- **Região de um volume:** é o sólido dele **menos** os volumes filhos. A dose em
-  `neck` não inclui a tireoide, que é filha dele; para incluí-la, liste os dois.
+- **Region of a volume:** its solid **minus** its daughter volumes. The dose in
+  `neck` does not include the thyroid, which is its daughter; to include it,
+  list both.
 - **`dose_grid`:**
-  - a grade cobre a caixa que envolve o volume, inclusive o que está fora dele;
-  - a massa de cada voxel é calculada com 27 pontos internos, então um voxel
-    cortado por uma fronteira recebe a massa que realmente contém;
-  - a dose do voxel é a média sobre os materiais dentro dele.
+  - the grid covers the bounding box of the volume, including what lies outside the volume;
+  - the mass of each voxel is computed from 27 points inside it, so a voxel cut
+    by a boundary gets the mass it really contains;
+  - the dose of a voxel is the mean over the materials inside it.
 - **`spectrum`:**
-  - usa o estimador de comprimento de trajetória (fluência = soma dos comprimentos ÷ volume);
-  - a coluna `fluence_per_keV` divide pela largura do bin.
+  - uses the track-length estimator (fluence = sum of track lengths ÷ volume);
+  - the `fluence_per_keV` column divides by the bin width.

@@ -1,36 +1,34 @@
-# Volume III — Interface Gráfica
+# Volume III — Graphical Interface
 
-:::{note} Em desenvolvimento
-A interface gráfica ainda não existe. Esta página descreve o que ela vai
-fazer e como este volume será organizado. Tudo o que a interface faz
-também pode ser feito pelo terminal, com os comandos do
+:::{note} In development
+The graphical interface does not exist yet. This page describes what it will
+do and how this volume will be organised. Everything the interface does can
+also be done from the terminal, with the commands of
 [Volume II](../volume-2/index.md).
 :::
 
-A interface é um programa desktop escrito em Rust (egui), inspirado no Flair
-do FLUKA. Ela trabalha **sobre os mesmos arquivos `.gci`**: nada fica escondido
-na interface, e o arquivo de entrada continua sendo o caderno de laboratório
-da simulação.
+The interface is a desktop program written in Rust (egui), inspired by Flair
+for FLUKA. It works **on the same `.gci` files**: nothing is hidden inside the
+interface, and the input file remains the lab notebook of the simulation.
 
-## Capítulos previstos
+## Planned chapters
 
-1. **Visão geral:** janelas, projetos e arquivos.
+1. **Overview:** windows, projects and files.
 2. **Editor:**
-   - destaque de sintaxe do `.gci`;
-   - validação enquanto se digita, com as mesmas mensagens do `guaraci check`;
-   - completar nomes de materiais, volumes e nuclídeos.
-3. **Geometria:**
-   - cortes 2D (axial, coronal, sagital) com as cores dos materiais;
-   - vista 3D;
-   - seleção de um volume pelo clique, que leva à seção correspondente no editor.
-4. **Materiais e nuclídeos:** navegador do banco de materiais e dos dados de
-   decaimento (linhas, meia-vida, energias médias).
-5. **Execução:** rodar, acompanhar o progresso, ver o registro e interromper
-   uma simulação.
-6. **Resultados:**
-   - mapa de dose sobreposto à geometria, com escala de cores;
-   - perfis de dose;
-   - histograma dose-volume (DVH);
-   - mapa de incerteza;
-   - espectros.
-7. **Exportação:** figuras, tabelas e relatórios.
+   - syntax highlighting of `.gci`;
+   - checking while typing, with the same messages as `guaraci check`;
+   - completion of material, volume and nuclide names.
+3. **Geometry:**
+   - 2D slices (axial, coronal, sagittal) coloured by material;
+   - 3D view;
+   - clicking a volume jumps to its section in the editor.
+4. **Materials and nuclides:** browsers of the material database and of the
+   decay data (lines, half-life, mean energies).
+5. **Running:** start a simulation, follow its progress, read the log and stop it.
+6. **Results:**
+   - dose map over the geometry, with a colour scale;
+   - dose profiles;
+   - dose-volume histograms (DVH);
+   - uncertainty map;
+   - spectra.
+7. **Export:** figures, tables and reports.

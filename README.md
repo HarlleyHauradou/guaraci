@@ -5,14 +5,18 @@
 <h1 align="center">Guaraci</h1>
 
 <p align="center">
+  <b>English</b> · <a href="README.pt-BR.md">Português</a> · <a href="README.es.md">Español</a>
+</p>
+
+<p align="center">
   <b>Monte Carlo radiation transport on CPU and GPU</b><br>
   Focused initially on medical physics and nuclear medicine.
 </p>
 
 <p align="center">
   <a href="https://guaraci.readthedocs.io/"><b>Documentation</b></a> ·
-  <a href="docs/volume-2/03-primeira-simulacao.md">First simulation</a> ·
-  <a href="docs/volume-1/08-validacao.md">Validation</a> ·
+  <a href="docs/volume-2/03-first-simulation.md">First simulation</a> ·
+  <a href="docs/volume-1/08-validation.md">Validation</a> ·
   <a href="examples/">Examples</a>
 </p>
 
@@ -70,7 +74,7 @@ guaraci run examples/thyroid_i131
 
 ## Documentation
 
-The manual is online at **<https://guaraci.readthedocs.io/>** (in Portuguese), in three volumes:
+The manual is online at **<https://guaraci.readthedocs.io/>**, in three volumes:
 
 | Volume | Contents |
 |---|---|

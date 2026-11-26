@@ -4,7 +4,11 @@ project = "Guaraci"
 author = "Harlley Hauradou"
 copyright = "Guaraci"
 release = "0.1"
-language = "pt_BR"
+language = "en"
+
+# Translations (gettext): docs/locale/<lang>/LC_MESSAGES/*.po
+locale_dirs = ["locale/"]
+gettext_compact = False
 
 extensions = [
     "myst_parser",

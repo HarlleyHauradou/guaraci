@@ -1,16 +1,17 @@
-# Volume I — Manual Técnico
+# Volume I — Technical Manual
 
-Como o Guaraci calcula: arquitetura, unidades, leitura da entrada, dados nucleares, materiais, física, motor de transporte e validação.
+How Guaraci computes: architecture, units, input reading, nuclear data,
+materials, physics, transport engine and validation.
 
 ```{toctree}
 :maxdepth: 2
 
-01-arquitetura
-02-unidades
-03-entrada
-04-dados
-05-materiais
-06-fisica
-07-motor
-08-validacao
+01-architecture
+02-units
+03-input
+04-data
+05-materials
+06-physics
+07-engine
+08-validation
 ```
