@@ -96,8 +96,8 @@ msgstr "El benchmark completo de las esferas de Stabin & Konijnenberg (231 casos
 msgid "Documentation"
 msgstr "Documentación"
 
-msgid "The website is built from the `docs/` folder with Sphinx (PyData Sphinx Theme; pages in Markdown with MyST) and published on GitHub Pages, in the three languages, at every push to `main` (workflow `.github/workflows/docs.yml`). To view it locally:"
-msgstr "El sitio se genera a partir de la carpeta `docs/` con Sphinx (PyData Sphinx Theme; páginas en Markdown con MyST) y se publica en GitHub Pages, en los tres idiomas, con cada push a `main` (workflow `.github/workflows/docs.yml`). Para verlo localmente:"
+msgid "The website is built from the `docs/` folder with Sphinx (PyData Sphinx Theme; pages in Markdown with MyST) and published on Read the Docs, in the three languages, at every push to `main` (configuration in `.readthedocs.yaml`). To view it locally:"
+msgstr "El sitio se genera a partir de la carpeta `docs/` con Sphinx (PyData Sphinx Theme; páginas en Markdown con MyST) y se publica en Read the Docs, en los tres idiomas, con cada push a `main` (configuración en `.readthedocs.yaml`). Para verlo localmente:"
 
 msgid "Then open `docs/_build/html/index.html` in a browser."
 msgstr "Después, abra `docs/_build/html/index.html` en un navegador."

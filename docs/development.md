@@ -42,8 +42,8 @@ GUARACI_TEST_DATA=~/.local/share/guaraci cargo test --release -p guaraci-cpu sta
 ## Documentation
 
 The website is built from the `docs/` folder with Sphinx (PyData Sphinx
-Theme; pages in Markdown with MyST) and published on GitHub Pages, in the
-three languages, at every push to `main` (workflow `.github/workflows/docs.yml`).
+Theme; pages in Markdown with MyST) and published on Read the Docs, in the
+three languages, at every push to `main` (configuration in `.readthedocs.yaml`).
 To view it locally:
 
 ```bash

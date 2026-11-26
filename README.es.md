@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <a href="https://harlleyhauradou.github.io/guaraci/es/"><b>Documentación</b></a> ·
+  <a href="https://guaraci.readthedocs.io/es/latest/"><b>Documentación</b></a> ·
   <a href="docs/volume-2/03-first-simulation.md">Primera simulación</a> ·
   <a href="docs/volume-1/08-validation.md">Validación</a> ·
   <a href="examples/">Ejemplos</a>
@@ -22,7 +22,7 @@
 
 <p align="center">
   <a href="https://github.com/HarlleyHauradou/guaraci/actions/workflows/ci.yml"><img src="https://github.com/HarlleyHauradou/guaraci/actions/workflows/ci.yml/badge.svg" alt="ci"></a>
-  <a href="https://github.com/HarlleyHauradou/guaraci/actions/workflows/docs.yml"><img src="https://github.com/HarlleyHauradou/guaraci/actions/workflows/docs.yml/badge.svg" alt="docs"></a>
+  <a href="https://guaraci.readthedocs.io/es/latest/"><img src="https://readthedocs.org/projects/guaraci/badge/?version=latest" alt="docs"></a>
 </p>
 
 ---
@@ -74,7 +74,7 @@ guaraci run examples/thyroid_i131
 
 ## Documentación
 
-El manual está en línea, en inglés, portugués y español, en **<https://harlleyhauradou.github.io/guaraci/es/>**, en tres volúmenes:
+El manual está en línea, en inglés, portugués y español, en **<https://guaraci.readthedocs.io/es/latest/>**, en tres volúmenes:
 
 | Volumen | Contenido |
 |---|---|
@@ -90,7 +90,7 @@ El programa, sus mensajes y sus salidas están en inglés, el idioma de la comun
 |---|---|
 | `crates/` | los crates de Rust (`guaraci-units`, `-input`, `-data`, `-core`, `-cpu`, `-cli`) |
 | `data/` | base de datos de materiales |
-| `docs/` | fuentes de la documentación (Sphinx + tema PyData, Markdown con MyST), publicada en GitHub Pages |
+| `docs/` | fuentes de la documentación (Sphinx + tema PyData, Markdown con MyST), publicada en Read the Docs |
 | `examples/` | archivos de entrada |
 | `validation/` | benchmarks y comparaciones con GATE y MCNPX |
 | `tools/` | generadores |

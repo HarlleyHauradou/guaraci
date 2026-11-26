@@ -17,7 +17,7 @@
       e.preventDefault();
       var slug = a.getAttribute("data-lang-slug");
       var path = window.location.pathname;
-      var next = /\/(en|pt-br|es)\//.test(path) ? path.replace(/\/(en|pt-br|es)\//, "/" + slug + "/") : "/" + slug + "/";
+      var next = /\/(en|pt-br|es)\//.test(path) ? path.replace(/\/(en|pt-br|es)\//, "/" + slug + "/") : "/" + slug + "/latest/";
       window.location.href = next + window.location.hash;
     });
   });
