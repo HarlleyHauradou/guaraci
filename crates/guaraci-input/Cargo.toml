@@ -1,0 +1,12 @@
+[package]
+name = "guaraci-input"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "The Guaraci input language (.gci): parser, includes and diagnostics"
+
+[dependencies]
+guaraci-units.workspace = true
+miette.workspace = true
+thiserror.workspace = true
+strsim.workspace = true

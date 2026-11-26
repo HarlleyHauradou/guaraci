@@ -1,0 +1,10 @@
+[package]
+name = "guaraci-units"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Physical units and dimensional analysis for Guaraci input files"
+
+[dependencies]
+thiserror.workspace = true
+strsim.workspace = true
