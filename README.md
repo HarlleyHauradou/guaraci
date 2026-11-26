@@ -17,7 +17,7 @@
 <p align="center">
   <a href="https://guaraci.readthedocs.io/en/latest/"><b>Documentation</b></a> ·
   <a href="docs/volume-2/03-first-simulation.md">First simulation</a> ·
-  <a href="docs/volume-1/08-validation.md">Validation</a> ·
+  <a href="docs/volume-1/09-validation.md">Validation</a> ·
   <a href="examples/">Examples</a>
 </p>
 
@@ -56,13 +56,14 @@ guaraci run thyroid      # dose map, uncertainties and a readable report
 ## Features
 
 - **Photon transport** on multi-core CPUs: photoelectric effect, Compton (Klein-Nishina with S(x,Z)), Rayleigh (form factors), pair production.
+- **Electron and positron transport** (mixed condensed history): Bethe stopping powers with ICRU 37 mean excitation energies, δ-rays, bremsstrahlung, multiple scattering, β spectra from Fermi theory, annihilation.
 - **Radionuclide sources** from ENDF/B-VIII.0 decay data (3821 nuclides), downloaded from the official source on first use — no third-party data is redistributed.
 - **Human-readable input** with units (`15 mm`, `3.7 GBq`), includes, and error messages that point at the line and suggest the fix.
 - **372 materials** from PNNL-15870 Rev. 1.
 - **Probes**: 3D dose maps (MetaImage), dose in volumes, fluence spectra — all with statistical uncertainties.
-- **Validated**: μ/ρ within 0.4 % of NIST XCOM; absorbed fractions in 231 spheres compared with Stabin & Konijnenberg (2000); exact energy conservation; results independent of the thread count.
+- **Validated**: μ/ρ within 0.4 % of NIST XCOM; stopping powers and ranges within 1.1 % of NIST ESTAR; photon and electron absorbed fractions in spheres compared with Stabin & Konijnenberg (2000); exact energy conservation; results independent of the thread count.
 
-In development: voxelised phantoms (CT/DICOM), electron transport, CUDA backend, graphical interface.
+In development: voxelised phantoms (CT/DICOM), CUDA backend, graphical interface.
 
 ## Install
 

@@ -17,7 +17,7 @@
 <p align="center">
   <a href="https://guaraci.readthedocs.io/es/latest/"><b>Documentación</b></a> ·
   <a href="docs/volume-2/03-first-simulation.md">Primera simulación</a> ·
-  <a href="docs/volume-1/08-validation.md">Validación</a> ·
+  <a href="docs/volume-1/09-validation.md">Validación</a> ·
   <a href="examples/">Ejemplos</a>
 </p>
 
@@ -56,13 +56,14 @@ guaraci run thyroid      # mapa de dosis, incertidumbres y un informe legible
 ## Características
 
 - **Transporte de fotones** en CPU multinúcleo: efecto fotoeléctrico, Compton (Klein-Nishina con S(x,Z)), Rayleigh (factores de forma), producción de pares.
+- **Transporte de electrones y positrones** (historia condensada mixta): poder de frenado de Bethe con las energías medias de excitación de ICRU 37, rayos δ, bremsstrahlung, dispersión múltiple, espectros β según la teoría de Fermi, aniquilación.
 - **Fuentes radiactivas** a partir de los datos de decaimiento de ENDF/B-VIII.0 (3821 nucleidos), descargados de la fuente oficial en el primer uso; no se redistribuye ningún dato de terceros.
 - **Entrada legible** con unidades (`15 mm`, `3.7 GBq`), inclusión de archivos y mensajes de error que señalan la línea y sugieren la corrección.
 - **372 materiales** del PNNL-15870 Rev. 1.
 - **Probes:** mapas de dosis 3D (MetaImage), dosis en volúmenes y espectros de fluencia, todos con incertidumbre estadística.
-- **Validación:** μ/ρ dentro del 0,4 % de NIST XCOM; fracciones absorbidas en 231 esferas comparadas con Stabin & Konijnenberg (2000); conservación exacta de la energía; resultados independientes del número de hilos.
+- **Validación:** μ/ρ dentro del 0,4 % de NIST XCOM; poder de frenado y alcance dentro del 1,1 % de NIST ESTAR; fracciones absorbidas de fotones y electrones en esferas comparadas con Stabin & Konijnenberg (2000); conservación exacta de la energía; resultados independientes del número de hilos.
 
-En desarrollo: fantomas vóxel (CT/DICOM), transporte de electrones, backend CUDA e interfaz gráfica.
+En desarrollo: fantomas vóxel (CT/DICOM), backend CUDA e interfaz gráfica.
 
 ## Instalación
 

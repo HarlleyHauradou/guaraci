@@ -22,6 +22,33 @@ pub struct PhotonLine {
     pub kind: PhotonKind,
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+pub enum BetaKind {
+    Minus,
+    Plus,
+}
+
+/// One β branch: the spectrum is computed from the endpoint (Fermi theory).
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq)]
+pub struct BetaBranch {
+    pub kind: BetaKind,
+    /// Endpoint (maximum kinetic) energy, MeV.
+    pub endpoint: f64,
+    /// Emitted particles per decay.
+    pub intensity: f64,
+    /// ENDF transition type: 1 allowed, 2 first-forbidden unique, ...
+    pub forbiddenness: u8,
+}
+
+/// A discrete electron line (internal conversion or Auger).
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq)]
+pub struct ElectronLine {
+    /// MeV
+    pub energy: f64,
+    /// Electrons per decay.
+    pub intensity: f64,
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct DecayMode {
     /// ENDF RTYP, e.g. 1 = β⁻, 2 = β⁺/EC, 3 = IT, 4 = α; 1.5 = β⁻ then n.
@@ -45,6 +72,12 @@ pub struct NuclideDecay {
     pub photons: Vec<PhotonLine>,
     /// True if the file gives a continuous photon spectrum that is not included in `photons`.
     pub has_continuous_photons: bool,
+    /// β⁻ and β⁺ branches.
+    pub betas: Vec<BetaBranch>,
+    /// Conversion and Auger electrons.
+    pub electrons: Vec<ElectronLine>,
+    /// Mean β energy per decay given by the library (ERAV × FD of STYP 1 and 2), MeV.
+    pub mean_beta_energy: f64,
 }
 
 impl NuclideDecay {
@@ -58,6 +91,7 @@ impl NuclideDecay {
 }
 
 const ANNIHILATION_EV: f64 = 510_998.95;
+const ELECTRON_MASS_MEV: f64 = 0.510_998_950;
 
 /// Read an ENDF-6 decay file. Returns `None` for files without MF8 MT457.
 pub fn read_decay(file: &str, text: &str) -> Result<Option<NuclideDecay>, EndfError> {
@@ -92,12 +126,18 @@ pub fn read_decay(file: &str, text: &str) -> Result<Option<NuclideDecay>, EndfEr
 
     let mut photons = Vec::new();
     let mut has_continuous_photons = false;
+    let mut betas = Vec::new();
+    let mut electrons = Vec::new();
+    let mut mean_beta_energy = 0.0;
     for _ in 0..nsp {
         let (sc, sv) = r.list()?;
         let styp = sc.c2.round() as i64;
         let lcon = sc.l1;
         let ner = sc.n2.max(0) as usize;
         let fd = sv.first().copied().unwrap_or(1.0);
+        if matches!(styp, 1 | 2) {
+            mean_beta_energy += fd * sv.get(2).copied().unwrap_or(0.0) * 1e-6;
+        }
         if lcon != 1 {
             for _ in 0..ner {
                 let (lc, lv) = r.list()?;
@@ -116,6 +156,34 @@ pub fn read_decay(file: &str, text: &str) -> Result<Option<NuclideDecay>, EndfEr
                             kind,
                         });
                     }
+                }
+                let ty = lv.get(1).copied().unwrap_or(1.0).round().max(1.0) as u8;
+                match styp {
+                    1 if ri > 0.0 => betas.push(BetaBranch {
+                        kind: BetaKind::Minus,
+                        endpoint: lc.c1 * 1e-6,
+                        intensity: fd * ri,
+                        forbiddenness: ty,
+                    }),
+                    2 => {
+                        // RI counts β⁺ and EC together; RIS is the positron intensity
+                        let ris = lv.get(4).copied().unwrap_or(0.0);
+                        if ris > 0.0 {
+                            // for β⁺ the library gives the decay energy Q_EC of the branch;
+                            // the positron endpoint is Q_EC − 2 mₑc²
+                            betas.push(BetaBranch {
+                                kind: BetaKind::Plus,
+                                endpoint: (lc.c1 * 1e-6 - 2.0 * ELECTRON_MASS_MEV).max(0.0),
+                                intensity: fd * ris,
+                                forbiddenness: ty,
+                            });
+                        }
+                    }
+                    8 if ri > 0.0 => electrons.push(ElectronLine {
+                        energy: lc.c1 * 1e-6,
+                        intensity: fd * ri,
+                    }),
+                    _ => {}
                 }
             }
         }
@@ -140,5 +208,8 @@ pub fn read_decay(file: &str, text: &str) -> Result<Option<NuclideDecay>, EndfEr
         modes,
         photons,
         has_continuous_photons,
+        betas,
+        electrons,
+        mean_beta_energy,
     }))
 }

@@ -6,6 +6,6 @@ msgstr ""
 msgid "Volume I — Technical Manual"
 msgstr "Volumen I — Manual Técnico"
 
-msgid "How Guaraci computes: architecture, units, input reading, nuclear data, materials, physics, transport engine and validation."
-msgstr "Cómo calcula Guaraci: arquitectura, unidades, lectura de la entrada, datos nucleares, materiales, física, motor de transporte y validación."
+msgid "How Guaraci computes: architecture, units, input reading, nuclear data, materials, photon physics, electron and positron physics, transport engine and validation."
+msgstr "Cómo calcula Guaraci: arquitectura, unidades, lectura de la entrada, datos nucleares, materiales, física de los fotones, física de los electrones y positrones, motor de transporte y validación."
 

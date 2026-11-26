@@ -74,8 +74,9 @@ histories = {histories:.0f}
 seed = 2026
 
 [physics]
-# defaults: photoelectric, Compton (Klein-Nishina with S(x,Z)), Rayleigh, pair;
-# electrons deposit their energy where they are created
+# photons only: photoelectric, Compton (Klein-Nishina with S(x,Z)), Rayleigh, pair;
+# electrons deposit their energy where they are created (as in the GATE and MCNPX inputs)
+list = photon_local
 
 [material VialWater]
 density = {MATERIALS['water'][0]} g/cm3

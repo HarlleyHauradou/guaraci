@@ -26,8 +26,10 @@ path does not need to be kept.
 
 ## Photoelectric effect
 
-The photon is absorbed and all its energy is deposited on the spot. This
-includes the binding energy, since fluorescence is not emitted in this version.
+The photon is absorbed. Its whole energy, binding energy included (fluorescence
+is not emitted in this version), goes to a photo-electron. The photo-electron
+is transported (chapter 7) with the list `photon_electron`, and deposited on
+the spot with `photon_local`.
 
 ## Compton scattering
 
@@ -42,8 +44,9 @@ method of Geant4's `G4KleinNishinaCompton`. For ε = E′/E in [ε₀, 1],
 With `compton = klein_nishina_sf` (the default), a second rejection uses the
 incoherent scattering function: accept with probability S(x, Z)/Z, where
 x = (E/hc) sin(θ/2). This reduces scattering at small angles, where the
-binding of the electron matters. The energy E − E′ goes to the electron and is
-deposited on the spot. Doppler broadening is not simulated.
+binding of the electron matters. The energy E − E′ goes to the electron, which
+is transported or deposited on the spot depending on the physics list. Doppler
+broadening is not simulated.
 
 ## Rayleigh scattering
 
@@ -59,8 +62,10 @@ The photon keeps its energy.
 
 ## Pair production
 
-The kinetic energy of the pair, E − 2mₑc², is deposited on the spot. Two
-photons of mₑc² leave in opposite, isotropic directions.
+- **`photon_electron`:** the electron and the positron share E − 2mₑc² and are
+  transported. The positron annihilates when it stops (chapter 7).
+- **`photon_local`:** the kinetic energy of the pair, E − 2mₑc², is deposited
+  on the spot, and two photons of mₑc² leave in opposite, isotropic directions.
 
 ## Energy cut-off
 
@@ -73,16 +78,23 @@ For each decay:
 - **Photon lines:** a line of intensity I (photons per decay) emits ⌊I⌋
   photons, plus one with probability I − ⌊I⌋. Lines are independent of each
   other; γ-γ correlations are not reproduced.
-- **Annihilation:** the 511 keV photons leave in collinear pairs from the decay
-  point (without the positron range).
-- **Electrons:** with `beta = local`, the mean energy per decay carried by
-  light particles, ⟨E_LP⟩ from ENDF (β⁻, β⁺, Auger and conversion electrons),
-  is deposited at the decay point.
+- **Annihilation:** when positrons are not transported, the 511 keV lines of
+  the library leave in collinear pairs from the decay point (without the
+  positron range). When they are transported, the positrons make their own
+  annihilation photons (chapter 7).
+- **Electrons:**
+  - with `beta = transport` (the default) and the list `photon_electron`, β
+    particles and conversion and Auger electrons are emitted and transported
+    (chapter 7);
+  - with `beta = local`, or with the list `photon_local`, the mean energy per
+    decay carried by light particles, ⟨E_LP⟩ from ENDF (β⁻, β⁺, Auger and
+    conversion electrons), is deposited at the decay point;
+  - with `beta = off`, it is ignored.
 - **Position and direction:**
   - for a source with `in = volume`, the position is uniform in the region of
     the volume (the solid minus its daughters), sampled by rejection in its
     bounding box;
-  - the direction of each photon is isotropic.
+  - the direction of each particle is isotropic.
 
 ## Constants
 

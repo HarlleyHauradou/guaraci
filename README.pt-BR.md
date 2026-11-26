@@ -17,7 +17,7 @@
 <p align="center">
   <a href="https://guaraci.readthedocs.io/pt-br/latest/"><b>Documentação</b></a> ·
   <a href="docs/volume-2/03-first-simulation.md">Primeira simulação</a> ·
-  <a href="docs/volume-1/08-validation.md">Validação</a> ·
+  <a href="docs/volume-1/09-validation.md">Validação</a> ·
   <a href="examples/">Exemplos</a>
 </p>
 
@@ -56,13 +56,14 @@ guaraci run thyroid      # mapa de dose, incertezas e um relatório legível
 ## Recursos
 
 - **Transporte de fótons** em CPUs multinúcleo: efeito fotoelétrico, Compton (Klein-Nishina com S(x,Z)), Rayleigh (fatores de forma), produção de pares.
+- **Transporte de elétrons e pósitrons** (história condensada mista): poder de freamento de Bethe com as energias médias de excitação do ICRU 37, raios δ, bremsstrahlung, espalhamento múltiplo, espectros β pela teoria de Fermi, aniquilação.
 - **Fontes radioativas** a partir dos dados de decaimento do ENDF/B-VIII.0 (3821 nuclídeos), baixados da fonte oficial no primeiro uso; nenhum dado de terceiros é redistribuído.
 - **Entrada legível** com unidades (`15 mm`, `3.7 GBq`), inclusão de arquivos e mensagens de erro que apontam a linha e sugerem a correção.
 - **372 materiais** do PNNL-15870 Rev. 1.
 - **Probes:** mapas de dose 3D (MetaImage), dose em volumes e espectros de fluência, todos com incerteza estatística.
-- **Validação:** μ/ρ a menos de 0,4 % do NIST XCOM; frações absorvidas em 231 esferas comparadas com Stabin & Konijnenberg (2000); conservação exata de energia; resultados independentes do número de threads.
+- **Validação:** μ/ρ a menos de 0,4 % do NIST XCOM; poder de freamento e alcance a menos de 1,1 % do NIST ESTAR; frações absorvidas de fótons e elétrons em esferas comparadas com Stabin & Konijnenberg (2000); conservação exata de energia; resultados independentes do número de threads.
 
-Em desenvolvimento: fantomas voxelizados (CT/DICOM), transporte de elétrons, backend CUDA e interface gráfica.
+Em desenvolvimento: fantomas voxelizados (CT/DICOM), backend CUDA e interface gráfica.
 
 ## Instalação
 

@@ -66,11 +66,20 @@ msgstr ""
 msgid "`9087395f…f8d03d5e`[^sha]"
 msgstr ""
 
+msgid "ENDF/B-VIII.0 electrons"
+msgstr ""
+
+msgid "`ENDF-B-VIII.0_electrons.zip` (9 060 819 B)"
+msgstr ""
+
+msgid "`98f5ce1e…e694c5d4`[^sha]"
+msgstr ""
+
 msgid "ENDF-6 reader"
 msgstr "Lector ENDF-6"
 
-msgid "`endf.rs` implements the CONT/HEAD, LIST and TAB1 records of the 80-column format:"
-msgstr "`endf.rs` implementa los registros CONT/HEAD, LIST y TAB1 del formato de 80 columnas:"
+msgid "`endf.rs` implements the CONT/HEAD, LIST, TAB1 and TAB2 records of the 80-column format:"
+msgstr "`endf.rs` implementa los registros CONT/HEAD, LIST, TAB1 y TAB2 del formato de 80 columnas:"
 
 msgid "Real numbers accept the compact form without `E` (`1.234567+5`) and blank fields (= 0)."
 msgstr "Los números reales aceptan la forma compacta sin `E` (`1.234567+5`) y los campos en blanco (= 0)."
@@ -165,8 +174,59 @@ msgstr "STYP 0 se convierte en **gamma**;"
 msgid "STYP 9 becomes **X-ray**, or **annihilation** when the energy is within 50 eV of 510.999 keV."
 msgstr "STYP 9 se convierte en **rayo X**, o en **aniquilación** cuando la energía está a menos de 50 eV de 510,999 keV."
 
+msgid "the β branches:"
+msgstr "las ramas β:"
+
+msgid "STYP 1 (β⁻): endpoint = ER, intensity = FD × RI;"
+msgstr "STYP 1 (β⁻): punto final = ER, intensidad = FD × RI;"
+
+msgid "STYP 2 (β⁺): endpoint = ER − 2mₑc², because for this type ER is the decay energy of the branch; intensity = FD × RIS (RI counts β⁺ and electron capture together);"
+msgstr "STYP 2 (β⁺): punto final = ER − 2mₑc², porque en este tipo ER es la energía de decaimiento de la rama; intensidad = FD × RIS (RI cuenta β⁺ y captura electrónica juntos);"
+
+msgid "the transition type (allowed, first-forbidden unique...) for the spectrum shape;"
+msgstr "el tipo de transición (permitida, primera prohibida única...) para la forma del espectro;"
+
+msgid "the discrete electrons (STYP 8: conversion and Auger) and the mean β energy per decay."
+msgstr "los electrones discretos (STYP 8: conversión y Auger) y la energía β media por decaimiento."
+
 msgid "Continuous photon spectra (rare) are flagged but not used yet."
 msgstr "Los espectros continuos de fotones (poco frecuentes) se señalan, pero aún no se usan."
+
+msgid "Electro-atomic data (MF23, MF26)"
+msgstr "Datos electro-atómicos (MF23, MF26)"
+
+msgid "The ENDF/B-VIII.0 electron sublibrary is EEDL (EPICS2017). For each element, Guaraci derives on a grid from 100 eV to 100 MeV (40 points per decade):"
+msgstr "La subbiblioteca de electrones de ENDF/B-VIII.0 es EEDL (EPICS2017). Para cada elemento, Guaraci calcula, en una malla de 100 eV a 100 MeV (40 puntos por década):"
+
+msgid "Use"
+msgstr "Uso"
+
+msgid "MF23 MT525, MF26 MT525"
+msgstr ""
+
+msgid "large-angle elastic cross section and angular distribution → transport cross section σ_el (1 − ⟨cos θ⟩)"
+msgstr "sección eficaz elástica de grandes ángulos y distribución angular → sección eficaz de transporte σ_el (1 − ⟨cos θ⟩)"
+
+msgid "MF23 MT526"
+msgstr ""
+
+msgid "total elastic cross section"
+msgstr "sección eficaz elástica total"
+
+msgid "MF23/MF26 MT527"
+msgstr ""
+
+msgid "bremsstrahlung: cross section, mean photon energy (LAW = 8) and photon spectra (LAW = 1)"
+msgstr "bremsstrahlung: sección eficaz, energía media del fotón (LAW = 8) y espectros de fotones (LAW = 1)"
+
+msgid "MF23/MF26 MT528, MT534+"
+msgstr ""
+
+msgid "excitation and subshell ionisation (converted, but not used for transport: see chapter 7)"
+msgstr "excitación e ionización por subcapa (convertidas, pero no usadas en el transporte: ver el capítulo 7)"
+
+msgid "The value 1 − ⟨cos θ⟩ is interpolated log-log between the tabulated energies."
+msgstr "El valor 1 − ⟨cos θ⟩ se interpola en log-log entre las energías tabuladas."
 
 msgid "Reference tests"
 msgstr "Pruebas de referencia"
@@ -209,6 +269,24 @@ msgstr ""
 
 msgid "no photons; ⟨E_LP⟩ = 49.5 keV"
 msgstr "ningún fotón; ⟨E_LP⟩ = 49,5 keV"
+
+msgid "I-131 β⁻"
+msgstr ""
+
+msgid "main branch: endpoint 606.3 keV, 89.6 %; mean β energy 181.9 keV per decay"
+msgstr "rama principal: punto final 606,3 keV, 89,6 %; energía β media de 181,9 keV por decaimiento"
+
+msgid "F-18 β⁺"
+msgstr ""
+
+msgid "96.7 % positrons, endpoint 633.5 keV"
+msgstr "96,7 % de positrones, punto final 633,5 keV"
+
+msgid "water, EEDL"
+msgstr "agua, EEDL"
+
+msgid "radiative stopping power vs ESTAR (printed); bremsstrahlung spectra normalised, σ_b⟨k⟩ = S_rad within 3 %"
+msgstr "poder de frenado radiativo comparado con ESTAR (impreso); espectros de bremsstrahlung normalizados, σ_b⟨k⟩ = S_rad dentro del 3 %"
 
 msgid "The full values are in `crates/guaraci-data/src/library.rs`."
 msgstr "Los valores completos están en `crates/guaraci-data/src/library.rs`."

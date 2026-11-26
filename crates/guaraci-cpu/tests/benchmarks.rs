@@ -7,7 +7,7 @@
 use guaraci_core::physics::{Grid, Material};
 use guaraci_core::problem::{Probe, Problem};
 use guaraci_cpu::{run, Options, RngChoice};
-use guaraci_data::library::{load_decay, load_photon, DecayData, PhotonData};
+use guaraci_data::library::{load_decay, load_electron, load_photon, DecayData, ElectronData, PhotonData};
 use guaraci_input::{load_str, Builtin, Config};
 use std::path::PathBuf;
 use std::sync::atomic::{AtomicBool, AtomicU64};
@@ -27,13 +27,22 @@ fn data() -> Option<&'static (PhotonData, DecayData)> {
     .as_ref()
 }
 
+fn electron_data() -> Option<&'static ElectronData> {
+    static DATA: OnceLock<Option<ElectronData>> = OnceLock::new();
+    DATA.get_or_init(|| {
+        let dir = PathBuf::from(std::env::var_os("GUARACI_TEST_DATA")?);
+        Some(load_electron(&dir, "endfb8").ok()?.1)
+    })
+    .as_ref()
+}
+
 fn problem(text: &str) -> Option<Problem> {
     let (photon, decay) = data()?;
     let prog = load_str("bench.gci", text, &[MATERIALS])
         .map_err(|(_, d)| d)
         .expect("input");
     let c = Config::from_program(&prog).expect("config");
-    Some(Problem::build(&c, photon, Some(decay)).expect("problem"))
+    Some(Problem::build(&c, photon, Some(decay), electron_data()).expect("problem"))
 }
 
 fn options(histories: u64, threads: usize) -> Options {
@@ -168,9 +177,8 @@ struct StabinRow {
     recommended: f64,
 }
 
-fn stabin_rows() -> Vec<StabinRow> {
-    include_str!("../../../validation/stabin2000_photons.csv")
-        .lines()
+fn parse_stabin(csv: &str) -> Vec<StabinRow> {
+    csv.lines()
         .filter(|l| !l.starts_with('#') && !l.starts_with("mass"))
         .map(|l| {
             let v: Vec<f64> = l.split(',').map(|x| x.parse().unwrap()).collect();
@@ -186,14 +194,26 @@ fn stabin_rows() -> Vec<StabinRow> {
         .collect()
 }
 
+fn stabin_rows() -> Vec<StabinRow> {
+    parse_stabin(include_str!("../../../validation/stabin2000_photons.csv"))
+}
+
+fn stabin_electron_rows() -> Vec<StabinRow> {
+    parse_stabin(include_str!("../../../validation/stabin2000_electrons.csv"))
+}
+
 /// Absorbed fraction for a uniform monoenergetic photon source in a sphere of
 /// soft tissue (unit density) inside a 1 m cube of the same tissue
 /// (the "infinite medium" of the reference). Returns (fraction, relative σ).
 fn absorbed_fraction(radius: f64, energy: f64, histories: u64) -> Option<(f64, f64)> {
+    absorbed_fraction_of("photon", radius, energy, histories)
+}
+
+fn absorbed_fraction_of(particle: &str, radius: f64, energy: f64, histories: u64) -> Option<(f64, f64)> {
     let text = format!(
         "[world]\nmaterial = Tissue_Soft_ICRP\nsize = 100 cm\n\
          [volume sphere]\nshape = sphere\nradius = {radius} cm\nmaterial = Tissue_Soft_ICRP\n\
-         [source]\nenergy = {energy} MeV\nin = sphere\n\
+         [source]\nparticle = {particle}\nenergy = {energy} MeV\nin = sphere\n\
          [probe af]\ntype = volume_dose\nvolumes = [sphere]\n"
     );
     let p = problem(&text)?;
@@ -273,6 +293,110 @@ fn stabin_spheres_full() {
     std::fs::write(path, out).unwrap();
     let mean = devs.iter().map(|d| d.2).sum::<f64>() / devs.len() as f64;
     let max = devs.iter().map(|d| d.2.abs()).fold(0.0, f64::max);
+    eprintln!(
+        "{} cases: mean deviation {mean:+.2} %, largest |deviation| {max:.1} %",
+        devs.len()
+    );
+}
+
+/// Electron stopping power and CSDA range in liquid water against NIST ESTAR.
+#[test]
+fn electron_stopping_and_range_match_estar() {
+    if electron_data().is_none() {
+        return;
+    }
+    let text = "[physics]\nelectron_cut = 1 keV\n[world]\nmaterial = Water\nsize = 30\n\
+                [source]\nenergy = 12 MeV\nposition = [0, 0, 0]\n";
+    let Some(p) = problem(text) else { return };
+    let k = p.materials.iter().position(|m| m.name == "Water").unwrap();
+    let (m, rho) = (&p.emats[k], p.materials[k].density);
+    // total stopping power (MeV cm²/g) and CSDA range (g/cm²), ESTAR
+    for (e, s_estar, r_estar) in [
+        (0.01, 22.56, None),
+        (0.1, 4.121, Some(1.431e-2)),
+        (1.0, 1.862, Some(4.367e-1)),
+        (10.0, 2.151, Some(4.975)),
+    ] {
+        let s = m.total_stopping(&p.egrid, e, false) / rho;
+        let ds = 100.0 * (s - s_estar) / s_estar;
+        eprintln!("water {e:>5} MeV  S {s:.4} (ESTAR {s_estar}, {ds:+.2} %)");
+        assert!(ds.abs() < 2.0, "stopping power at {e} MeV: {s} vs {s_estar}");
+        if let Some(r_estar) = r_estar {
+            let r = m.csda_range(&p.egrid, e) * rho;
+            let dr = 100.0 * (r - r_estar) / r_estar;
+            eprintln!("water {e:>5} MeV  R {r:.4e} (ESTAR {r_estar:.4e}, {dr:+.2} %)");
+            assert!(dr.abs() < 2.0, "CSDA range at {e} MeV: {r} vs {r_estar}");
+        }
+    }
+}
+
+/// Radius (cm) of a unit-density sphere of `mass` grams. The electron table
+/// rounds radii to 0.01 cm, too coarse for the smallest spheres.
+fn unit_density_radius(mass: f64) -> f64 {
+    (3.0 * mass / (4.0 * std::f64::consts::PI)).cbrt()
+}
+
+/// Electron absorbed fractions, Stabin & Konijnenberg (2000), Table 1: a few spheres and energies.
+#[test]
+fn stabin_electron_spheres_selected() {
+    if data().is_none() || electron_data().is_none() {
+        return;
+    }
+    let rows = stabin_electron_rows();
+    for (mass, energy) in [(0.01, 0.4), (0.1, 1.0), (1.0, 2.0), (10.0, 4.0), (0.01, 2.0)] {
+        let row = rows.iter().find(|r| r.mass == mass && r.energy == energy).unwrap();
+        let (af, rel) = absorbed_fraction_of("electron", unit_density_radius(mass), energy, 40_000).unwrap();
+        let dev = (af - row.recommended) / row.recommended;
+        // EGS4 and MCNP differ by up to ~10 % in the smallest spheres (paper)
+        let spread = (row.egs4 - row.mcnp).abs() / row.recommended;
+        let tol = 0.03 + spread + 3.0 * rel + 0.0005 / row.recommended;
+        eprintln!(
+            "{mass:>6} g {:>6.0} keV  Guaraci {af:.4} ± {:.2} %  ref {:.3} (EGS4 {:.3}, MCNP {:.3})  {:+.1} %",
+            energy * 1e3,
+            rel * 100.0,
+            row.recommended,
+            row.egs4,
+            row.mcnp,
+            dev * 100.0
+        );
+        assert!(
+            dev.abs() < tol,
+            "{mass} g, {energy} MeV: {af:.4} vs {} ({:+.1} %)",
+            row.recommended,
+            dev * 100.0
+        );
+    }
+}
+
+/// The whole electron table. Writes validation/stabin2000_electrons_comparison.csv.
+#[test]
+#[ignore]
+fn stabin_electron_spheres_full() {
+    if data().is_none() || electron_data().is_none() {
+        return;
+    }
+    let mut out = String::from("mass_g,energy_MeV,guaraci,guaraci_rel_sigma,egs4,mcnp,recommended,deviation_percent\n");
+    let mut devs = Vec::new();
+    for row in stabin_electron_rows() {
+        let (af, rel) = absorbed_fraction_of("electron", unit_density_radius(row.mass), row.energy, 100_000).unwrap();
+        let dev = 100.0 * (af - row.recommended) / row.recommended;
+        eprintln!(
+            "{:>6} g {:>5} MeV  {af:.4}  ref {:.3}  {dev:+.1} %",
+            row.mass, row.energy, row.recommended
+        );
+        out += &format!(
+            "{},{},{af:.5},{rel:.5},{},{},{},{dev:.2}\n",
+            row.mass, row.energy, row.egs4, row.mcnp, row.recommended
+        );
+        devs.push(dev);
+    }
+    let path = concat!(
+        env!("CARGO_MANIFEST_DIR"),
+        "/../../validation/stabin2000_electrons_comparison.csv"
+    );
+    std::fs::write(path, out).unwrap();
+    let mean = devs.iter().sum::<f64>() / devs.len() as f64;
+    let max = devs.iter().map(|d| d.abs()).fold(0.0, f64::max);
     eprintln!(
         "{} cases: mean deviation {mean:+.2} %, largest |deviation| {max:.1} %",
         devs.len()

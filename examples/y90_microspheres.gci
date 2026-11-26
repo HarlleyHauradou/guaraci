@@ -1,0 +1,43 @@
+# Y-90 (a pure β⁻ emitter) spread uniformly in a small liver tumour,
+# as in radioembolisation with microspheres. Almost all the energy comes from
+# the β particles (mean 0.93 MeV, range up to ~11 mm in tissue), so electron
+# transport decides the dose near the edge of the tumour.
+
+[run]
+histories = 2e6
+seed = 90
+
+[physics]
+list = photon_electron
+electron_cut = 10 keV
+
+[world]
+material = Air
+size = [40, 40, 40] cm
+
+[volume liver]
+shape = ellipsoid
+semi_axes = [10, 7, 8] cm
+material = Tissue_Soft_ICRP
+
+[volume tumour]
+parent = liver
+shape = sphere
+radius = 15 mm
+center = [3, 0, 0] cm
+material = Tissue_Soft_ICRP
+
+[source]
+nuclide = Y-90
+in = tumour
+activity = 1 GBq
+duration = 1 h
+
+[probe dose]
+type = dose_grid
+in = tumour
+voxel = [1, 1, 1] mm
+
+[probe organs]
+type = volume_dose
+volumes = [tumour, liver]

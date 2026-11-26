@@ -1,4 +1,4 @@
-# 7. Transport engine and statistics
+# 8. Transport engine and statistics
 
 ## Geometry
 
@@ -10,7 +10,7 @@ Module `geometry.rs`. The volumes form a tree whose root is the world.
   the exit distance from V and the entry distance into each daughter of V. The
   solids (box, sphere, cylinder, ellipsoid) compute these distances from the
   parametric interval of the ray inside them.
-- **Crossing:** the photon moves to the boundary plus a small push
+- **Crossing:** the particle moves to the boundary plus a small push
   (10⁻⁹ × the size of the world) and is located again.
 - **Overlap check:** before running, 5000 points of each surface are tested.
   A point outside the mother means the volume sticks out of its mother; a point
@@ -33,8 +33,12 @@ Histories are split into fixed blocks of 1000. Block b always uses stream b of
 the generator: for Philox, the counter (b, i) with the key equal to the seed;
 for the others, the state is derived from (seed, b) by SplitMix64. Therefore
 **the result does not depend on the number of threads**, and a test checks it.
-Blocks are distributed among threads with rayon. Each thread accumulates in a
-`Tally` of its own, and the tallies are summed at the end of each batch.
+Each batch is split into a fixed number of chunks (64, or fewer if the batch
+has fewer blocks), whatever the number of threads. Rayon distributes the
+chunks among the threads. Each chunk runs its blocks in order into a `Tally`
+of its own, and the tallies of the chunks are then added in chunk order. Every
+floating-point sum is therefore done in the same order, and the results are
+identical bit for bit with any number of threads.
 
 ## Uncertainty
 
@@ -43,6 +47,14 @@ the total sum and the sum of the squares of the per-history means of each
 batch are kept. The uncertainty of the mean is
 
   σ²(x̄) = [ (1/B) Σ x̄_b² − x̄² ] · B/(B − 1) / B
+
+## Particle stack
+
+Each history starts with the particles emitted by the decay (photons, β
+particles, conversion and Auger electrons), pushed on a stack. Secondaries
+(Compton and photo-electrons, δ-rays, bremsstrahlung and annihilation photons)
+are pushed on the same stack, and the history ends when it is empty. Photons
+follow chapter 6, and electrons and positrons follow chapter 7.
 
 ## Scoring
 

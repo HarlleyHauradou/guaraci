@@ -91,3 +91,90 @@ fn carbon_14_pure_beta() {
         d.mean_electron_energy
     );
 }
+
+fn electron(name: &str) -> Option<crate::electron::ElementElectron> {
+    let p = root()?.join("ENDF-B-VIII.0_electrons").join(name);
+    if !p.exists() {
+        return None;
+    }
+    Some(crate::electron::read_electron(name, &std::fs::read_to_string(p).unwrap()).unwrap())
+}
+
+/// Stopping powers of liquid water (MeV cm²/g) vs NIST ESTAR.
+#[test]
+fn water_stopping_power() {
+    let (Some(h), Some(o)) = (electron("e-001_H_000.endf"), electron("e-008_O_000.endf")) else {
+        return;
+    };
+    let (wh, wo) = (0.111894, 0.888106);
+    let na = 6.022_140_76e23;
+    let per_g = |el: &crate::electron::ElementElectron,
+                 a: f64,
+                 w: f64,
+                 v: &dyn Fn(&crate::electron::ElementElectron, usize) -> f64,
+                 e: f64| {
+        let t = crate::photon::Table {
+            x: el.energy.clone(),
+            y: (0..el.energy.len()).map(|i| v(el, i)).collect(),
+        };
+        w * na / a * t.eval(e) * 1e-24
+    };
+    let col = |el: &crate::electron::ElementElectron, i: usize| el.stopping_collision[i];
+    let rad = |el: &crate::electron::ElementElectron, i: usize| el.stopping_radiative[i];
+    for (e, estar_col, estar_rad) in [
+        (0.01, 22.56, 3.898e-3),
+        (0.1, 4.115, 6.229e-3),
+        (1.0, 1.849, 1.293e-2),
+        (10.0, 1.968, 0.1832),
+    ] {
+        let c = per_g(&h, 1.008, wh, &col, e) + per_g(&o, 15.999, wo, &col, e);
+        let r = per_g(&h, 1.008, wh, &rad, e) + per_g(&o, 15.999, wo, &rad, e);
+        eprintln!("{e:>6} MeV  collision {c:.4} (ESTAR {estar_col}, {:+.2} %)  radiative {r:.4e} (ESTAR {estar_rad}, {:+.2} %)", 100.0 * (c - estar_col) / estar_col, 100.0 * (r - estar_rad) / estar_rad);
+    }
+}
+
+#[test]
+fn beta_branches() {
+    let Some(d) = decay("dec-053_I_131.endf") else { return };
+    let main = d
+        .betas
+        .iter()
+        .max_by(|a, b| a.intensity.total_cmp(&b.intensity))
+        .unwrap();
+    assert!(
+        close(main.endpoint, 0.6063, 1e-3) && close(main.intensity, 0.896, 0.01),
+        "{main:?}"
+    );
+    assert!(close(d.mean_beta_energy, 0.18185, 1e-3), "{}", d.mean_beta_energy);
+    assert!(!d.electrons.is_empty());
+    let Some(f) = decay("dec-009_F_018.endf") else { return };
+    let plus: Vec<_> = f.betas.iter().filter(|b| b.kind == BetaKind::Plus).collect();
+    let intensity: f64 = plus.iter().map(|b| b.intensity).sum();
+    assert!(close(intensity, 0.967, 0.01), "{intensity} {:?}", f.betas);
+    // F-18 positron endpoint: 633.5 keV
+    assert!(close(plus[0].endpoint, 0.6335, 2e-3), "{:?}", plus[0]);
+}
+
+/// The bremsstrahlung spectra are normalised and their mean photon energy,
+/// times the cross section, gives back the radiative stopping power.
+#[test]
+fn bremsstrahlung_spectra_consistent() {
+    let Some(o) = electron("e-008_O_000.endf") else { return };
+    assert!(o.brem_spectra.len() > 5, "{}", o.brem_spectra.len());
+    for s in &o.brem_spectra {
+        let (mut norm, mut mean) = (0.0, 0.0);
+        for i in 1..s.kappa.len() {
+            let (a, b, fa, fb) = (s.kappa[i - 1], s.kappa[i], s.density[i - 1], s.density[i]);
+            norm += 0.5 * (fa + fb) * (b - a);
+            mean += (b - a) / 6.0 * (fa * (2.0 * a + b) + fb * (a + 2.0 * b));
+        }
+        assert!((norm - 1.0).abs() < 1e-3, "{} MeV: norm {norm}", s.energy);
+        let k = o.energy.iter().position(|&e| (e / s.energy - 1.0).abs() < 0.02);
+        if let Some(k) = k {
+            let s_rad = o.brem_cross_section[k] * mean * o.energy[k];
+            let rel = s_rad / o.stopping_radiative[k] - 1.0;
+            eprintln!("{:.4e} MeV: σ⟨k⟩ / S_rad − 1 = {rel:+.4}", s.energy);
+            assert!(rel.abs() < 0.03, "{} MeV: {rel}", s.energy);
+        }
+    }
+}

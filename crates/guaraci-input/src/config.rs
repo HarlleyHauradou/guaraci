@@ -65,6 +65,10 @@ pub struct Physics {
     pub pair: bool,
     /// Photons below this energy deposit locally (MeV).
     pub photon_cut: f64,
+    /// Electrons and positrons are transported (otherwise they deposit locally).
+    pub electrons: bool,
+    /// Electrons and positrons below this energy deposit locally (MeV).
+    pub electron_cut: f64,
 }
 
 #[derive(Debug, Clone)]
@@ -134,11 +138,14 @@ pub struct MaterialDef {
     pub copied_from: Option<String>,
     /// Material number in the source compendium, if any.
     pub number: Option<u64>,
+    /// Mean excitation energy given by the user (MeV); otherwise the Bragg rule.
+    pub mean_excitation: Option<f64>,
 }
 
 /// A material as written, before `same_as` is resolved.
 #[derive(Debug, Clone)]
 struct RawMaterial {
+    mean_excitation: Option<f64>,
     name: Spanned<String>,
     density: Option<f64>,
     comp: CompSpec,
@@ -155,8 +162,40 @@ pub enum Emission {
         id: guaraci_data::NuclideId,
         span: Span,
     },
-    /// (energy MeV, photons per decay)
-    Lines(Vec<(f64, f64)>),
+    /// Discrete lines of one particle type.
+    Lines {
+        particle: SourceParticle,
+        /// (energy MeV, particles per decay)
+        lines: Vec<(f64, f64)>,
+    },
+}
+
+/// Particle emitted by a source given by `energy`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum SourceParticle {
+    Photon,
+    Electron,
+    Positron,
+}
+
+impl SourceParticle {
+    pub fn name(self) -> &'static str {
+        match self {
+            SourceParticle::Photon => "photon",
+            SourceParticle::Electron => "electron",
+            SourceParticle::Positron => "positron",
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum BetaMode {
+    /// Emitted and transported (needs electron transport in the physics list).
+    Transport,
+    /// Mean energy deposited at the decay point.
+    Local,
+    /// Ignored.
+    Off,
 }
 
 #[derive(Debug, Clone)]
@@ -177,9 +216,8 @@ pub struct Source {
     pub activity: Option<f64>,
     /// s; with `activity`, gives the number of decays
     pub duration: Option<f64>,
-    /// Deposit the energy of β particles and conversion/Auger electrons at the
-    /// decay point (`beta = local`, default) or ignore it (`beta = off`).
-    pub electrons_local: bool,
+    /// What to do with β particles and conversion/Auger electrons.
+    pub beta: BetaMode,
 }
 
 #[derive(Debug, Clone)]
@@ -437,7 +475,9 @@ fn read_run(s: &Section, n: &mut Notes) -> Run {
 
 fn read_physics(s: &Section, n: &mut Notes) -> Physics {
     let mut r = Reader::new(s);
-    let list = r.choice("list", &["photon_local"], "photon_local", n).to_string();
+    let list = r
+        .choice("list", &["photon_electron", "photon_local"], "photon_electron", n)
+        .to_string();
     let data = r
         .choice("data", &["endfb8", "epics2017", "epdl97"], "endfb8", n)
         .to_string();
@@ -457,17 +497,28 @@ fn read_physics(s: &Section, n: &mut Notes) -> Physics {
         _ => Some(ComptonModel::KleinNishinaSf),
     };
     let photon_cut = r.quantity_or("photon_cut", Kind::Energy, 1.0, n).to("MeV");
-    let particles = r.text_list("particles", n);
-    if let Some(ps) = particles {
+    let electron_cut = r.quantity_or("electron_cut", Kind::Energy, 10.0, n).to("MeV");
+    let mut electrons = list == "photon_electron";
+    if let Some(ps) = r.text_list("particles", n) {
+        electrons = false;
         for p in ps {
-            if !matches!(p.node.as_str(), "photon" | "gamma") {
-                n.error(
-                    Diagnostic::error(format!("particle `{}` is not transported yet", p.node))
+            match p.node.as_str() {
+                "photon" | "gamma" => {}
+                "electron" | "positron" | "e-" | "e+" => electrons = true,
+                other => n.error(
+                    Diagnostic::error(format!("particle `{other}` is not transported"))
                         .at(p.span)
-                        .help("this version follows photons only; electrons deposit their energy locally"),
-                );
+                        .help("particles: photon, electron, positron"),
+                ),
             }
         }
+    }
+    if electron_cut < 1e-3 {
+        n.error(
+            Diagnostic::error("`electron_cut` must be at least 1 keV")
+                .at(s.header_span)
+                .help("the stopping-power model (Bethe) is not valid below about 1 keV"),
+        );
     }
     r.finish(n);
     Physics {
@@ -479,6 +530,8 @@ fn read_physics(s: &Section, n: &mut Notes) -> Physics {
         rayleigh,
         pair,
         photon_cut,
+        electrons,
+        electron_cut,
     }
 }
 
@@ -589,6 +642,7 @@ fn read_material(s: &Section, builtin: bool, n: &mut Notes) -> Option<RawMateria
     let comment = r.text("comment", n).map(|t| t.node);
     let reference = r.text("reference", n).map(|t| t.node);
     let number = r.count("number", n);
+    let mean_excitation = r.quantity("mean_excitation", Kind::Energy, n).map(|q| q.to("MeV"));
     let given: Vec<&str> = ["composition", "formula", "same_as"]
         .into_iter()
         .filter(|k| r.has(k))
@@ -664,6 +718,7 @@ fn read_material(s: &Section, builtin: bool, n: &mut Notes) -> Option<RawMateria
         comment,
         reference,
         number,
+        mean_excitation,
     })
 }
 
@@ -716,6 +771,7 @@ fn resolve_materials(raw: Vec<RawMaterial>, n: &mut Notes) -> Vec<MaterialDef> {
             reference: m.reference.clone().or_else(|| cur.reference.clone()),
             copied_from: (chain.len() > 1).then(|| chain[1].to_string()),
             number: m.number.or(cur.number),
+            mean_excitation: m.mean_excitation.or(cur.mean_excitation),
         });
     }
     out
@@ -731,8 +787,26 @@ fn read_source(s: &Section, index: usize, n: &mut Notes) -> Option<Source> {
     let nuclide = read_nuclide(&mut r, n);
     let energies = r.quantity_list("energy", Kind::Energy, n);
     let intensities = r.quantity_list("intensity", Kind::Dimensionless, n);
+    let particle_given = r.has("particle");
+    // only `energy` sources have a particle type (and a default for it)
+    let particle = if particle_given || nuclide.is_none() {
+        match r.choice("particle", &["photon", "electron", "positron"], "photon", n) {
+            "electron" => SourceParticle::Electron,
+            "positron" => SourceParticle::Positron,
+            _ => SourceParticle::Photon,
+        }
+    } else {
+        SourceParticle::Photon
+    };
     let emission = match (nuclide, energies) {
         (Some(nu), None) => {
+            if particle_given {
+                n.error(
+                    Diagnostic::error("`particle` goes with `energy`, not with `nuclide`")
+                        .at(r_span(&r, "particle"))
+                        .help("a nuclide emits the particles of its decay data"),
+                );
+            }
             if intensities.is_some() {
                 n.error(
                     Diagnostic::error("`intensity` goes with `energy`, not with `nuclide`").at(r_span(&r, "intensity")),
@@ -757,13 +831,14 @@ fn read_source(s: &Section, index: usize, n: &mut Notes) -> Option<Source> {
                 n.error(
                     Diagnostic::error(format!("{} energies but {} intensities", es.len(), ints.len()))
                         .at(r_span(&r, "intensity"))
-                        .help("give one intensity (photons per decay) for each energy"),
+                        .help("give one intensity (particles per decay) for each energy"),
                 );
                 None
             } else {
-                Some(Emission::Lines(
-                    es.iter().zip(&ints).map(|(e, i)| (e.to("MeV"), i.si)).collect(),
-                ))
+                Some(Emission::Lines {
+                    particle,
+                    lines: es.iter().zip(&ints).map(|(e, i)| (e.to("MeV"), i.si)).collect(),
+                })
             }
         }
         (Some(nu), Some(_)) => {
@@ -801,7 +876,11 @@ fn read_source(s: &Section, index: usize, n: &mut Notes) -> Option<Source> {
             None
         }
     };
-    let electrons_local = r.choice("beta", &["local", "off"], "local", n) == "local";
+    let beta = match r.choice("beta", &["transport", "local", "off"], "transport", n) {
+        "local" => BetaMode::Local,
+        "off" => BetaMode::Off,
+        _ => BetaMode::Transport,
+    };
     let activity = r.quantity("activity", Kind::Activity, n).map(|q| q.to("Bq"));
     let duration = r.quantity("duration", Kind::Time, n).map(|q| q.to("s"));
     if duration.is_some() && activity.is_none() {
@@ -815,7 +894,7 @@ fn read_source(s: &Section, index: usize, n: &mut Notes) -> Option<Source> {
         placement: placement?,
         activity,
         duration,
-        electrons_local,
+        beta,
     })
 }
 

@@ -102,6 +102,12 @@ msgstr ""
 msgid "copies the composition (and the density, if not given) of another material"
 msgstr "copia a composição (e a densidade, se não for dada) de outro material"
 
+msgid "`mean_excitation`"
+msgstr ""
+
+msgid "mean excitation energy I for the electron stopping power, e.g. `75 eV` for water. Default: the Bragg rule with the values of ICRU Report 37"
+msgstr "energia média de excitação I para o poder de freamento dos elétrons, por exemplo `75 eV` para a água. Padrão: a regra de Bragg com os valores do ICRU Report 37"
+
 msgid "`title`, `comment`, `reference`, `number`"
 msgstr ""
 

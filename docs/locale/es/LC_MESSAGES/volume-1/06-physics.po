@@ -36,8 +36,8 @@ msgstr "La distancia hasta la siguiente interacción es s = −ln(ξ)/μ(E). Si 
 msgid "Photoelectric effect"
 msgstr "Efecto fotoeléctrico"
 
-msgid "The photon is absorbed and all its energy is deposited on the spot. This includes the binding energy, since fluorescence is not emitted in this version."
-msgstr "El fotón se absorbe y toda su energía se deposita en el lugar. Esto incluye la energía de ligadura, ya que en esta versión no se emite fluorescencia."
+msgid "The photon is absorbed. Its whole energy, binding energy included (fluorescence is not emitted in this version), goes to a photo-electron. The photo-electron is transported (chapter 7) with the list `photon_electron`, and deposited on the spot with `photon_local`."
+msgstr "El fotón se absorbe. Toda su energía, incluida la de ligadura (en esta versión no se emite fluorescencia), va a un fotoelectrón. El fotoelectrón se transporta (capítulo 7) con la lista `photon_electron` y se deposita en el lugar con `photon_local`."
 
 msgid "Compton scattering"
 msgstr "Dispersión Compton"
@@ -51,8 +51,8 @@ msgstr "Con probabilidad α₁/(α₁ + α₂), α₁ = −ln ε₀ y α₂ = (1
 msgid "Accept with probability g = 1 − ε sin²θ / (1 + ε²)."
 msgstr "Se acepta con probabilidad g = 1 − ε sen²θ / (1 + ε²)."
 
-msgid "With `compton = klein_nishina_sf` (the default), a second rejection uses the incoherent scattering function: accept with probability S(x, Z)/Z, where x = (E/hc) sin(θ/2). This reduces scattering at small angles, where the binding of the electron matters. The energy E − E′ goes to the electron and is deposited on the spot. Doppler broadening is not simulated."
-msgstr "Con `compton = klein_nishina_sf` (el valor por defecto), un segundo rechazo usa la función de dispersión incoherente: se acepta con probabilidad S(x, Z)/Z, donde x = (E/hc) sen(θ/2). Esto reduce la dispersión a ángulos pequeños, donde importa la ligadura del electrón. La energía E − E′ va al electrón y se deposita en el lugar. El ensanchamiento Doppler no se simula."
+msgid "With `compton = klein_nishina_sf` (the default), a second rejection uses the incoherent scattering function: accept with probability S(x, Z)/Z, where x = (E/hc) sin(θ/2). This reduces scattering at small angles, where the binding of the electron matters. The energy E − E′ goes to the electron, which is transported or deposited on the spot depending on the physics list. Doppler broadening is not simulated."
+msgstr "Con `compton = klein_nishina_sf` (el valor por defecto), un segundo rechazo usa la función de dispersión incoherente: se acepta con probabilidad S(x, Z)/Z, donde x = (E/hc) sen(θ/2). Esto reduce la dispersión a ángulos pequeños, donde importa la ligadura del electrón. La energía E − E′ va al electrón, que se transporta o se deposita en el lugar según la lista de física. El ensanchamiento Doppler no se simula."
 
 msgid "Rayleigh scattering"
 msgstr "Dispersión Rayleigh"
@@ -75,8 +75,11 @@ msgstr "El fotón conserva su energía."
 msgid "Pair production"
 msgstr "Producción de pares"
 
-msgid "The kinetic energy of the pair, E − 2mₑc², is deposited on the spot. Two photons of mₑc² leave in opposite, isotropic directions."
-msgstr "La energía cinética del par, E − 2mₑc², se deposita en el lugar. Dos fotones de mₑc² salen en direcciones opuestas e isótropas."
+msgid "**`photon_electron`:** the electron and the positron share E − 2mₑc² and are transported. The positron annihilates when it stops (chapter 7)."
+msgstr "**`photon_electron`:** el electrón y el positrón se reparten E − 2mₑc² y se transportan. El positrón se aniquila cuando se detiene (capítulo 7)."
+
+msgid "**`photon_local`:** the kinetic energy of the pair, E − 2mₑc², is deposited on the spot, and two photons of mₑc² leave in opposite, isotropic directions."
+msgstr "**`photon_local`:** la energía cinética del par, E − 2mₑc², se deposita en el lugar, y dos fotones de mₑc² salen en direcciones opuestas e isótropas."
 
 msgid "Energy cut-off"
 msgstr "Corte de energía"
@@ -93,11 +96,20 @@ msgstr "Para cada decaimiento:"
 msgid "**Photon lines:** a line of intensity I (photons per decay) emits ⌊I⌋ photons, plus one with probability I − ⌊I⌋. Lines are independent of each other; γ-γ correlations are not reproduced."
 msgstr "**Líneas de fotones:** una línea de intensidad I (fotones por decaimiento) emite ⌊I⌋ fotones, más uno con probabilidad I − ⌊I⌋. Las líneas son independientes entre sí; las correlaciones γ-γ no se reproducen."
 
-msgid "**Annihilation:** the 511 keV photons leave in collinear pairs from the decay point (without the positron range)."
-msgstr "**Aniquilación:** los fotones de 511 keV salen en pares colineales desde el punto de decaimiento (sin el alcance del positrón)."
+msgid "**Annihilation:** when positrons are not transported, the 511 keV lines of the library leave in collinear pairs from the decay point (without the positron range). When they are transported, the positrons make their own annihilation photons (chapter 7)."
+msgstr "**Aniquilación:** cuando los positrones no se transportan, las líneas de 511 keV de la biblioteca salen en pares colineales desde el punto de decaimiento (sin el alcance del positrón). Cuando se transportan, los propios positrones generan sus fotones de aniquilación (capítulo 7)."
 
-msgid "**Electrons:** with `beta = local`, the mean energy per decay carried by light particles, ⟨E_LP⟩ from ENDF (β⁻, β⁺, Auger and conversion electrons), is deposited at the decay point."
-msgstr "**Electrones:** con `beta = local`, la energía media por decaimiento que llevan las partículas ligeras, ⟨E_LP⟩ de ENDF (electrones β⁻, β⁺, Auger y de conversión), se deposita en el punto de decaimiento."
+msgid "**Electrons:**"
+msgstr "**Electrones:**"
+
+msgid "with `beta = transport` (the default) and the list `photon_electron`, β particles and conversion and Auger electrons are emitted and transported (chapter 7);"
+msgstr "con `beta = transport` (la opción por defecto) y la lista `photon_electron`, las partículas β y los electrones de conversión y Auger se emiten y se transportan (capítulo 7);"
+
+msgid "with `beta = local`, or with the list `photon_local`, the mean energy per decay carried by light particles, ⟨E_LP⟩ from ENDF (β⁻, β⁺, Auger and conversion electrons), is deposited at the decay point;"
+msgstr "con `beta = local`, o con la lista `photon_local`, la energía media por decaimiento que llevan las partículas ligeras, ⟨E_LP⟩ de ENDF (electrones β⁻, β⁺, Auger y de conversión), se deposita en el punto de decaimiento;"
+
+msgid "with `beta = off`, it is ignored."
+msgstr "con `beta = off`, se ignora."
 
 msgid "**Position and direction:**"
 msgstr "**Posición y dirección:**"
@@ -105,8 +117,8 @@ msgstr "**Posición y dirección:**"
 msgid "for a source with `in = volume`, the position is uniform in the region of the volume (the solid minus its daughters), sampled by rejection in its bounding box;"
 msgstr "en una fuente con `in = volume`, la posición es uniforme en la región del volumen (el sólido menos sus hijos), muestreada por rechazo en la caja que lo envuelve;"
 
-msgid "the direction of each photon is isotropic."
-msgstr "la dirección de cada fotón es isótropa."
+msgid "the direction of each particle is isotropic."
+msgstr "la dirección de cada partícula es isótropa."
 
 msgid "Constants"
 msgstr "Constantes"

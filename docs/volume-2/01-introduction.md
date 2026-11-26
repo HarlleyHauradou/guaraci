@@ -8,6 +8,8 @@ terminal with input files (`.gci`), and it can compute on CPU or GPU.
 
 - Transports photons on the CPU, in parallel: photoelectric effect, Compton,
   Rayleigh and pair production (`guaraci run`).
+- Transports electrons and positrons: stopping powers, δ-rays,
+  bremsstrahlung, multiple scattering and annihilation.
 - Scores 3D dose grids, dose in volumes and fluence spectra, each with its
   statistical uncertainty.
 - Reads and checks input files, with error messages that point at the line
@@ -16,8 +18,8 @@ terminal with input files (`.gci`), and it can compute on CPU or GPU.
 - Ships a database of 372 materials (PNNL-15870 Rev. 1).
 - Knows the decay data of 3821 nuclides.
 
-Electrons are not transported yet: they deposit their energy where they are
-created. The GPU backend is **in development**.
+Electrons and positrons are transported (mixed condensed history), including
+β particles from the decay data. The GPU backend is **in development**.
 
 ## Principles
 

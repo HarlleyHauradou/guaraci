@@ -15,6 +15,9 @@ msgstr "Qué hace esta versión"
 msgid "Transports photons on the CPU, in parallel: photoelectric effect, Compton, Rayleigh and pair production (`guaraci run`)."
 msgstr "Transporta fotones en la CPU, en paralelo: efecto fotoeléctrico, Compton, Rayleigh y producción de pares (`guaraci run`)."
 
+msgid "Transports electrons and positrons: stopping powers, δ-rays, bremsstrahlung, multiple scattering and annihilation."
+msgstr "Transporta electrones y positrones: poder de frenado, rayos δ, bremsstrahlung, dispersión múltiple y aniquilación."
+
 msgid "Scores 3D dose grids, dose in volumes and fluence spectra, each with its statistical uncertainty."
 msgstr "Calcula mallas de dosis 3D, dosis en volúmenes y espectros de fluencia, cada uno con su incertidumbre estadística."
 
@@ -30,8 +33,8 @@ msgstr "Incluye una base de 372 materiales (PNNL-15870 Rev. 1)."
 msgid "Knows the decay data of 3821 nuclides."
 msgstr "Conoce los datos de decaimiento de 3821 nucleidos."
 
-msgid "Electrons are not transported yet: they deposit their energy where they are created. The GPU backend is **in development**."
-msgstr "Los electrones todavía no se transportan: depositan su energía donde se crean. El backend en GPU está **en desarrollo**."
+msgid "Electrons and positrons are transported (mixed condensed history), including β particles from the decay data. The GPU backend is **in development**."
+msgstr "Los electrones y positrones se transportan (historia condensada mixta), incluidas las partículas β de los datos de decaimiento. El backend en GPU está **en desarrollo**."
 
 msgid "Principles"
 msgstr "Principios"

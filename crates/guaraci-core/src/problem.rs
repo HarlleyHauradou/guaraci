@@ -1,13 +1,17 @@
 //! A complete, validated simulation: geometry, materials, physics tables,
 //! sources and probes, built from a [`Config`] and the nuclear data.
 
+use crate::electron::{BetaSpectrum, ElectronMaterial};
 use crate::geometry::{Geometry, Solid, Volume};
 use crate::physics::{Component, ElementSampling, Grid, Material, Processes, AVOGADRO};
 use crate::vec3::Vec3;
+use guaraci_data::decay::BetaKind;
 use guaraci_data::elements::{symbol, z_of};
-use guaraci_data::library::{DecayData, PhotonData};
+use guaraci_data::library::{DecayData, ElectronData, PhotonData};
 use guaraci_data::{NuclideId, PhotonKind};
-use guaraci_input::config::{Composition, Config, Emission, MaterialDef, Placement, ProbeKind, Shape};
+use guaraci_input::config::{
+    BetaMode, Composition, Config, Emission, MaterialDef, Placement, ProbeKind, Shape, SourceParticle,
+};
 use guaraci_input::{Diagnostic, Span};
 use std::collections::BTreeMap;
 
@@ -19,6 +23,8 @@ pub enum LineKind {
     Single,
     /// Emitted in back-to-back pairs (positron annihilation).
     Annihilation,
+    /// A positron line (only in `Source::electron_lines`).
+    Positron,
 }
 
 #[derive(Debug, Clone)]
@@ -38,11 +44,25 @@ pub enum Where {
     },
 }
 
+/// A β branch ready for sampling.
+#[derive(Debug, Clone)]
+pub struct BetaEmitter {
+    pub spectrum: BetaSpectrum,
+    /// Particles per decay.
+    pub intensity: f64,
+    pub positron: bool,
+}
+
 #[derive(Debug, Clone)]
 pub struct Source {
     pub name: String,
     pub label: String,
     pub lines: Vec<Line>,
+    /// β branches emitted as particles (electron transport on).
+    pub betas: Vec<BetaEmitter>,
+    /// Conversion and Auger electrons, and electron or positron sources,
+    /// emitted as particles (`LineKind::Positron` marks positrons).
+    pub electron_lines: Vec<Line>,
     /// Energy deposited at the decay point, MeV per decay.
     pub local_energy: f64,
     pub place: Where,
@@ -128,6 +148,13 @@ pub struct Problem {
     /// Per volume: spectrum probes scoring track length there.
     pub spectrum_slots: Vec<Vec<usize>>,
     pub max_energy: f64,
+    /// Electrons and positrons are transported.
+    pub electrons: bool,
+    pub electron_cut: f64,
+    /// Energy grid of the electron tables.
+    pub egrid: Grid,
+    /// Electron tables, one per entry of `materials` (empty without electron transport).
+    pub emats: Vec<ElectronMaterial>,
 }
 
 /// Mass fractions by Z from a material definition.
@@ -266,18 +293,28 @@ fn solid(s: &Shape) -> Solid {
 }
 
 impl Problem {
-    pub fn build(c: &Config, photon: &PhotonData, decay: Option<&DecayData>) -> Result<Problem, Vec<Diagnostic>> {
+    pub fn build(
+        c: &Config,
+        photon: &PhotonData,
+        decay: Option<&DecayData>,
+        electron: Option<&ElectronData>,
+    ) -> Result<Problem, Vec<Diagnostic>> {
         let mut errs = Vec::new();
+        let electrons_on = c.physics.electrons && electron.is_some();
 
         // ---- sources first: they decide the energy range of the tables
         let mut sources = Vec::new();
         for s in &c.sources {
-            let (label, lines, local) = match &s.emission {
+            let transport_e = electrons_on && s.beta == BetaMode::Transport;
+            let (label, lines, local, betas, electron_lines) = match &s.emission {
                 Emission::Nuclide { id, span } => match decay.and_then(|d| d.get(id)) {
                     Some(n) => {
+                        let positrons = n.betas.iter().any(|b| b.kind == BetaKind::Plus);
                         let lines: Vec<Line> = n
                             .photons
                             .iter()
+                            // transported positrons create their own annihilation photons
+                            .filter(|l| !(transport_e && positrons && l.kind == PhotonKind::Annihilation))
                             .map(|l| Line {
                                 energy: l.energy,
                                 intensity: l.intensity,
@@ -291,30 +328,90 @@ impl Problem {
                         if n.is_stable() {
                             errs.push(Diagnostic::error(format!("{id} is stable: it does not decay")).at(*span));
                         }
-                        (id.to_string(), lines, n.mean_electron_energy)
+                        let local = match s.beta {
+                            BetaMode::Off => 0.0,
+                            BetaMode::Local => n.mean_electron_energy,
+                            BetaMode::Transport if !electrons_on => n.mean_electron_energy,
+                            BetaMode::Transport => 0.0,
+                        };
+                        let (betas, elines) = if transport_e {
+                            (
+                                n.betas
+                                    .iter()
+                                    .map(|b| {
+                                        let positron = b.kind == BetaKind::Plus;
+                                        let zd = if positron { id.z.saturating_sub(1) } else { id.z + 1 };
+                                        BetaEmitter {
+                                            spectrum: BetaSpectrum::new(b.endpoint, zd, positron, b.forbiddenness),
+                                            intensity: b.intensity,
+                                            positron,
+                                        }
+                                    })
+                                    .collect(),
+                                n.electrons
+                                    .iter()
+                                    .map(|e| Line {
+                                        energy: e.energy,
+                                        intensity: e.intensity,
+                                        kind: LineKind::Single,
+                                    })
+                                    .collect(),
+                            )
+                        } else {
+                            (vec![], vec![])
+                        };
+                        (id.to_string(), lines, local, betas, elines)
                     }
                     None => {
                         errs.push(nuclide_missing(*id, *span, decay.is_some()));
                         continue;
                     }
                 },
-                Emission::Lines(ls) => (
-                    "photon lines".into(),
-                    ls.iter()
+                Emission::Lines { particle, lines: ls } => {
+                    let kind = match particle {
+                        SourceParticle::Positron => LineKind::Positron,
+                        _ => LineKind::Single,
+                    };
+                    let lines: Vec<Line> = ls
+                        .iter()
                         .map(|&(e, i)| Line {
                             energy: e,
                             intensity: i,
-                            kind: LineKind::Single,
+                            kind,
                         })
-                        .collect(),
-                    0.0,
-                ),
+                        .collect();
+                    let label = format!("{} lines", particle.name());
+                    if *particle == SourceParticle::Photon {
+                        (label, lines, 0.0, vec![], vec![])
+                    } else if electrons_on {
+                        (label, vec![], 0.0, vec![], lines)
+                    } else {
+                        errs.push(
+                            Diagnostic::error(format!(
+                                "{} emits {}s, but electron transport is off",
+                                s.name,
+                                particle.name()
+                            ))
+                            .at(s.span)
+                            .help("use `list = photon_electron` in [physics], or a photon source"),
+                        );
+                        continue;
+                    }
+                }
             };
-            sources.push((s, label, lines, if s.electrons_local { local } else { 0.0 }));
+            sources.push((s, label, lines, local, betas, electron_lines));
         }
         let max_energy = sources
             .iter()
-            .flat_map(|(_, _, l, _)| l.iter().map(|x| x.energy))
+            .flat_map(|(_, _, l, _, b, el)| {
+                l.iter()
+                    .map(|x| x.energy)
+                    .chain(
+                        b.iter()
+                            .map(|x: &BetaEmitter| *x.spectrum.energies.last().unwrap_or(&0.0)),
+                    )
+                    .chain(el.iter().map(|x| x.energy))
+            })
             .fold(0.0f64, f64::max)
             .max(0.02);
         let emin = c.physics.photon_cut.clamp(1e-6, 1e-3);
@@ -372,6 +469,44 @@ impl Problem {
             materials.push(Material::new(name, density, comps, &element_data, &grid, processes));
         }
         let elements: Vec<ElementSampling> = element_data.iter().map(|e| ElementSampling::new(e)).collect();
+
+        // ---- electron tables
+        let electron_cut = c.physics.electron_cut;
+        let egrid = Grid::new(electron_cut * 0.999, max_energy.max(electron_cut * 2.0) * 1.01, 200);
+        let mut emats = Vec::new();
+        if electrons_on {
+            let edata = electron.expect("checked");
+            for m in &materials {
+                let mut comps = Vec::new();
+                for comp in &m.components {
+                    match edata.get(&comp.z) {
+                        Some(el) => comps.push((
+                            comp.z,
+                            comp.mass_fraction,
+                            photon[&comp.z].atomic_mass,
+                            comp.atom_density,
+                            el,
+                        )),
+                        None => errs.push(Diagnostic::error(format!(
+                            "the electron data has no element {} (Z = {})",
+                            symbol(comp.z),
+                            comp.z
+                        ))),
+                    }
+                }
+                let i_override = c.material(&m.name).and_then(|d| d.mean_excitation).map(|e| e * 1e6);
+                // δ-rays above the electron cut-off, bremsstrahlung photons above the photon cut-off
+                let brem_cut = c.physics.photon_cut.max(1e-3);
+                emats.push(ElectronMaterial::new(
+                    &egrid,
+                    m.density,
+                    &comps,
+                    i_override,
+                    electron_cut,
+                    brem_cut,
+                ));
+            }
+        }
         let mat_index = |name: &str| materials.iter().position(|m: &Material| m.name == name).unwrap_or(0);
 
         // ---- geometry
@@ -440,7 +575,7 @@ impl Problem {
             }
         }
         let mut out_sources = Vec::new();
-        for (s, label, lines, local) in sources {
+        for (s, label, lines, local, betas, electron_lines) in sources {
             let place = match &s.placement {
                 Placement::Point(p) => {
                     let p = Vec3::from_array(*p);
@@ -474,6 +609,8 @@ impl Problem {
                 name: s.name.clone(),
                 label,
                 lines,
+                betas,
+                electron_lines,
                 local_energy: local,
                 place,
                 weight,
@@ -617,6 +754,10 @@ impl Problem {
             volume_slots,
             spectrum_slots,
             max_energy,
+            electrons: electrons_on,
+            electron_cut,
+            egrid,
+            emats,
         })
     }
 

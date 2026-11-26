@@ -70,6 +70,9 @@ pub fn run(problem: &Problem, opts: &Options, done: &AtomicU64, stop: &AtomicBoo
     }
 }
 
+/// Chunks of blocks per batch (see `run_with`).
+const CHUNKS_PER_BATCH: u64 = 64;
+
 fn run_with<R: StreamRng>(problem: &Problem, opts: &Options, done: &AtomicU64, stop: &AtomicBool) -> Results {
     let start = Instant::now();
     let mut builder = rayon::ThreadPoolBuilder::new();
@@ -93,28 +96,29 @@ fn run_with<R: StreamRng>(problem: &Problem, opts: &Options, done: &AtomicU64, s
                 break;
             }
             let (first, last) = (b * nblocks / batches, (b + 1) * nblocks / batches);
-            let blocks: Vec<u64> = (first..last).collect();
-            let min_len = (blocks.len() / (threads * 4)).max(1);
-            let batch = blocks
-                .par_iter()
-                .with_min_len(min_len)
-                .fold(
-                    || Tally::new(problem),
-                    |mut t, &blk| {
+            // A fixed number of chunks, independent of the thread count: each chunk
+            // is summed in order and the partial tallies are added in order, so the
+            // floating-point sums (and the results) are the same with any number of threads.
+            let nblk = last - first;
+            let chunks = nblk.clamp(1, CHUNKS_PER_BATCH);
+            let partials: Vec<Tally> = (0..chunks)
+                .into_par_iter()
+                .map(|c| {
+                    let mut t = Tally::new(problem);
+                    for blk in first + c * nblk / chunks..first + (c + 1) * nblk / chunks {
                         let count = BLOCK.min(opts.histories - blk * BLOCK);
                         let mut rng = R::stream(opts.seed, blk);
                         run_block(problem, &mut rng, count, &mut t);
                         done.fetch_add(count, Ordering::Relaxed);
-                        t
-                    },
-                )
-                .reduce(
-                    || Tally::new(problem),
-                    |mut a, b| {
-                        a.add(&b);
-                        a
-                    },
-                );
+                    }
+                    t
+                })
+                .collect();
+            let mut batch = Tally::new(problem);
+            for t in &partials {
+                batch.add(t);
+            }
+            drop(partials);
             let n = batch.histories.max(1) as f64;
             for (s, c) in sum_sq.iter_mut().zip(&batch.cells) {
                 for (x, v) in s.iter_mut().zip(c) {

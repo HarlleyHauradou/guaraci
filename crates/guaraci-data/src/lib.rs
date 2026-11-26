@@ -5,6 +5,7 @@
 //! to a compact internal format and cached locally (see [`library`]).
 
 pub mod decay;
+pub mod electron;
 pub mod elements;
 pub mod endf;
 pub mod library;

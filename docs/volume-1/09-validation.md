@@ -1,4 +1,4 @@
-# 8. Validation
+# 9. Validation
 
 The tests of `crates/guaraci-cpu/tests/benchmarks.rs` run with
 `GUARACI_TEST_DATA` pointing to a data folder where ENDF/B-VIII.0 is installed:

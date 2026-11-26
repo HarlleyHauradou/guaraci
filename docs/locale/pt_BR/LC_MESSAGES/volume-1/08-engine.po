@@ -3,8 +3,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language: pt_BR\n"
 
-msgid "7. Transport engine and statistics"
-msgstr "7\\. Motor de transporte e estatística"
+msgid "8. Transport engine and statistics"
+msgstr "8\\. Motor de transporte e estatística"
 
 msgid "Geometry"
 msgstr "Geometria"
@@ -18,8 +18,8 @@ msgstr "**Localização:** a partir do mundo, a busca desce ao primeiro filho qu
 msgid "**Distance to the boundary:** in the region of volume V, it is the smallest of the exit distance from V and the entry distance into each daughter of V. The solids (box, sphere, cylinder, ellipsoid) compute these distances from the parametric interval of the ray inside them."
 msgstr "**Distância à fronteira:** na região do volume V, é o menor valor entre a distância de saída de V e a distância de entrada em cada filho de V. Os sólidos (caixa, esfera, cilindro, elipsoide) calculam essas distâncias a partir do intervalo paramétrico da reta dentro deles."
 
-msgid "**Crossing:** the photon moves to the boundary plus a small push (10⁻⁹ × the size of the world) and is located again."
-msgstr "**Travessia:** o fóton vai até a fronteira mais um pequeno empurrão (10⁻⁹ × o tamanho do mundo) e é localizado de novo."
+msgid "**Crossing:** the particle moves to the boundary plus a small push (10⁻⁹ × the size of the world) and is located again."
+msgstr "**Travessia:** a partícula vai até a fronteira mais um pequeno empurrão (10⁻⁹ × o tamanho do mundo) e é localizado de novo."
 
 msgid "**Overlap check:** before running, 5000 points of each surface are tested. A point outside the mother means the volume sticks out of its mother; a point inside a sister means an overlap. The idea is that of Geant4's `CheckOverlaps`."
 msgstr "**Verificação de sobreposição:** antes de rodar, 5000 pontos de cada superfície são testados. Um ponto fora do pai significa que o volume vaza do pai; um ponto dentro de um irmão significa sobreposição. A ideia é a do `CheckOverlaps` do Geant4."
@@ -78,8 +78,8 @@ msgstr "10000ª saída da semente 5489 (padrão C++)"
 msgid "Parallelism and reproducibility"
 msgstr "Paralelismo e reprodutibilidade"
 
-msgid "Histories are split into fixed blocks of 1000. Block b always uses stream b of the generator: for Philox, the counter (b, i) with the key equal to the seed; for the others, the state is derived from (seed, b) by SplitMix64. Therefore **the result does not depend on the number of threads**, and a test checks it. Blocks are distributed among threads with rayon. Each thread accumulates in a `Tally` of its own, and the tallies are summed at the end of each batch."
-msgstr "As histórias são divididas em blocos fixos de 1000. O bloco b sempre usa o fluxo b do gerador: no Philox, o contador (b, i) com a chave igual à semente; nos demais, o estado é derivado de (semente, b) por SplitMix64. Por isso **o resultado não depende do número de threads**, e um teste verifica isso. Os blocos são distribuídos entre as threads com rayon. Cada thread acumula num `Tally` próprio, e os tallies são somados ao fim de cada lote."
+msgid "Histories are split into fixed blocks of 1000. Block b always uses stream b of the generator: for Philox, the counter (b, i) with the key equal to the seed; for the others, the state is derived from (seed, b) by SplitMix64. Therefore **the result does not depend on the number of threads**, and a test checks it. Each batch is split into a fixed number of chunks (64, or fewer if the batch has fewer blocks), whatever the number of threads. Rayon distributes the chunks among the threads. Each chunk runs its blocks in order into a `Tally` of its own, and the tallies of the chunks are then added in chunk order. Every floating-point sum is therefore done in the same order, and the results are identical bit for bit with any number of threads."
+msgstr "As histórias são divididas em blocos fixos de 1000. O bloco b sempre usa o fluxo b do gerador: no Philox, o contador (b, i) com a chave igual à semente; nos demais, o estado é derivado de (semente, b) por SplitMix64. Por isso **o resultado não depende do número de threads**, e um teste verifica isso. Cada lote é dividido num número fixo de pedaços (64, ou menos se o lote tiver menos blocos), qualquer que seja o número de threads. O rayon distribui os pedaços entre as threads. Cada pedaço roda os seus blocos em ordem num `Tally` próprio, e os tallies dos pedaços são somados depois, na ordem dos pedaços. Assim, toda soma em ponto flutuante é feita na mesma ordem, e os resultados são idênticos bit a bit com qualquer número de threads."
 
 msgid "Uncertainty"
 msgstr "Incerteza"
@@ -89,6 +89,12 @@ msgstr "Os blocos são agrupados em B lotes (`batches`). Para cada célula de ca
 
 msgid "σ²(x̄) = [ (1/B) Σ x̄_b² − x̄² ] · B/(B − 1) / B"
 msgstr ""
+
+msgid "Particle stack"
+msgstr "Pilha de partículas"
+
+msgid "Each history starts with the particles emitted by the decay (photons, β particles, conversion and Auger electrons), pushed on a stack. Secondaries (Compton and photo-electrons, δ-rays, bremsstrahlung and annihilation photons) are pushed on the same stack, and the history ends when it is empty. Photons follow chapter 6, and electrons and positrons follow chapter 7."
+msgstr "Cada história começa com as partículas emitidas pelo decaimento (fótons, partículas β, elétrons de conversão e Auger), colocadas numa pilha. Os secundários (elétrons Compton e fotoelétrons, raios δ, fótons de bremsstrahlung e de aniquilação) entram na mesma pilha, e a história termina quando ela fica vazia. Os fótons seguem o capítulo 6, e os elétrons e pósitrons, o capítulo 7."
 
 msgid "Scoring"
 msgstr "Pontuação"

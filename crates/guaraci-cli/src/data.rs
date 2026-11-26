@@ -63,6 +63,7 @@ fn parse_kind(s: &str) -> Option<Kind> {
     match s {
         "photoatomic" | "photon" => Some(Kind::Photoatomic),
         "decay" => Some(Kind::Decay),
+        "electron" | "electrons" => Some(Kind::Electron),
         _ => None,
     }
 }
@@ -108,13 +109,15 @@ pub fn run(cmd: DataCommand) -> Result<(), ()> {
                 Some(k) => match parse_kind(k) {
                     Some(k) => vec![k],
                     None => {
-                        eprintln!("error: unknown kind `{k}` (use `photoatomic` or `decay`)");
+                        eprintln!("error: unknown kind `{k}` (use `photoatomic`, `decay` or `electron`)");
                         return Err(());
                     }
                 },
             };
             if from.is_some() && kinds.len() > 1 {
-                eprintln!("error: with --from, say which part the file contains: --kind photoatomic or --kind decay");
+                eprintln!(
+                    "error: with --from, say which part the file contains: --kind photoatomic, decay or electron"
+                );
                 return Err(());
             }
             let mut ok = true;

@@ -64,6 +64,7 @@ a file of your own and `include` it.
 | `composition` | table `{ element = mass fraction }` |
 | `formula` | chemical formula, e.g. `H2O`, `Ca(OH)2`; atomic masses come from the data library |
 | `same_as` | copies the composition (and the density, if not given) of another material |
+| `mean_excitation` | mean excitation energy I for the electron stopping power, e.g. `75 eV` for water. Default: the Bragg rule with the values of ICRU Report 37 |
 | `title`, `comment`, `reference`, `number` | descriptive information, shown in the reports |
 
 ### Pure elements

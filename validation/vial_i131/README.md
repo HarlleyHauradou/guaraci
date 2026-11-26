@@ -19,7 +19,7 @@ the cross sections of each code.
 
 | Code | How "photons only, local electrons" is set |
 |---|---|
-| Guaraci | default (`photon_local` physics); the source has photon lines only, no β |
+| Guaraci | `list = photon_local`; the source has photon lines only, no β |
 | GATE 10 | `G4EmLivermorePhysics`; fluo, Auger and PIXE off; electrons killed at creation (user limit `min_ekine`) |
 | MCNPX | `MODE P`; `PHYS:P 100 1 0 0 1` (IDES = 1: no electrons; NODOP = 1: no Doppler) |
 

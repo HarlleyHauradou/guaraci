@@ -3,8 +3,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language: es\n"
 
-msgid "8. Validation"
-msgstr "8\\. Validación"
+msgid "9. Validation"
+msgstr "9\\. Validación"
 
 msgid "The tests of `crates/guaraci-cpu/tests/benchmarks.rs` run with `GUARACI_TEST_DATA` pointing to a data folder where ENDF/B-VIII.0 is installed:"
 msgstr "Las pruebas de `crates/guaraci-cpu/tests/benchmarks.rs` se ejecutan con `GUARACI_TEST_DATA` apuntando a una carpeta de datos con ENDF/B-VIII.0 instalado:"

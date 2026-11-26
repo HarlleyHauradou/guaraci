@@ -24,12 +24,13 @@ The installation process:
 |---|---|---|
 | ENDF/B-VIII.0 photoat | `ENDF-B-VIII.0_photoat.zip` (35 776 679 B) | `61aee2b8…0248e835d`[^sha] |
 | ENDF/B-VIII.0 decay | `ENDF-B-VIII.0_decay.zip` (14 173 710 B) | `9087395f…f8d03d5e`[^sha] |
+| ENDF/B-VIII.0 electrons | `ENDF-B-VIII.0_electrons.zip` (9 060 819 B) | `98f5ce1e…e694c5d4`[^sha] |
 
 [^sha]: The full values are in `crates/guaraci-data/src/library.rs`.
 
 ## ENDF-6 reader
 
-`endf.rs` implements the CONT/HEAD, LIST and TAB1 records of the 80-column format:
+`endf.rs` implements the CONT/HEAD, LIST, TAB1 and TAB2 records of the 80-column format:
 
 - Real numbers accept the compact form without `E` (`1.234567+5`) and blank fields (= 0).
 - The file is split into `(MF, MT)` sections by columns 71–75.
@@ -61,8 +62,28 @@ For each nuclide, Guaraci keeps:
 - the discrete photon lines, with absolute intensity = FD × RI:
   - STYP 0 becomes **gamma**;
   - STYP 9 becomes **X-ray**, or **annihilation** when the energy is within 50 eV of 510.999 keV.
+- the β branches:
+  - STYP 1 (β⁻): endpoint = ER, intensity = FD × RI;
+  - STYP 2 (β⁺): endpoint = ER − 2mₑc², because for this type ER is the decay
+    energy of the branch; intensity = FD × RIS (RI counts β⁺ and electron capture together);
+  - the transition type (allowed, first-forbidden unique...) for the spectrum shape;
+- the discrete electrons (STYP 8: conversion and Auger) and the mean β energy per decay.
 
 Continuous photon spectra (rare) are flagged but not used yet.
+
+## Electro-atomic data (MF23, MF26)
+
+The ENDF/B-VIII.0 electron sublibrary is EEDL (EPICS2017). For each element,
+Guaraci derives on a grid from 100 eV to 100 MeV (40 points per decade):
+
+| Section | Use |
+|---|---|
+| MF23 MT525, MF26 MT525 | large-angle elastic cross section and angular distribution → transport cross section σ_el (1 − ⟨cos θ⟩) |
+| MF23 MT526 | total elastic cross section |
+| MF23/MF26 MT527 | bremsstrahlung: cross section, mean photon energy (LAW = 8) and photon spectra (LAW = 1) |
+| MF23/MF26 MT528, MT534+ | excitation and subshell ionisation (converted, but not used for transport: see chapter 7) |
+
+The value 1 − ⟨cos θ⟩ is interpolated log-log between the tabulated energies.
 
 ## Reference tests
 
@@ -75,3 +96,6 @@ With `GUARACI_TEST_ENDF` pointing to the unpacked files, the tests check:
 | Tc-99m | T½ = 6.007 h; 140.51 keV with 88.5 % |
 | F-18 | 1.934 annihilation photons per decay |
 | C-14 | no photons; ⟨E_LP⟩ = 49.5 keV |
+| I-131 β⁻ | main branch: endpoint 606.3 keV, 89.6 %; mean β energy 181.9 keV per decay |
+| F-18 β⁺ | 96.7 % positrons, endpoint 633.5 keV |
+| water, EEDL | radiative stopping power vs ESTAR (printed); bremsstrahlung spectra normalised, σ_b⟨k⟩ = S_rad within 3 % |

@@ -173,10 +173,26 @@ pub fn describe(c: &Config, sources: &guaraci_input::SourceMap) -> String {
     let _ = writeln!(o, "  rayleigh       {}", onoff(p.rayleigh));
     let _ = writeln!(o, "  pair           {}", onoff(p.pair));
     let _ = writeln!(o, "  photon cut     {}", energy(p.photon_cut));
-    let _ = writeln!(
-        o,
-        "  electrons      deposited where they are created (not transported in this version)"
-    );
+    if p.electrons {
+        let _ = writeln!(
+            o,
+            "  electrons      transported (electrons and positrons), cut-off {}",
+            energy(p.electron_cut)
+        );
+        let _ = writeln!(
+            o,
+            "                 mixed condensed history: continuous loss with the restricted stopping power\n\
+             \x20                (Bethe, ICRU 37 mean excitation energies); δ-rays above the cut-off (Møller,\n\
+             \x20                Bhabha) and bremsstrahlung photons above the photon cut (library spectra)\n\
+             \x20                produced one by one; multiple scattering matched to the elastic transport\n\
+             \x20                mean free path; positrons annihilate at rest into two 511 keV photons"
+        );
+    } else {
+        let _ = writeln!(
+            o,
+            "  electrons      deposited where they are created (list photon_local)"
+        );
+    }
 
     let _ = writeln!(o, "\nGeometry");
     let _ = writeln!(o, "  world  box {}  {}", v3(c.world.size), c.world.material.node);
@@ -294,13 +310,13 @@ pub fn describe(c: &Config, sources: &guaraci_input::SourceMap) -> String {
                     }
                 }
             }
-            Emission::Lines(lines) => {
+            Emission::Lines { particle, lines } => {
                 let ls = lines
                     .iter()
                     .map(|(e, i)| format!("{} ({}/decay)", energy(*e), trim(*i)))
                     .collect::<Vec<_>>()
                     .join(", ");
-                let _ = writeln!(o, "  {}  {ls}  {place}{act}", s.name);
+                let _ = writeln!(o, "  {}  {} {ls}  {place}{act}", s.name, particle.name());
             }
         }
     }

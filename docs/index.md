@@ -94,16 +94,16 @@ guaraci run thyroid       # runs and writes dose, uncertainties and a report
 
 | | |
 |---|---|
-| **Physics** | photoelectric effect, Compton (Klein-Nishina with S(x,Z)), Rayleigh (form factors), pair production |
-| **Sources** | 3821 nuclides of ENDF/B-VIII.0, user-defined lines, activity and duration |
+| **Physics** | photons: photoelectric effect, Compton (Klein-Nishina with S(x,Z)), Rayleigh (form factors), pair production; electrons and positrons: mixed condensed history with δ-rays, bremsstrahlung, multiple scattering and annihilation |
+| **Sources** | 3821 nuclides of ENDF/B-VIII.0 (γ, X, β⁻, β⁺, conversion and Auger electrons), user-defined photon, electron and positron lines, activity and duration |
 | **Geometry** | nested boxes, spheres, cylinders and ellipsoids, with overlap checks |
 | **Materials** | 372 materials of PNNL-15870 Rev. 1, chemical formulas and custom compositions |
 | **Probes** | 3D dose maps (`.mhd`), dose in volumes and fluence spectra, all with uncertainties |
 | **Performance** | millions of histories per second on multi-core CPUs; identical results with any number of threads |
-| **Validation** | μ/ρ within 0.4 % of NIST XCOM; absorbed fractions in 231 spheres compared with Stabin & Konijnenberg (2000) |
+| **Validation** | μ/ρ within 0.4 % of NIST XCOM; stopping powers and ranges within 1.1 % of NIST ESTAR; photon and electron absorbed fractions in spheres compared with Stabin & Konijnenberg (2000) |
 
-In development: voxelised phantoms (CT/DICOM), electron transport, CUDA
-backend and the graphical interface ([Volume III](volume-3/index.md)).
+In development: voxelised phantoms (CT/DICOM), CUDA backend and the graphical
+interface ([Volume III](volume-3/index.md)).
 
 ## The three volumes
 

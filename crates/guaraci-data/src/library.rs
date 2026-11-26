@@ -3,6 +3,7 @@
 //! from the publisher on the user's machine.
 
 use crate::decay::{read_decay, NuclideDecay};
+use crate::electron::{read_electron, ElementElectron};
 use crate::elements::NuclideId;
 use crate::photon::{read_photoatomic, ElementPhoton};
 use serde::{Deserialize, Serialize};
@@ -11,13 +12,21 @@ use std::collections::BTreeMap;
 use std::io::Read;
 use std::path::{Path, PathBuf};
 
-/// Version of the converted-data format. Bump when the stored structs change.
-pub const FORMAT_VERSION: u32 = 1;
+/// Version of the converted-data format of each kind. Bump when the stored
+/// structs of that kind change (the data is then converted again).
+pub fn format_version(kind: Kind) -> u32 {
+    match kind {
+        Kind::Photoatomic => 1,
+        Kind::Decay => 3,
+        Kind::Electron => 3,
+    }
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum Kind {
     Photoatomic,
     Decay,
+    Electron,
 }
 
 impl Kind {
@@ -25,6 +34,7 @@ impl Kind {
         match self {
             Kind::Photoatomic => "photoatomic",
             Kind::Decay => "decay",
+            Kind::Electron => "electron",
         }
     }
 }
@@ -69,6 +79,13 @@ pub static CATALOG: &[LibraryInfo] = &[
                 page: "https://www.nndc.bnl.gov/endf-b8.0/download.html",
                 sha256: Some("9087395f6d74fe35b47bb4c8b37ef53b44e67569196c933f835a53cdf8d03d5e"),
                 size: 14_173_710,
+            },
+            Component {
+                kind: Kind::Electron,
+                url: Some("https://www.nndc.bnl.gov/endf-b8.0/zips/ENDF-B-VIII.0_electrons.zip"),
+                page: "https://www.nndc.bnl.gov/endf-b8.0/download.html",
+                sha256: Some("98f5ce1eaa3115cb73a8d23bae2fef659380974b15b023d987d20b13e694c5d4"),
+                size: 9_060_819,
             },
         ],
     },
@@ -175,6 +192,7 @@ struct Stored<T> {
 
 pub type PhotonData = BTreeMap<u32, ElementPhoton>;
 pub type DecayData = BTreeMap<NuclideId, NuclideDecay>;
+pub type ElectronData = BTreeMap<u32, ElementElectron>;
 
 fn cache_file(dir: &Path, lib: &str, kind: Kind) -> PathBuf {
     dir.join(lib).join(format!("{}.bin", kind.name()))
@@ -186,7 +204,7 @@ pub fn installed(dir: &Path, lib: &str, kind: Kind) -> Option<Provenance> {
     let f = std::fs::File::open(p).ok()?;
     // provenance is serialised first, so this reads only the start of the file
     let prov: Provenance = bincode::deserialize_from(std::io::BufReader::new(f)).ok()?;
-    (prov.format_version == FORMAT_VERSION).then_some(prov)
+    (prov.format_version == format_version(kind)).then_some(prov)
 }
 
 /// Progress reporting for long operations.
@@ -299,6 +317,23 @@ fn convert_and_store(
             )?;
             prov
         }
+        Kind::Electron => {
+            let data: ElectronData = convert_archive(&archive, |name, text| {
+                if !name.ends_with(".endf") {
+                    return Ok(None);
+                }
+                read_electron(name, text).map(|e| Some((e.z, e)))
+            })?;
+            let prov = provenance(info, kind, source, sha, &installed_at, data.len());
+            store(
+                &cache_file(dir, info.id, kind),
+                &Stored {
+                    provenance: prov.clone(),
+                    data,
+                },
+            )?;
+            prov
+        }
         Kind::Decay => {
             let data: DecayData = convert_archive(&archive, |name, text| {
                 if !name.ends_with(".endf") {
@@ -328,7 +363,7 @@ fn provenance(info: &LibraryInfo, kind: Kind, source: &str, sha: &str, when: &st
         source: source.into(),
         sha256: sha.into(),
         installed: when.into(),
-        format_version: FORMAT_VERSION,
+        format_version: format_version(kind),
         entries: n,
     }
 }
@@ -370,6 +405,14 @@ pub fn load_photon(dir: &Path, lib: &str) -> Result<(Provenance, PhotonData), Da
         dir,
         library_info(lib).ok_or_else(|| DataError::UnknownLibrary(lib.into()))?,
         Kind::Photoatomic,
+    )
+}
+
+pub fn load_electron(dir: &Path, lib: &str) -> Result<(Provenance, ElectronData), DataError> {
+    load(
+        dir,
+        library_info(lib).ok_or_else(|| DataError::UnknownLibrary(lib.into()))?,
+        Kind::Electron,
     )
 }
 

@@ -4,6 +4,10 @@
 histories = 1e7
 seed = 2026
 
+[physics]
+list = photon_electron      # β particles, conversion and Auger electrons are transported
+electron_cut = 10 keV       # below this, electrons deposit their energy on the spot
+
 [world]
 material = Air
 size = [50, 50, 50] cm
@@ -25,6 +29,7 @@ material = Tissue_Soft_ICRP
 nuclide = 131I
 in = thyroid
 activity = 3.7 GBq
+beta = transport            # or `local` (mean β energy at the decay point) or `off`
 
 [probe dose]
 type = dose_grid

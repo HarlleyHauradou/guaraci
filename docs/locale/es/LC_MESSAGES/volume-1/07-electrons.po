@@ -1,0 +1,260 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: es\n"
+
+msgid "7. Electron and positron physics"
+msgstr "7\\. Física de los electrones y positrones"
+
+msgid "Module `guaraci-core/src/electron.rs`, used by `transport.rs`. Units: MeV, cm, g/cm³. Electrons and positrons are transported with the physics list `photon_electron` (the default); with `photon_local` they deposit their energy where they are created."
+msgstr "Módulo `guaraci-core/src/electron.rs`, usado por `transport.rs`. Unidades: MeV, cm, g/cm³. Los electrones y positrones se transportan con la lista de física `photon_electron` (la predeterminada); con `photon_local`, depositan su energía donde se crean."
+
+msgid "Mixed condensed history"
+msgstr "Historia condensada mixta"
+
+msgid "A charged particle undergoes thousands of collisions per millimetre. As in EGS, PENELOPE and Geant4, Guaraci groups them into steps (a *condensed history*) and separates two kinds of events:"
+msgstr "Una partícula cargada sufre miles de colisiones por milímetro. Como en EGS, PENELOPE y Geant4, Guaraci las agrupa en pasos (una *historia condensada*) y separa dos tipos de eventos:"
+
+msgid "**Soft events** (energy transfer below a threshold): their total effect is continuous, with the *restricted* stopping power L(E)."
+msgstr "**Eventos blandos** (transferencia de energía por debajo de un umbral): su efecto total es continuo, dado por el poder de frenado *restringido* L(E)."
+
+msgid "**Hard events** (above the threshold): simulated one by one, with their secondaries:"
+msgstr "**Eventos duros** (por encima del umbral): simulados uno a uno, con sus secundarios:"
+
+msgid "knock-on electrons (δ-rays) above `electron_cut`;"
+msgstr "electrones de colisión (rayos δ) por encima de `electron_cut`;"
+
+msgid "bremsstrahlung photons above the photon threshold k_c = max(`photon_cut`, 1 keV)."
+msgstr "fotones de bremsstrahlung por encima del umbral de fotones k_c = max(`photon_cut`, 1 keV)."
+
+msgid "Elastic scattering is condensed: the direction changes at the end of each step, by an angle sampled so that the mean deflection is exact."
+msgstr "La dispersión elástica es condensada: la dirección cambia al final de cada paso, con un ángulo muestreado de modo que la deflexión media sea exacta."
+
+msgid "Tables per material"
+msgstr "Tablas por material"
+
+msgid "For each material, a logarithmic grid with 200 points per decade, from the cut-off up to the highest energy of the problem, holds:"
+msgstr "Para cada material, una malla logarítmica con 200 puntos por década, desde el corte hasta la energía más alta del problema, guarda:"
+
+msgid "the restricted stopping power L(E) for electrons and for positrons;"
+msgstr "el poder de frenado restringido L(E), para electrones y para positrones;"
+
+msgid "the unrestricted stopping power S(E) and the CSDA range (for reports and checks);"
+msgstr "el poder de frenado sin restricción S(E) y el alcance CSDA (para informes y comprobaciones);"
+
+msgid "the range R(E) = ∫ dE / L(E), from the cut-off;"
+msgstr "el alcance R(E) = ∫ dE / L(E), desde el corte;"
+
+msgid "the macroscopic cross sections of the hard events, Σ_δ(E) and Σ_b(E);"
+msgstr "las secciones eficaces macroscópicas de los eventos duros, Σ_δ(E) y Σ_b(E);"
+
+msgid "the inverse transport mean free path, 1/λ₁(E)."
+msgstr "el inverso del recorrido libre medio de transporte, 1/λ₁(E)."
+
+msgid "Collision stopping power"
+msgstr "Poder de frenado de colisión"
+
+msgid "The Bethe formula, with the Rohrlich–Carlson terms for electrons and positrons (ICRU Report 37):"
+msgstr "La fórmula de Bethe, con los términos de Rohrlich–Carlson para electrones y positrones (ICRU Report 37):"
+
+msgid "S_col/ρ = K (Z/A) / β² · [ ln(τ²(τ + 2) / (2 (I/mₑc²)²)) + F^±(τ) − δ ]"
+msgstr ""
+
+msgid "with K = 2π r_e² mₑc² N_A = 0.153537 MeV cm²/mol and τ = T/mₑc²."
+msgstr "con K = 2π r_e² mₑc² N_A = 0,153537 MeV cm²/mol y τ = T/mₑc²."
+
+msgid "**Mean excitation energy I:**"
+msgstr "**Energía media de excitación I:**"
+
+msgid "Bragg rule over the elements, ln I = Σ wᵢ (Zᵢ/Aᵢ) ln Iᵢ / Σ wᵢ (Zᵢ/Aᵢ);"
+msgstr "regla de Bragg sobre los elementos, ln I = Σ wᵢ (Zᵢ/Aᵢ) ln Iᵢ / Σ wᵢ (Zᵢ/Aᵢ);"
+
+msgid "Iᵢ from ICRU Report 37 (the values used by NIST ESTAR);"
+msgstr "Iᵢ de ICRU Report 37 (los valores que usa NIST ESTAR);"
+
+msgid "in condensed media, H, C, N, O, F and Cl take 19.2, 81, 82, 106, 112 and 180 eV, and the other elements 1.13 × their gas value;"
+msgstr "en medios condensados, H, C, N, O, F y Cl toman 19,2, 81, 82, 106, 112 y 180 eV, y los demás elementos 1,13 × su valor en gas;"
+
+msgid "`mean_excitation` in a `[material]` replaces the Bragg rule (water: 75 eV)."
+msgstr "`mean_excitation` en un `[material]` reemplaza la regla de Bragg (agua: 75 eV)."
+
+msgid "**Density effect δ:** the parametrisation of Sternheimer and Peierls (1971), with its constants computed from I and the plasma energy of the material."
+msgstr "**Efecto de densidad δ:** la parametrización de Sternheimer y Peierls (1971), con sus constantes calculadas a partir de I y de la energía de plasma del material."
+
+msgid "The collision stopping power derived from the library (EEDL) is not used: in water it is about 7 % above ESTAR at 1 MeV."
+msgstr "El poder de frenado de colisión obtenido de la biblioteca (EEDL) no se usa: en agua queda cerca de un 7 % por encima de ESTAR a 1 MeV."
+
+msgid "Radiative stopping power and bremsstrahlung spectra"
+msgstr "Poder de frenado radiativo y espectros de bremsstrahlung"
+
+msgid "From the electro-atomic library (EEDL, ENDF-6 MF23/MF26 MT527):"
+msgstr "De la biblioteca electro-atómica (EEDL, ENDF-6 MF23/MF26 MT527):"
+
+msgid "the cross section σ_b(E) and the mean photon energy ⟨k⟩(E) give S_rad = Σᵢ nᵢ σ_b,i ⟨k⟩ᵢ;"
+msgstr "la sección eficaz σ_b(E) y la energía media del fotón ⟨k⟩(E) dan S_rad = Σᵢ nᵢ σ_b,i ⟨k⟩ᵢ;"
+
+msgid "the photon spectra p(k | E), tabulated at a few incident energies, are kept in the reduced variable κ = k/E and interpolated in ln E between them."
+msgstr "los espectros de fotones p(k | E), tabulados en unas pocas energías incidentes, se guardan en la variable reducida κ = k/E y se interpolan en ln E entre ellas."
+
+msgid "Photons below k_c are part of L(E): their share of S_rad is ∫₀^κc κ p dκ / ∫₀¹ κ p dκ. Above k_c, the number of photons per unit length is Σ_b = Σᵢ nᵢ σ_b,i ∫_κc¹ p dκ."
+msgstr "Los fotones por debajo de k_c forman parte de L(E): su parte de S_rad es ∫₀^κc κ p dκ / ∫₀¹ κ p dκ. Por encima de k_c, el número de fotones por unidad de longitud es Σ_b = Σᵢ nᵢ σ_b,i ∫_κc¹ p dκ."
+
+msgid "Knock-on electrons (δ-rays)"
+msgstr "Electrones de colisión (rayos δ)"
+
+msgid "The Møller (electrons) and Bhabha (positrons) cross sections for free electrons at rest, as in Geant4's `G4MollerBhabhaModel`:"
+msgstr "Las secciones eficaces de Møller (electrones) y de Bhabha (positrones) para electrones libres en reposo, como en el `G4MollerBhabhaModel` de Geant4:"
+
+msgid "largest energy transfer: T/2 for electrons (the faster electron is called the primary) and T for positrons;"
+msgstr "mayor transferencia de energía: T/2 para electrones (el electrón más rápido se llama primario) y T para positrones;"
+
+msgid "Σ_δ(E) is the integral of the cross section from `electron_cut` up to that maximum;"
+msgstr "Σ_δ(E) es la integral de la sección eficaz desde `electron_cut` hasta ese máximo;"
+
+msgid "the restricted collision stopping power subtracts the energy carried by the hard collisions:"
+msgstr "el poder de frenado de colisión restringido descuenta la energía que se llevan las colisiones duras:"
+
+msgid "L_col = S_col − K (Z/A) ρ / β² · [ G(τ, W_max) − G(τ, W_cut) ]"
+msgstr ""
+
+msgid "with G the transfer-dependent part of the restricted Bethe formula (Seltzer and Berger). A unit test checks that L_col + Σ_δ⟨W⟩ = S_col within 0.2 %."
+msgstr "con G la parte de la fórmula de Bethe restringida que depende de la transferencia (Seltzer y Berger). Una prueba unitaria comprueba que L_col + Σ_δ⟨W⟩ = S_col dentro del 0,2 %."
+
+msgid "The energy W of the δ-ray is sampled from 1/W² and accepted by rejection with the rest of the cross section. The directions of the δ-ray and of the primary follow from energy and momentum conservation."
+msgstr "La energía W del rayo δ se muestrea de 1/W² y se acepta por rechazo con el resto de la sección eficaz. Las direcciones del rayo δ y del primario resultan de la conservación de la energía y del momento."
+
+msgid "Elastic scattering and the transport mean free path"
+msgstr "Dispersión elástica y recorrido libre medio de transporte"
+
+msgid "1/λ₁ = Σᵢ nᵢ σ_el,i (1 − ⟨cos θ⟩ᵢ)"
+msgstr ""
+
+msgid "with the large-angle elastic cross section (MT525) and the mean cosine of its angular distribution (MF26). The angular tables of EEDL are sparse at high energy (for oxygen: 256 keV, then 10 MeV), and 1 − ⟨cos θ⟩ falls by a factor of 40 between them. It is therefore interpolated log-log in energy. A linear interpolation would make λ₁ 2.5 times too short at 1 MeV."
+msgstr "con la sección eficaz elástica de grandes ángulos (MT525) y el coseno medio de su distribución angular (MF26). Las tablas angulares de EEDL son escasas a alta energía (para el oxígeno: 256 keV, luego 10 MeV), y 1 − ⟨cos θ⟩ cae en un factor 40 entre ellas. Por eso se interpola en log-log en la energía. Una interpolación lineal haría λ₁ 2,5 veces demasiado corto a 1 MeV."
+
+msgid "At the end of a step of length s, the deflection is sampled from a screened Rutherford distribution,"
+msgstr "Al final de un paso de longitud s, la deflexión se muestrea de una distribución de Rutherford apantallada,"
+
+msgid "p(μ) ∝ 1/(1 − μ + 2η)²,"
+msgstr ""
+
+msgid "whose screening parameter η is chosen so that ⟨1 − cos θ⟩ = 1 − e^(−s/λ₁), the exact mean after a path s (Lewis, 1950)."
+msgstr "cuyo parámetro de apantallamiento η se elige para que ⟨1 − cos θ⟩ = 1 − e^(−s/λ₁), la media exacta tras un recorrido s (Lewis, 1950)."
+
+msgid "Step"
+msgstr "Paso"
+
+msgid "The step s is the smallest of:"
+msgstr "El paso s es el menor de:"
+
+msgid "the path that loses 15 % of the energy (from the range table);"
+msgstr "el recorrido que pierde el 15 % de la energía (según la tabla de alcances);"
+
+msgid "0.3 λ₁;"
+msgstr "0,3 λ₁;"
+
+msgid "the residual range down to the cut-off;"
+msgstr "el alcance restante hasta el corte;"
+
+msgid "the distance to the next hard event, s_h = −ln ξ / Σ_max, where Σ_max is the largest Σ_δ + Σ_b over the energies of the step;"
+msgstr "la distancia hasta el próximo evento duro, s_h = −ln ξ / Σ_max, donde Σ_max es el mayor Σ_δ + Σ_b en las energías del paso;"
+
+msgid "the distance to the next boundary."
+msgstr "la distancia hasta la próxima frontera."
+
+msgid "Along the step:"
+msgstr "A lo largo del paso:"
+
+msgid "the energy after the step comes from the range: E₁ = R⁻¹(R(E₀) − s);"
+msgstr "la energía tras el paso sale del alcance: E₁ = R⁻¹(R(E₀) − s);"
+
+msgid "the loss E₀ − E₁ is deposited at a uniform point of the segment;"
+msgstr "la pérdida E₀ − E₁ se deposita en un punto uniforme del segmento;"
+
+msgid "at a boundary, the particle crosses and continues with the tables of the new material."
+msgstr "en una frontera, la partícula la cruza y sigue con las tablas del nuevo material."
+
+msgid "When the step ends on a hard event, the event happens with probability Σ(E₁)/Σ_max, and is then a δ-ray or a photon in proportion to Σ_δ and Σ_b. Otherwise it is a virtual event, and nothing happens: this keeps the sampling exact although Σ changes along the step."
+msgstr "Cuando el paso termina en un evento duro, el evento ocurre con probabilidad Σ(E₁)/Σ_max, y entonces es un rayo δ o un fotón, en proporción a Σ_δ y Σ_b. Si no, es un evento virtual y no ocurre nada: así el muestreo sigue siendo exacto aunque Σ cambie a lo largo del paso."
+
+msgid "Cut-off and positrons"
+msgstr "Corte y positrones"
+
+msgid "Below `electron_cut` (default 10 keV, minimum 1 keV), the particle deposits its energy on the spot."
+msgstr "Por debajo de `electron_cut` (10 keV por defecto, mínimo 1 keV), la partícula deposita su energía en el lugar."
+
+msgid "A positron below the cut-off, or at the end of its range, annihilates at rest: two photons of 511 keV leave in opposite, isotropic directions. Annihilation in flight is not simulated."
+msgstr "Un positrón por debajo del corte, o al final de su alcance, se aniquila en reposo: dos fotones de 511 keV salen en direcciones opuestas e isótropas. La aniquilación en vuelo no se simula."
+
+msgid "Electrons created by photons"
+msgstr "Electrones creados por fotones"
+
+msgid "Interaction"
+msgstr "Interacción"
+
+msgid "Electron"
+msgstr "Electrón"
+
+msgid "photoelectric"
+msgstr "fotoeléctrico"
+
+msgid "all the photon energy (binding included, since fluorescence is not emitted), direction from the Sauter–Gavrila distribution (K shell)"
+msgstr "toda la energía del fotón (incluida la de enlace, ya que no se emite fluorescencia), dirección según la distribución de Sauter–Gavrila (capa K)"
+
+msgid "Compton"
+msgstr ""
+
+msgid "E − E′, direction from momentum conservation"
+msgstr "E − E′, dirección por conservación del momento"
+
+msgid "pair production"
+msgstr "producción de pares"
+
+msgid "E − 2mₑc² shared uniformly between the electron and the positron, both close to the photon direction (θ ≈ mₑc²/E)"
+msgstr "E − 2mₑc² repartida uniformemente entre el electrón y el positrón, ambos cerca de la dirección del fotón (θ ≈ mₑc²/E)"
+
+msgid "Electrons from radioactive decay"
+msgstr "Electrones del decaimiento radiactivo"
+
+msgid "With `beta = transport` and the list `photon_electron`:"
+msgstr "Con `beta = transport` y la lista `photon_electron`:"
+
+msgid "**β⁻ and β⁺ branches:** one spectrum per branch, from the endpoint of the decay library and Fermi theory:"
+msgstr "**Ramas β⁻ y β⁺:** un espectro por rama, a partir del punto final de la biblioteca de decaimiento y de la teoría de Fermi:"
+
+msgid "N(T) ∝ F(Z, W) · p W (W₀ − W)² · C(W)"
+msgstr ""
+
+msgid "W is the total energy in units of mₑc² and p the momentum."
+msgstr "W es la energía total en unidades de mₑc², y p el momento."
+
+msgid "F is the Fermi function in the usual relativistic approximation: 2πη/(1 − e^(−2πη)) · p^(2(γ₀−1)), with η = ±αZW/p and γ₀ = √(1 − (αZ)²). Z is the charge of the daughter nucleus, and the sign is negative for β⁺."
+msgstr "F es la función de Fermi en la aproximación relativista habitual: 2πη/(1 − e^(−2πη)) · p^(2(γ₀−1)), con η = ±αZW/p y γ₀ = √(1 − (αZ)²). Z es la carga del núcleo hijo, y el signo es negativo para β⁺."
+
+msgid "C = 1 for allowed transitions, and p² + q² for first-forbidden unique ones."
+msgstr "C = 1 para las transiciones permitidas, y p² + q² para las primeras prohibidas únicas."
+
+msgid "For β⁺, the library gives the decay energy of the branch, and the positron endpoint is that energy minus 2mₑc²."
+msgstr "Para β⁺, la biblioteca da la energía de decaimiento de la rama, y el punto final del positrón es esa energía menos 2mₑc²."
+
+msgid "**Conversion and Auger electrons:** discrete lines with their intensities."
+msgstr "**Electrones de conversión y Auger:** líneas discretas con sus intensidades."
+
+msgid "**Annihilation photons:** the 511 keV lines of the decay library are left out, since the transported positrons make their own."
+msgstr "**Fotones de aniquilación:** las líneas de 511 keV de la biblioteca de decaimiento se dejan fuera, ya que los positrones transportados generan los suyos."
+
+msgid "Check: the mean β energy of the main I-131 branch (endpoint 606.3 keV) is 191.6 keV (ENSDF), and the F-18 positron spectrum has a mean of 250 keV."
+msgstr "Comprobación: la energía β media de la rama principal del I-131 (punto final 606,3 keV) es 191,6 keV (ENSDF), y el espectro de positrones del F-18 tiene una media de 250 keV."
+
+msgid "Limitations"
+msgstr "Limitaciones"
+
+msgid "No energy-loss straggling below the δ-ray and bremsstrahlung thresholds: soft losses are their mean value."
+msgstr "Sin fluctuación de la pérdida de energía (straggling) por debajo de los umbrales de rayos δ y de bremsstrahlung: las pérdidas blandas valen su media."
+
+msgid "δ-rays are produced on free electrons (atomic binding is neglected), and no fluorescence or Auger cascade follows the ionisation."
+msgstr "Los rayos δ se producen sobre electrones libres (se desprecia el enlace atómico), y ninguna fluorescencia ni cascada Auger sigue a la ionización."
+
+msgid "Annihilation in flight is not simulated."
+msgstr "La aniquilación en vuelo no se simula."
+

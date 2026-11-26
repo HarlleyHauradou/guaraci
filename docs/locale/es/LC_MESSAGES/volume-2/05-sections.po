@@ -93,11 +93,14 @@ msgstr "`[physics]` — la física"
 msgid "`list`"
 msgstr ""
 
-msgid "`photon_local`"
+msgid "`photon_electron`, `photon_local`"
 msgstr ""
 
-msgid "ready-made physics list"
-msgstr "lista de física predefinida"
+msgid "`photon_electron`"
+msgstr ""
+
+msgid "ready-made physics list (see below)"
+msgstr "lista de física predefinida (ver abajo)"
 
 msgid "`data`"
 msgstr ""
@@ -156,8 +159,17 @@ msgstr "energía"
 msgid "1 keV"
 msgstr ""
 
-msgid "below this, a photon deposits its energy on the spot"
-msgstr "por debajo, el fotón deposita su energía en el lugar"
+msgid "below this, a photon deposits its energy on the spot; bremsstrahlung photons are produced above it (at least 1 keV)"
+msgstr "por debajo, el fotón deposita su energía en el lugar; los fotones de bremsstrahlung se producen por encima (como mínimo 1 keV)"
+
+msgid "`electron_cut`"
+msgstr ""
+
+msgid "10 keV"
+msgstr ""
+
+msgid "below this, an electron or positron deposits its energy on the spot; knock-on electrons (δ-rays) are produced above it. Minimum 1 keV"
+msgstr "por debajo, el electrón o positrón deposita su energía en el lugar; los electrones de colisión (rayos δ) se producen por encima. Mínimo 1 keV"
 
 msgid "`particles`"
 msgstr ""
@@ -165,14 +177,29 @@ msgstr ""
 msgid "list"
 msgstr "lista"
 
-msgid "`[photon]`"
+msgid "from the list"
+msgstr "según la lista"
+
+msgid "transported particles: `photon`, `electron`, `positron` (like the MODE card of MCNP)"
+msgstr "partículas transportadas: `photon`, `electron`, `positron` (como la tarjeta MODE de MCNP)"
+
+msgid "List"
+msgstr "Lista"
+
+msgid "What it does"
+msgstr "Qué hace"
+
+msgid "photons, electrons and positrons are transported. Use it whenever the electron range matters at the scale of your voxels or volumes: β emitters, small volumes, interfaces"
+msgstr "se transportan fotones, electrones y positrones. Úsela siempre que el alcance de los electrones importe a la escala de sus vóxeles o volúmenes: emisores β, volúmenes pequeños, interfaces"
+
+msgid "`photon_local`"
 msgstr ""
 
-msgid "transported particles (photons only in this version)"
-msgstr "partículas transportadas (solo fotones en esta versión)"
+msgid "only photons are transported. Electrons deposit their energy where they are created. Faster; good when the voxels are much larger than the electron range"
+msgstr "solo se transportan los fotones. Los electrones depositan su energía donde se crean. Más rápida; adecuada cuando los vóxeles son mucho mayores que el alcance de los electrones"
 
-msgid "The list sets the defaults, and any key written replaces them (like the MODE card of MCNP). `check` shows the physics actually used."
-msgstr "La lista define los valores por defecto, y cualquier clave escrita los reemplaza (como la tarjeta MODE de MCNP). `check` muestra la física realmente usada."
+msgid "The list sets the defaults, and any key written replaces them. `check` shows the physics actually used."
+msgstr "La lista define los valores por defecto, y cualquier clave escrita los reemplaza. `check` muestra la física realmente usada."
 
 msgid "`[world]` — the world"
 msgstr "`[world]` — el mundo"

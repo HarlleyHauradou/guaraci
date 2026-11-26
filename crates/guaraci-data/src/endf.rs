@@ -190,6 +190,13 @@ impl Reader<'_, '_> {
         Ok((c, v))
     }
 
+    /// TAB2 header: CONT plus NR interpolation ranges (the NZ sub-records follow).
+    pub fn tab2(&mut self) -> Result<(Cont, Vec<(usize, u8)>), EndfError> {
+        let c = self.cont()?;
+        let r = self.ints(2 * c.n1.max(0) as usize)?;
+        Ok((c, r.chunks(2).map(|p| (p[0] as usize, p[1] as u8)).collect()))
+    }
+
     pub fn tab1(&mut self) -> Result<Tab1, EndfError> {
         let c = self.cont()?;
         let nr = c.n1.max(0) as usize;

@@ -30,14 +30,17 @@ msgstr ""
 msgid "emissions of the nuclide, from the ENDF/B-VIII.0 decay library"
 msgstr "emissões do nuclídeo, da biblioteca de decaimento ENDF/B-VIII.0"
 
-msgid "`energy` (+ `intensity`)"
+msgid "`energy` (+ `intensity`, `particle`)"
 msgstr ""
 
 msgid "`energy = [140.5, 364.5] keV`, `intensity = [0.89, 0.81]`"
 msgstr ""
 
-msgid "lines of your own (intensity = photons per decay; default 1)"
-msgstr "linhas definidas por você (intensidade = fótons por decaimento; padrão 1)"
+msgid "lines of your own (intensity = particles per decay; default 1)"
+msgstr "linhas definidas por você (intensidade = partículas por decaimento; padrão 1)"
+
+msgid "With `energy`, the key `particle` chooses what is emitted: `photon` (the default), `electron` or `positron`. Electron and positron sources need the list `photon_electron`:"
+msgstr "Com `energy`, a chave `particle` escolhe o que é emitido: `photon` (o padrão), `electron` ou `positron`. Fontes de elétrons e de pósitrons precisam da lista `photon_electron`:"
 
 msgid "The nuclide name can be written in several equivalent ways: `I-131`, `I131`, `131I`, `i-131`; for isomers, `Tc-99m`, `Tc99m`, `99mTc`. To see the data of a nuclide:"
 msgstr "O nome do nuclídeo pode ser escrito de várias formas equivalentes: `I-131`, `I131`, `131I`, `i-131`; para isômeros, `Tc-99m`, `Tc99m`, `99mTc`. Para ver os dados de um nuclídeo:"
@@ -90,20 +93,26 @@ msgstr "Padrão"
 msgid "`beta`"
 msgstr ""
 
-msgid "`local`"
+msgid "`transport`"
 msgstr ""
 
-msgid "`local`: the mean energy of β⁻, β⁺, Auger and conversion electrons is deposited at the decay point; `off`: ignored (to separate the photon contribution)"
-msgstr "`local`: a energia média dos elétrons β⁻, β⁺, Auger e de conversão é depositada no ponto de decaimento; `off`: ignorada (para separar a contribuição dos fótons)"
+msgid "`transport`: β⁻ and β⁺ particles (spectra from Fermi theory) and conversion and Auger electrons are emitted and transported; `local`: their mean energy is deposited at the decay point; `off`: ignored (to separate the photon contribution)"
+msgstr "`transport`: as partículas β⁻ e β⁺ (espectros pela teoria de Fermi) e os elétrons de conversão e Auger são emitidos e transportados; `local`: a energia média deles é depositada no ponto de decaimento; `off`: ignorados (para separar a contribuição dos fótons)"
 
-msgid "How emissions are treated in this version"
-msgstr "Como as emissões são tratadas nesta versão"
+msgid "With the list `photon_local`, `beta = transport` falls back to `local`."
+msgstr "Com a lista `photon_local`, `beta = transport` passa a valer como `local`."
+
+msgid "How emissions are treated"
+msgstr "Como as emissões são tratadas"
 
 msgid "Emission"
 msgstr "Emissão"
 
-msgid "Treatment"
-msgstr "Tratamento"
+msgid "`photon_electron` (default)"
+msgstr "`photon_electron` (padrão)"
+
+msgid "`photon_local`"
+msgstr ""
 
 msgid "gamma and X-rays"
 msgstr "gama e raios X"
@@ -114,24 +123,27 @@ msgstr ""
 msgid "transported"
 msgstr "transportados"
 
-msgid "positron annihilation"
-msgstr "aniquilação de pósitron"
+msgid "β⁻, Auger and conversion electrons"
+msgstr "β⁻, elétrons Auger e de conversão"
+
+msgid "I-131, Lu-177, Y-90"
+msgstr ""
+
+msgid "energy deposited at the decay point"
+msgstr "energia depositada no ponto de decaimento"
+
+msgid "β⁺"
+msgstr ""
 
 msgid "F-18, Ga-68"
 msgstr ""
 
-msgid "back-to-back 511 keV photons transported from the decay point"
-msgstr "fótons de 511 keV em direções opostas, transportados a partir do ponto de decaimento"
+msgid "positrons transported; they annihilate where they stop"
+msgstr "pósitrons transportados; aniquilam onde param"
 
-msgid "β⁻, β⁺ (kinetic energy), Auger and conversion electrons"
-msgstr "β⁻, β⁺ (energia cinética), elétrons Auger e de conversão"
+msgid "positron energy deposited at the decay point; 511 keV pairs from the decay point"
+msgstr "energia do pósitron depositada no ponto de decaimento; pares de 511 keV a partir do ponto de decaimento"
 
-msgid "I-131, Lu-177, C-14"
-msgstr ""
-
-msgid "energy deposited at the emission point"
-msgstr "energia depositada no ponto de emissão"
-
-msgid "Local deposition is a good approximation when the voxel is much larger than the electron range (about 0.3 mm for C-14 and up to 2–3 mm for I-131 in tissue). Electron transport will come in a future version."
-msgstr "A deposição local é uma boa aproximação quando o voxel é bem maior que o alcance do elétron (cerca de 0,3 mm para o C-14 e até 2–3 mm para o I-131 no tecido). O transporte de elétrons virá numa versão futura."
+msgid "Local deposition is a good approximation when the voxel is much larger than the electron range: about 0.3 mm for C-14, 2–3 mm for I-131 and up to 11 mm for Y-90 in tissue. Below that, use electron transport."
+msgstr "A deposição local é uma boa aproximação quando o voxel é bem maior que o alcance do elétron: cerca de 0,3 mm para o C-14, 2–3 mm para o I-131 e até 11 mm para o Y-90 no tecido. Abaixo disso, use o transporte de elétrons."
 

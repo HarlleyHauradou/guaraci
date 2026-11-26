@@ -4,7 +4,7 @@ use crate::data::Bar;
 use crate::{check, report, BUILTINS};
 use guaraci_core::problem::{Normalization, Probe, Problem, MEV_TO_J};
 use guaraci_cpu::{Options, Results, RngChoice};
-use guaraci_data::library::{data_dir, install, installed, load_decay, load_photon, Kind, Provenance};
+use guaraci_data::library::{data_dir, install, installed, load_decay, load_electron, load_photon, Kind, Provenance};
 use guaraci_input::config::{Backend, Emission, RngKind};
 use guaraci_input::{load, Config, Diagnostic};
 use std::fmt::Write as _;
@@ -70,8 +70,16 @@ pub fn run(args: RunArgs) -> Result<(), ()> {
     if needs_decay {
         ensure("endfb8", Kind::Decay, offline)?;
     }
+    if config.physics.electrons {
+        ensure("endfb8", Kind::Electron, offline)?;
+    }
     let dir = data_dir();
     let (photon_prov, photon) = load_photon(&dir, &lib).map_err(|e| eprintln!("error: {e}"))?;
+    let electron = if config.physics.electrons {
+        Some(load_electron(&dir, "endfb8").map_err(|e| eprintln!("error: {e}"))?)
+    } else {
+        None
+    };
     let decay = if needs_decay {
         Some(load_decay(&dir, "endfb8").map_err(|e| eprintln!("error: {e}"))?)
     } else {
@@ -80,8 +88,13 @@ pub fn run(args: RunArgs) -> Result<(), ()> {
 
     // ---- problem
     eprintln!("Preparing geometry and cross-section tables...");
-    let problem = Problem::build(&config, &photon, decay.as_ref().map(|d| &d.1))
-        .map_err(|d: Vec<Diagnostic>| report(&d, &prog.sources))?;
+    let problem = Problem::build(
+        &config,
+        &photon,
+        decay.as_ref().map(|d| &d.1),
+        electron.as_ref().map(|d| &d.1),
+    )
+    .map_err(|d: Vec<Diagnostic>| report(&d, &prog.sources))?;
     drop(photon);
 
     // ---- output directory
@@ -157,6 +170,7 @@ pub fn run(args: RunArgs) -> Result<(), ()> {
         &results,
         &photon_prov,
         decay.as_ref().map(|d| &d.0),
+        electron.as_ref().map(|d| &d.0),
         &files,
         &args.input,
     );
@@ -486,6 +500,7 @@ fn report_text(
     r: &Results,
     photon: &Provenance,
     decay: Option<&Provenance>,
+    electron: Option<&Provenance>,
     files: &[String],
     input: &Path,
 ) -> String {
@@ -525,6 +540,18 @@ fn report_text(
             o,
             "                       sha256 {}, installed {}",
             d.sha256, d.installed
+        );
+    }
+    if let Some(e) = electron {
+        let _ = writeln!(o, "  electrons            {} — {}", e.title, e.source);
+        let _ = writeln!(
+            o,
+            "                       sha256 {}, installed {}",
+            e.sha256, e.installed
+        );
+        let _ = writeln!(
+            o,
+            "  mean excitation      ICRU Report 37 (Bragg rule, condensed-phase values)"
         );
     }
     let _ = writeln!(
@@ -596,7 +623,22 @@ fn report_text(
         let _ = writeln!(o, "  NOTE             stopped early by the user");
     }
     let _ = writeln!(o, "\nLimitations of this version");
-    let _ = writeln!(o, "  - Electrons (β, Auger, conversion, Compton and photo-electrons) deposit their energy at the point where they are created.");
+    if p.electrons {
+        let _ = writeln!(
+            o,
+            "  - Electrons below the cut-off deposit their energy on the spot; no energy-loss straggling below"
+        );
+        let _ = writeln!(
+            o,
+            "    the δ-ray and bremsstrahlung thresholds; positrons do not annihilate in flight."
+        );
+        let _ = writeln!(
+            o,
+            "  - Auger and conversion electrons are emitted with the decay, but not after photoelectric absorption."
+        );
+    } else {
+        let _ = writeln!(o, "  - Electrons (β, Auger, conversion, Compton and photo-electrons) deposit their energy at the point where they are created.");
+    }
     let _ = writeln!(
         o,
         "  - No fluorescence after photoelectric absorption; no Doppler broadening in Compton scattering."
