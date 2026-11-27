@@ -113,6 +113,18 @@ interface ([Volume III](volume-3/index.md)).
 | [**II — User Manual**](volume-2/index.md) | those who set up and run simulations; this is where to learn |
 | [**III — Graphical Interface**](volume-3/index.md) | users of the desktop program (editor, geometry and results viewers) |
 
+## Author, citation and license
+
+**Harlley Hauradou** · [ORCID 0000-0003-3560-9708](https://orcid.org/0000-0003-3560-9708) · <hhauradou@gmail.com>
+
+If you use Guaraci in your work, please cite it: the [`CITATION.cff`](https://github.com/HarlleyHauradou/guaraci/blob/main/CITATION.cff)
+file gives the reference, and GitHub shows it in APA and BibTeX with the
+**Cite this repository** button.
+
+Guaraci is licensed under either of the [Apache License 2.0](https://github.com/HarlleyHauradou/guaraci/blob/main/LICENSE-APACHE)
+or the [MIT license](https://github.com/HarlleyHauradou/guaraci/blob/main/LICENSE-MIT), at your option. The name, logos and sun
+symbol are not covered by these licenses ([brand terms](https://github.com/HarlleyHauradou/guaraci/blob/main/docs/_static/brand/LICENSE.md)).
+
 ```{toctree}
 :hidden:
 :maxdepth: 2

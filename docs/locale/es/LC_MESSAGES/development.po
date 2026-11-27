@@ -114,8 +114,8 @@ msgstr "Cuando el texto en inglés cambia, `sphinx-intl update` marca las entrad
 msgid "Project rules"
 msgstr "Reglas del proyecto"
 
-msgid "No third-party data is redistributed with the code; the libraries are downloaded from the official sources. The exception, by project decision, is the material database generated from PNNL-15870 Rev. 1."
-msgstr "No se redistribuye ningún dato de terceros con el código; las bibliotecas se descargan de las fuentes oficiales. La excepción, por decisión del proyecto, es la base de materiales generada a partir de PNNL-15870 Rev. 1."
+msgid "No third-party data is redistributed with the code; the libraries are downloaded from the official sources. The exceptions, by project decision, are the material database generated from PNNL-15870 Rev. 1 and the mean excitation energies of ICRU Report 37 (listed in [NOTICE](https://github.com/HarlleyHauradou/guaraci/blob/main/NOTICE))."
+msgstr "No se redistribuye ningún dato de terceros con el código; las bibliotecas se descargan de las fuentes oficiales. Las excepciones, por decisión del proyecto, son la base de materiales generada a partir de PNNL-15870 Rev. 1 y las energías medias de excitación del ICRU Report 37 (enumeradas en [NOTICE](https://github.com/HarlleyHauradou/guaraci/blob/main/NOTICE))."
 
 msgid "Code, messages, outputs, documentation and commits are written in English."
 msgstr "El código, los mensajes, las salidas, la documentación y los commits se escriben en inglés."
@@ -125,4 +125,13 @@ msgstr "Toda funcionalidad nueva viene con pruebas y con el capítulo correspond
 
 msgid "Every error message points at the line of the input and suggests the fix ([philosophy](philosophy.md), item 3)."
 msgstr "Todo mensaje de error señala la línea de la entrada y sugiere la corrección ([filosofía](philosophy.md), punto 3)."
+
+msgid "License and contributions"
+msgstr "Licencia y contribuciones"
+
+msgid "Guaraci is licensed under either of the Apache License 2.0 or the MIT license, at your option ([LICENSE-APACHE](https://github.com/HarlleyHauradou/guaraci/blob/main/LICENSE-APACHE), [LICENSE-MIT](https://github.com/HarlleyHauradou/guaraci/blob/main/LICENSE-MIT)). Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in Guaraci, as defined in the Apache-2.0 license, is dual licensed in the same way, without any additional terms or conditions."
+msgstr "Guaraci se distribuye, a su elección, bajo la Apache License 2.0 o la licencia MIT ([LICENSE-APACHE](https://github.com/HarlleyHauradou/guaraci/blob/main/LICENSE-APACHE), [LICENSE-MIT](https://github.com/HarlleyHauradou/guaraci/blob/main/LICENSE-MIT)). Salvo que usted indique explícitamente lo contrario, cualquier contribución enviada intencionalmente para su inclusión en Guaraci, tal como se define en la licencia Apache-2.0, se licencia de la misma forma, sin términos ni condiciones adicionales."
+
+msgid "`guaraci --version` and every `report.txt` show the version, the author and the license, so that each result records where its code came from."
+msgstr "`guaraci --version` y cada `report.txt` muestran la versión, el autor y la licencia, para que cada resultado registre de dónde vino el código."
 

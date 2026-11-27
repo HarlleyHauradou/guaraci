@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use Guaraci in your work, please cite it as below."
+title: "Guaraci: Monte Carlo radiation transport on CPU and GPU"
+type: software
+authors:
+  - family-names: Hauradou
+    given-names: Harlley
+    email: hhauradou@gmail.com
+    orcid: "https://orcid.org/0000-0003-3560-9708"
+version: 0.2.0
+date-released: "2026-11-27"
+license:
+  - MIT
+  - Apache-2.0
+repository-code: "https://github.com/HarlleyHauradou/guaraci"
+url: "https://guaraci.readthedocs.io"
+abstract: >-
+  Guaraci is a Monte Carlo code for radiation transport in matter, aimed first
+  at medical physics and nuclear medicine. It transports photons, electrons and
+  positrons, reads human-readable input files with physical units, downloads
+  its nuclear data (ENDF/B-VIII.0) from the official sources, and scores dose
+  maps, doses in volumes and fluence spectra with their uncertainties.
+keywords:
+  - Monte Carlo
+  - radiation transport
+  - medical physics
+  - nuclear medicine
+  - dosimetry
+  - electron transport
+  - Rust

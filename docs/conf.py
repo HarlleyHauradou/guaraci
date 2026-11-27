@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "_ext"))
 
 project = "Guaraci"
 author = "Harlley Hauradou"
-copyright = "Guaraci"
+copyright = "2026, Harlley Hauradou"
 release = "0.2"
 language = "en"
 

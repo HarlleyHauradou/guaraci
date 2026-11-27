@@ -74,9 +74,22 @@ as *fuzzy*, so it is always clear what must be revised.
 ## Project rules
 
 - No third-party data is redistributed with the code; the libraries are
-  downloaded from the official sources. The exception, by project decision,
-  is the material database generated from PNNL-15870 Rev. 1.
+  downloaded from the official sources. The exceptions, by project decision,
+  are the material database generated from PNNL-15870 Rev. 1 and the mean
+  excitation energies of ICRU Report 37 (listed in [NOTICE](https://github.com/HarlleyHauradou/guaraci/blob/main/NOTICE)).
 - Code, messages, outputs, documentation and commits are written in English.
 - Every new feature comes with tests and with the corresponding chapter of the manual.
 - Every error message points at the line of the input and suggests the fix
   ([philosophy](philosophy.md), item 3).
+
+## License and contributions
+
+Guaraci is licensed under either of the Apache License 2.0 or the MIT
+license, at your option ([LICENSE-APACHE](https://github.com/HarlleyHauradou/guaraci/blob/main/LICENSE-APACHE),
+[LICENSE-MIT](https://github.com/HarlleyHauradou/guaraci/blob/main/LICENSE-MIT)). Unless you explicitly state otherwise, any
+contribution intentionally submitted for inclusion in Guaraci, as defined in
+the Apache-2.0 license, is dual licensed in the same way, without any
+additional terms or conditions.
+
+`guaraci --version` and every `report.txt` show the version, the author and
+the license, so that each result records where its code came from.

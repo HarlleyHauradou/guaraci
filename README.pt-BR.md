@@ -94,7 +94,44 @@ O programa, suas mensagens e suas saídas são em inglês, a língua da comunida
 | `data/` | banco de materiais |
 | `docs/` | fontes da documentação (Sphinx + tema PyData, Markdown com MyST), publicada no Read the Docs |
 | `examples/` | arquivos de entrada |
-| `validation/` | benchmarks e comparações com GATE e MCNPX |
+| `validation/` | benchmarks e comparações com GATE, EGSnrc e FLUKA |
 | `tools/` | geradores |
 
 Veja também a [filosofia](PHILOSOPHY.md) do projeto.
+
+
+## Autor
+
+**Harlley Hauradou** · [ORCID 0000-0003-3560-9708](https://orcid.org/0000-0003-3560-9708) · <hhauradou@gmail.com>
+
+## Como citar
+
+Se você usar o Guaraci no seu trabalho, cite-o, por favor. O botão **Cite this
+repository** do GitHub (gerado a partir do [`CITATION.cff`](CITATION.cff)) dá a
+referência em APA e BibTeX:
+
+```bibtex
+@software{guaraci,
+  author  = {Hauradou, Harlley},
+  title   = {Guaraci: Monte Carlo radiation transport on CPU and GPU},
+  version = {0.2.0},
+  year    = {2026},
+  url     = {https://github.com/HarlleyHauradou/guaraci}
+}
+```
+
+## Licença
+
+O Guaraci é licenciado, à sua escolha, sob
+
+- a Apache License, versão 2.0 ([LICENSE-APACHE](LICENSE-APACHE)), ou
+- a licença MIT ([LICENSE-MIT](LICENSE-MIT)).
+
+Salvo declaração explícita em contrário, qualquer contribuição enviada
+intencionalmente para inclusão no Guaraci, conforme definido na licença
+Apache-2.0, será licenciada nessas duas licenças, sem termos ou condições
+adicionais.
+
+O nome, os logos e o símbolo do sol do Guaraci não estão cobertos por essas
+licenças ([termos da marca](docs/_static/brand/LICENSE.md)). Os dados de outras
+origens estão listados no [NOTICE](NOTICE).

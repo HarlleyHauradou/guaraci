@@ -3,6 +3,9 @@ name = "guaraci-units"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
 rust-version.workspace = true
 description = "Physical units and dimensional analysis for Guaraci input files"
 

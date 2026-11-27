@@ -117,6 +117,18 @@ msgstr "[**III — Interfaz Gráfica**](volume-3/index.md)"
 msgid "users of the desktop program (editor, geometry and results viewers)"
 msgstr "quien usa el programa de escritorio (editor, visores de geometría y de resultados)"
 
+msgid "Author, citation and license"
+msgstr "Autor, cita y licencia"
+
+msgid "**Harlley Hauradou** · [ORCID 0000-0003-3560-9708](https://orcid.org/0000-0003-3560-9708) · <hhauradou@gmail.com>"
+msgstr ""
+
+msgid "If you use Guaraci in your work, please cite it: the [`CITATION.cff`](https://github.com/HarlleyHauradou/guaraci/blob/main/CITATION.cff) file gives the reference, and GitHub shows it in APA and BibTeX with the **Cite this repository** button."
+msgstr "Si usa Guaraci en su trabajo, por favor cítelo: el archivo [`CITATION.cff`](https://github.com/HarlleyHauradou/guaraci/blob/main/CITATION.cff) da la referencia, y GitHub la muestra en APA y BibTeX con el botón **Cite this repository**."
+
+msgid "Guaraci is licensed under either of the [Apache License 2.0](https://github.com/HarlleyHauradou/guaraci/blob/main/LICENSE-APACHE) or the [MIT license](https://github.com/HarlleyHauradou/guaraci/blob/main/LICENSE-MIT), at your option. The name, logos and sun symbol are not covered by these licenses ([brand terms](https://github.com/HarlleyHauradou/guaraci/blob/main/docs/_static/brand/LICENSE.md))."
+msgstr "Guaraci se distribuye, a su elección, bajo la [Apache License 2.0](https://github.com/HarlleyHauradou/guaraci/blob/main/LICENSE-APACHE) o la [licencia MIT](https://github.com/HarlleyHauradou/guaraci/blob/main/LICENSE-MIT). El nombre, los logotipos y el símbolo del sol no están cubiertos por estas licencias ([términos de la marca](https://github.com/HarlleyHauradou/guaraci/blob/main/docs/_static/brand/LICENSE.md))."
+
 msgid "Vol. I · Technical"
 msgstr "Vol. I · Técnico"
 

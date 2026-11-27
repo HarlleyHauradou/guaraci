@@ -20,7 +20,7 @@ pub const BUILTINS: &[Builtin] = &[Builtin {
 #[derive(Parser)]
 #[command(
     name = "guaraci",
-    version,
+    version = guaraci_core::VERSION_LINE,
     about = "Guaraci: Monte Carlo radiation transport on CPU and GPU"
 )]
 struct Cli {

@@ -6,6 +6,9 @@ members = ["crates/*"]
 version = "0.2.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
+authors = ["Harlley Hauradou <hhauradou@gmail.com>"]
+repository = "https://github.com/HarlleyHauradou/guaraci"
+homepage = "https://guaraci.readthedocs.io"
 rust-version = "1.82"
 
 [workspace.dependencies]

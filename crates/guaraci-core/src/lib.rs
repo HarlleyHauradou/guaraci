@@ -8,3 +8,9 @@ pub mod problem;
 pub mod rng;
 pub mod transport;
 pub mod vec3;
+
+/// Version, author and license, shown by `guaraci --version` and in every report.
+pub const VERSION_LINE: &str = concat!(
+    env!("CARGO_PKG_VERSION"),
+    " — © 2026 Harlley Hauradou — MIT OR Apache-2.0"
+);

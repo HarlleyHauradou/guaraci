@@ -1,0 +1,31 @@
+Guaraci
+Copyright 2026 Harlley Hauradou
+
+The source code is licensed under either of the Apache License, Version 2.0
+(LICENSE-APACHE) or the MIT license (LICENSE-MIT), at your option.
+
+Data of other origin
+--------------------
+
+This repository embeds the following reference data, with their sources:
+
+- Material compositions and densities (data/materials.gci) from
+  R. J. McConn Jr., C. J. Gesh, R. T. Pagh, R. A. Rucker, R. G. Williams III,
+  "Compendium of Material Composition Data for Radiation Transport Modeling",
+  PNNL-15870 Rev. 1, Pacific Northwest National Laboratory, 2011.
+- Mean excitation energies of the elements (crates/guaraci-core/src/electron.rs)
+  from ICRU Report 37, "Stopping Powers for Electrons and Positrons",
+  International Commission on Radiation Units and Measurements, 1984.
+- Reference values used in the validation tests and tables (NIST XCOM and
+  ESTAR; M. G. Stabin and M. W. Konijnenberg, J Nucl Med 2000;41:149-160),
+  cited where they are used.
+
+Nuclear and atomic data libraries (ENDF/B-VIII.0 and others) are NOT
+redistributed: Guaraci downloads them from their official sources on the
+user's machine, checks their SHA-256 and converts them locally.
+
+Brand
+-----
+
+The Guaraci name, logos and sun symbol (docs/_static/brand/) are not covered by
+the licenses of the source code; see docs/_static/brand/LICENSE.md.

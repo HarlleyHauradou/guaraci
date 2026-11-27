@@ -487,7 +487,7 @@ fn report_text(
     let _ = writeln!(
         o,
         "{line}\nGuaraci {} — simulation report\n{line}",
-        env!("CARGO_PKG_VERSION")
+        guaraci_core::VERSION_LINE
     );
     let _ = writeln!(o, "Input       {}", input.display());
     let _ = writeln!(
