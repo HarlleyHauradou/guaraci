@@ -212,8 +212,10 @@ em.fluo = False
 em.auger = False
 em.pixe = False
 # kill every electron at creation: its kinetic energy is deposited locally
+# (Geant4 does not accept a user region on the world volume: the region is
+# the air box `room`, which contains everything else)
 region = sim.physics_manager.add_region("everything")
-region.associate_volume(sim.world)
+region.associate_volume("room")
 region.user_limits["min_ekine"] = 1 * GeV
 sim.physics_manager.user_limits_particles = ["electron"]"""
 
@@ -319,10 +321,17 @@ db = sim.volume_manager.material_database
 {mats}
 
 # ---- geometry
-sim.world.size = [{WORLD} * cm] * 3
-sim.world.material = "Vial_Air"
+# the world is vacuum; the air box `room` inside it is the {WORLD} cm air cube of
+# vial.gci and mcnpx_vial.inp (a particle leaving it never comes back)
+sim.world.size = [{WORLD + 2} * cm] * 3
+sim.world.material = "G4_Galactic"
+
+room = sim.add_volume("Box", "room")
+room.size = [{WORLD} * cm] * 3
+room.material = "Vial_Air"
 
 vial = sim.add_volume("Tubs", "vial")
+vial.mother = "room"
 vial.rmin, vial.rmax, vial.dz = 0, {VIAL_R} * cm, {VIAL_H / 2} * cm       # dz = half length
 vial.material = "Vial_Glass"
 
