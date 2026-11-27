@@ -39,14 +39,14 @@ msgstr ""
 msgid "`endfb8` (default)"
 msgstr "`endfb8` (padrão)"
 
-msgid "photon interactions and radioactive decay"
-msgstr "interações de fótons e decaimento radioativo"
+msgid "photon interactions, radioactive decay and electron interactions"
+msgstr "interações de fótons, decaimento radioativo e interações de elétrons"
 
 msgid "NNDC/BNL, ENDF/B-VIII.0"
 msgstr ""
 
-msgid "automatic (36 MB + 14 MB)"
-msgstr "automático (36 MB + 14 MB)"
+msgid "automatic (36 MB + 14 MB + 9 MB)"
+msgstr "automático (36 MB + 14 MB + 9 MB)"
 
 msgid "`epics2017`"
 msgstr ""

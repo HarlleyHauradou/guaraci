@@ -28,7 +28,7 @@ guaraci data install endfb8
 
 | Library | Contents | Source | Download |
 |---|---|---|---|
-| `endfb8` (default) | photon interactions and radioactive decay | NNDC/BNL, ENDF/B-VIII.0 | automatic (36 MB + 14 MB) |
+| `endfb8` (default) | photon interactions, radioactive decay and electron interactions | NNDC/BNL, ENDF/B-VIII.0 | automatic (36 MB + 14 MB + 9 MB) |
 | `epics2017` | photon interactions | IAEA | manual |
 | `epdl97` | photon interactions | IAEA | manual |
 
