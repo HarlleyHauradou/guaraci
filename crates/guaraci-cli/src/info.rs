@@ -2,7 +2,9 @@
 
 use crate::{report, BUILTINS};
 use clap::Subcommand;
-use guaraci_data::library::{data_dir, load_decay};
+use guaraci_core::electron::BetaSpectrum;
+use guaraci_data::decay::BetaKind;
+use guaraci_data::library::{data_dir, load_decay, Kind};
 use guaraci_data::NuclideId;
 use guaraci_input::config::Composition;
 
@@ -19,6 +21,13 @@ pub enum InfoCommand {
         /// e.g. to build the source of another Monte Carlo code.
         #[arg(long)]
         csv: bool,
+        /// Print the β⁻ spectrum (all branches together) as a CSV histogram
+        /// (E_low_MeV,E_high_MeV,probability), from Fermi theory as used in transport.
+        #[arg(long, conflicts_with = "csv")]
+        beta_csv: bool,
+        /// Number of bins of the β histogram.
+        #[arg(long, default_value_t = 200, requires = "beta_csv")]
+        bins: usize,
     },
 }
 
@@ -71,11 +80,18 @@ pub fn run(cmd: InfoCommand) -> Result<(), ()> {
             println!("\n{n} materials");
             Ok(())
         }
-        InfoCommand::Nuclide { name, csv } => {
+        InfoCommand::Nuclide {
+            name,
+            csv,
+            beta_csv,
+            bins,
+        } => {
             let Some(id) = NuclideId::parse(&name) else {
                 eprintln!("error: `{name}` is not a nuclide name (e.g. I-131, Tc-99m)");
                 return Err(());
             };
+            // first use: download the decay data, as `run` does
+            crate::data::ensure("endfb8", Kind::Decay, crate::data::offline_env())?;
             let (prov, data) = match load_decay(&data_dir(), "endfb8") {
                 Ok(d) => d,
                 Err(e) => {
@@ -87,6 +103,51 @@ pub fn run(cmd: InfoCommand) -> Result<(), ()> {
                 eprintln!("error: {id} is not in {}", prov.title);
                 return Err(());
             };
+            let spectra: Vec<(f64, bool, BetaSpectrum)> = n
+                .betas
+                .iter()
+                .map(|b| {
+                    let positron = b.kind == BetaKind::Plus;
+                    // charge of the daughter nucleus
+                    let zd = if positron { id.z.saturating_sub(1) } else { id.z + 1 };
+                    (
+                        b.intensity,
+                        positron,
+                        BetaSpectrum::new(b.endpoint, zd, positron, b.forbiddenness),
+                    )
+                })
+                .collect();
+            if beta_csv {
+                let minus: Vec<&(f64, bool, BetaSpectrum)> = spectra.iter().filter(|s| !s.1).collect();
+                let total: f64 = minus.iter().map(|s| s.0).sum();
+                if minus.is_empty() || total <= 0.0 {
+                    eprintln!("error: {id} has no β⁻ branches");
+                    return Err(());
+                }
+                let emax = minus.iter().map(|s| s.2.endpoint()).fold(0.0, f64::max);
+                let mean = minus.iter().map(|s| s.0 * s.2.mean).sum::<f64>() / total;
+                let plus: f64 = spectra.iter().filter(|s| s.1).map(|s| s.0).sum::<f64>() + 0.0;
+                println!(
+                    "# {id} beta-minus spectrum, {} ({}, sha256 {})",
+                    prov.title, prov.source, prov.sha256
+                );
+                println!(
+                    "# beta_minus_per_decay = {total:.6e}; mean_energy_MeV = {mean:.6}; branches = {}; beta_plus_per_decay = {plus:.3e}",
+                    minus.len()
+                );
+                println!("E_low_MeV,E_high_MeV,probability");
+                let bins = bins.max(1);
+                for k in 0..bins {
+                    let (lo, hi) = (emax * k as f64 / bins as f64, emax * (k + 1) as f64 / bins as f64);
+                    let p: f64 = minus
+                        .iter()
+                        .map(|s| s.0 * (s.2.cdf_at(hi) - s.2.cdf_at(lo)))
+                        .sum::<f64>()
+                        / total;
+                    println!("{lo:.6},{hi:.6},{p:.6e}");
+                }
+                return Ok(());
+            }
             if csv {
                 println!(
                     "# {id} photon lines, {} ({}, sha256 {})",
@@ -118,6 +179,26 @@ pub fn run(cmd: InfoCommand) -> Result<(), ()> {
                     l.energy * 1e3,
                     l.intensity * 100.0,
                     l.kind
+                );
+            }
+            if !n.betas.is_empty() {
+                println!("  β branches               {}", n.betas.len());
+                for (intensity, positron, s) in &spectra {
+                    println!(
+                        "    {}  endpoint {:>9.4} keV  mean {:>9.4} keV  {:>9.5} %",
+                        if *positron { "β⁺" } else { "β⁻" },
+                        s.endpoint() * 1e3,
+                        s.mean * 1e3,
+                        intensity * 100.0
+                    );
+                }
+            }
+            if !n.electrons.is_empty() {
+                let e: f64 = n.electrons.iter().map(|l| l.energy * l.intensity).sum();
+                println!(
+                    "  conversion/Auger lines   {} ({:.4} keV per decay)",
+                    n.electrons.len(),
+                    e * 1e3
                 );
             }
             if n.has_continuous_photons {

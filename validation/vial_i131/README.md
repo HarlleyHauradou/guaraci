@@ -1,9 +1,13 @@
 # Vial benchmark: Guaraci × GATE 10 × MCNPX
 
-A 10 mL borosilicate glass vial filled with water and a uniform I-131 source,
-photon transport only. The three input files describe exactly the same
-problem, so the differences between the results come from the physics and
-the cross sections of each code.
+A 10 mL borosilicate glass vial filled with water and a uniform radioactive
+source. The three input files describe exactly the same problem, so the
+differences between the results come from the physics and the cross sections
+of each code. Two modes:
+
+- **photons** (default): the photon lines of I-131, photon transport only;
+- **beta** (`--beta`): the β⁻ spectrum of Y-90, electron and photon transport
+  (see [Beta mode: Y-90](#beta-mode-y-90) below).
 
 ## Problem
 
@@ -35,8 +39,11 @@ Remaining differences, to keep in mind when reading the results:
 
 ## Generating the inputs
 
-The photon lines are not stored in the repository: they are read from
-Guaraci's decay data when the inputs are generated.
+The source is not stored in the repository: it is read from Guaraci's decay
+data when the inputs are generated. `make_inputs.py` calls
+`guaraci info nuclide <name> --csv` (or `--beta-csv`) by itself, so Guaraci
+must be installed, but nothing needs to be run first; the decay data is
+downloaded on first use. If Guaraci fails, the script shows its message.
 
 ```bash
 python3 make_inputs.py                       # I-131, 1e7 photons, writes inputs/
@@ -89,3 +96,47 @@ It prints a table and writes `comparison.csv`.
 | Energy in the glass | 3.818 keV per photon (± 0.16 %) |
 | Photon fluence in the water | 9.595 × 10⁻² cm⁻² per photon |
 | Energy balance (emitted − deposited − escaped) | −1 × 10⁻¹¹ % |
+
+## Beta mode: Y-90
+
+Y-90 is a pure β⁻ emitter (endpoint 2.28 MeV, range up to ~11 mm in water).
+In the 1 cm radius vial most β particles stop in the water, but part of them
+reach the glass and some leave the vial: the result tests electron transport,
+and in particular the interfaces.
+
+```bash
+python3 make_inputs.py --nuclide Y-90 --beta --out inputs_y90
+guaraci run inputs_y90/vial -o y90_results
+(cd inputs_y90 && python3 gate10_vial.py)
+mcnpx i=inputs_y90/mcnpx_vial.inp o=outp_y90
+python3 compare.py --inputs inputs_y90 --guaraci y90_results --gate inputs_y90/gate_output --mcnp outp_y90
+```
+
+| | Guaraci | GATE 10 | MCNPX |
+|---|---|---|---|
+| Source | `nuclide = Y-90`, `beta = transport` | `e-`, histogram of `beta.csv` | `PAR=3`, `SI3 H`/`SP3 D` from `beta.csv` |
+| Physics | `photon_electron`, `electron_cut = 10 keV` | `G4EmStandardPhysics_option4`, cut 0.01 mm | `MODE E P`, `CUT:E J 0.01` |
+| Energy deposited | `volume_dose` | `DoseActor` (water) | `*F8:E,P` (water, glass) |
+
+- **Same spectrum:** the β⁻ histogram (200 bins, all branches) is written by
+  `guaraci info nuclide Y-90 --beta-csv`; it is the spectrum Guaraci samples.
+  Its mean, 945.8 keV, is 1.4 % above the ENDF value (933 keV), because the
+  shape of first-forbidden unique transitions leaves out a Coulomb
+  correction. This does not affect the comparison: all three codes use it.
+- **What Guaraci adds:** the photon lines and conversion electrons of Y-90
+  (less than 0.1 % of its energy), which the GATE and MCNPX inputs leave out.
+- **Comparison:** `compare.py` finds `beta.csv` in the inputs folder and
+  expresses every result per emitted electron. It compares the energy in the
+  water and in the glass, and the axial dose profile of Guaraci and GATE.
+  Differences of a few % between electron codes are usual, mostly near the
+  interfaces.
+
+Guaraci result (10⁶ decays, 47 s on 4 threads):
+
+| Quantity | Value |
+|---|---|
+| Energy in the water | 786.9 keV per electron (± 0.05 %) |
+| Energy in the glass | 113.9 keV per electron (± 0.16 %) |
+| Energy escaping from the world (30 cm of air) | 43.0 keV per electron (4.5 %) |
+| Energy balance (emitted − deposited − escaped) | 5 × 10⁻¹² % |
+

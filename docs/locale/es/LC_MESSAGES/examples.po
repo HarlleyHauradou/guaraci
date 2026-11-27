@@ -33,6 +33,6 @@ msgstr "[`examples/tc99m_lesion.gci`](https://github.com/HarlleyHauradou/guaraci
 msgid "I-131 vial: Guaraci vs GATE 10 vs MCNPX"
 msgstr "Vial con I-131: Guaraci frente a GATE 10 y MCNPX"
 
-msgid "[`validation/vial_i131/`](https://github.com/HarlleyHauradou/guaraci/tree/main/validation/vial_i131): a 10 mL vial of water with I-131, photon transport only. A generator writes three equivalent inputs (Guaraci, GATE 10 and MCNPX), and a script compares the results."
-msgstr "[`validation/vial_i131/`](https://github.com/HarlleyHauradou/guaraci/tree/main/validation/vial_i131): un vial de 10 mL de agua con I-131, solo transporte de fotones. Un generador escribe tres entradas equivalentes (Guaraci, GATE 10 y MCNPX), y un script compara los resultados."
+msgid "[`validation/vial_i131/`](https://github.com/HarlleyHauradou/guaraci/tree/main/validation/vial_i131): a 10 mL vial of water with I-131, photon transport only. A generator writes three equivalent inputs (Guaraci, GATE 10 and MCNPX), and a script compares the results. With `--beta`, the same vial holds a β⁻ emitter such as Y-90 and the three codes transport the electrons: `python3 make_inputs.py --nuclide Y-90 --beta --out inputs_y90`."
+msgstr "[`validation/vial_i131/`](https://github.com/HarlleyHauradou/guaraci/tree/main/validation/vial_i131): un vial de 10 mL de agua con I-131, solo transporte de fotones. Un generador escribe tres entradas equivalentes (Guaraci, GATE 10 y MCNPX), y un script compara los resultados. Con `--beta`, el mismo vial contiene un emisor β⁻, como el Y-90, y los tres códigos transportan los electrones: `python3 make_inputs.py --nuclide Y-90 --beta --out inputs_y90`."
 

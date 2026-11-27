@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Compare Guaraci, GATE 10 and MCNPX results of the vial benchmark.
 
-Every result is expressed per emitted photon. Any of the three codes may be
-missing; it is simply left out of the table.
+Every result is expressed per emitted particle: per photon in the photon mode,
+per β⁻ electron in the beta mode (detected from beta.csv in the inputs folder).
+Any of the three codes may be missing; it is simply left out of the table.
 
     python3 compare.py --inputs inputs \
         --guaraci vial_results --gate gate_output --mcnp outp
@@ -53,6 +54,15 @@ def photons_per_decay(inputs):
     return sum(float(r.split(",")[1]) for r in rows)
 
 
+def betas_per_decay(inputs):
+    """Beta mode: β⁻ per decay, from the header of beta.csv (None in the photon mode)."""
+    path = os.path.join(inputs, "beta.csv")
+    if not os.path.exists(path):
+        return None
+    m = re.search(r"beta_minus_per_decay = ([\d.eE+-]+)", open(path).read())
+    return float(m.group(1)) if m else 1.0
+
+
 def guaraci(path, per_decay):
     out = {}
     with open(os.path.join(path, "edep.csv")) as f:
@@ -63,16 +73,17 @@ def guaraci(path, per_decay):
     dims, data = read_mhd(os.path.join(path, "dose.mhd"))
     # Guaraci's dose unit is Gy per decay here (no activity given)
     out["z_profile"] = [v / per_decay for v in z_profile(dims, data)]
-    spec = list(csv.DictReader(open(os.path.join(path, "spectrum.csv"))))
-    out["spectrum"] = [float(r["fluence"]) / per_decay for r in spec]
+    spec_path = os.path.join(path, "spectrum.csv")
+    if os.path.exists(spec_path):
+        spec = list(csv.DictReader(open(spec_path)))
+        out["spectrum"] = [float(r["fluence"]) / per_decay for r in spec]
     return out
 
 
-def gate(path):
+def gate(path, events=None):
     out = {}
-    events = None
     stats = os.path.join(path, "stats.txt")
-    if os.path.exists(stats):
+    if not events and os.path.exists(stats):
         m = re.search(r"Events?\s*(?:\(\w+\))?\s*[:=]?\s*(\d+)", open(stats).read())
         events = int(m.group(1)) if m else None
     if not events:
@@ -90,11 +101,16 @@ def gate(path):
 
 
 def mcnp(path):
-    """Tallies F6 (cells 1 and 3, MeV/g per photon) and F4 (cell 1 spectrum)."""
+    """Photon mode: F6 (cells 1 and 3, MeV/g per photon) and F4 (cell 1 spectrum).
+    Beta mode: *F8 (cells 1 and 3, MeV per source electron)."""
     text = open(path).read()
     out = {}
     blocks = re.split(r"\n1tally\s+", text)
     for b in blocks:
+        if re.match(r"8\s", b):
+            for cell, val, err in re.findall(r"cell\s+(\d+)\s*\n\s*([\d.E+-]+)\s+([\d.]+)", b):
+                name = "water" if cell == "1" else "vial"
+                out[f"edep_{name}_keV"] = (float(val) * 1e3, float(err) * 100)
         if re.match(r"6\s", b):
             for cell, val, err in re.findall(r"cell\s+(\d+)\s*\n\s*([\d.E+-]+)\s+([\d.]+)", b):
                 mass = WATER_MASS if cell == "1" else GLASS_MASS
@@ -116,15 +132,14 @@ def main():
     ap.add_argument("--mcnp", default="outp")
     a = ap.parse_args()
 
-    per_decay = photons_per_decay(a.inputs)
+    betas = betas_per_decay(a.inputs)
+    per_decay = betas if betas is not None else photons_per_decay(a.inputs)
+    particle = "electron" if betas is not None else "photon"
     codes = {}
     if os.path.isdir(a.guaraci):
         codes["Guaraci"] = guaraci(a.guaraci, per_decay)
     if os.path.isdir(a.gate):
-        g = gate(a.gate)
-        if a.gate_events and not g:
-            pass
-        codes["GATE 10"] = g
+        codes["GATE 10"] = gate(a.gate, a.gate_events)
     if os.path.isfile(a.mcnp):
         codes["MCNPX"] = mcnp(a.mcnp)
     if not codes:
@@ -133,8 +148,8 @@ def main():
     ref = names[0]
     rows = []
 
-    print(f"Photons per decay in the source: {per_decay:.5f}; results per emitted photon.\n")
-    print(f"Energy deposited per emitted photon (keV); ± = 1σ in %; Δ relative to {ref}")
+    print(f"{particle.capitalize()}s per decay in the source: {per_decay:.5f}; results per emitted {particle}.\n")
+    print(f"Energy deposited per emitted {particle} (keV); ± = 1σ in %; Δ relative to {ref}")
     for q, label in [("edep_water_keV", "water"), ("edep_vial_keV", "glass"), ("edep_cavity_keV", "air above water")]:
         cells = []
         base = codes[ref].get(q, (None,))[0]
@@ -152,7 +167,7 @@ def main():
     # dose profile along the axis
     profs = {n: c["z_profile"] for n, c in codes.items() if "z_profile" in c}
     if profs:
-        print("\nDose near the axis (mean within r = 4 mm, Gy per photon), every 3 mm, z from the bottom of the vial:")
+        print(f"\nDose near the axis (mean within r = 4 mm, Gy per {particle}), every 3 mm, z from the bottom of the vial:")
         print("  z (mm)  " + "  ".join(f"{n:>12}" for n in profs))
         n_z = min(len(p) for p in profs.values())
         for k in range(1, n_z, 3):
@@ -163,16 +178,20 @@ def main():
     # spectrum
     specs = {n: c["spectrum"] for n, c in codes.items() if "spectrum" in c}
     if specs:
+        # main line of the source: the bin of the most intense photon line
+        lines = [l.split(",") for l in open(os.path.join(a.inputs, "lines.csv")) if l[0].isdigit()]
+        main_kev = int(max(lines, key=lambda r: float(r[1]))[0].split(".")[0])
         print("\nPhoton fluence in the water (cm^-2 per photon):")
-        print("  " + "  ".join(f"{n:>12}" for n in specs) + "   (total, 364-365 keV peak, 1-364 keV scattered)")
+        print("  " + "  ".join(f"{n:>12}" for n in specs)
+              + f"   (total, {main_kev}-{main_kev + 1} keV peak, 1-{main_kev} keV scattered)")
         for n, s in specs.items():
             total = sum(s)
-            peak = s[364] if len(s) > 364 else float("nan")
-            scattered = sum(s[:364])
+            peak = s[main_kev] if len(s) > main_kev else float("nan")
+            scattered = sum(s[:main_kev])
             print(f"  {n:<10} {total:12.4e} {peak:12.4e} {scattered:12.4e}")
             rows += [
                 {"quantity": "fluence_total", "code": n, "value": total, "uncertainty_percent": ""},
-                {"quantity": "fluence_364keV_bin", "code": n, "value": peak, "uncertainty_percent": ""},
+                {"quantity": f"fluence_{main_kev}keV_bin", "code": n, "value": peak, "uncertainty_percent": ""},
             ]
 
     with open("comparison.csv", "w", newline="") as f:

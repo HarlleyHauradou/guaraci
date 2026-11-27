@@ -14,7 +14,7 @@
 | `guaraci data path` | folder where the data is stored |
 | `guaraci info units` | every unit |
 | `guaraci info materials [filter]` | materials of the database |
-| `guaraci info nuclide <name> [--csv]` | decay data of a nuclide |
+| `guaraci info nuclide <name> [--csv \| --beta-csv]` | decay data of a nuclide; `--csv` prints the photon lines and `--beta-csv` the β⁻ spectrum as a histogram (`--bins`, default 200), e.g. for the source of another Monte Carlo code |
 
 ## Environment variables
 

@@ -164,7 +164,10 @@ With `beta = transport` and the list `photon_electron`:
   out, since the transported positrons make their own.
 
 Check: the mean β energy of the main I-131 branch (endpoint 606.3 keV) is
-191.6 keV (ENSDF), and the F-18 positron spectrum has a mean of 250 keV.
+191.6 keV (ENSDF), and the F-18 positron spectrum has a mean of 250 keV. For
+first-forbidden unique branches the shape factor p² + q² leaves out the
+Coulomb correction λ₂, and the mean is a little high: 946 keV for the main
+Y-90 branch, against 933 keV in ENDF/B-VIII.0 (+1.4 %).
 
 ## Limitations
 

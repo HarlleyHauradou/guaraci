@@ -2,7 +2,7 @@
 
 ## Building
 
-You need [Rust](https://www.rust-lang.org/tools/install) (1.80 or newer).
+You need [Rust](https://www.rust-lang.org/tools/install) (1.82 or newer).
 
 ```bash
 git clone https://github.com/HarlleyHauradou/guaraci

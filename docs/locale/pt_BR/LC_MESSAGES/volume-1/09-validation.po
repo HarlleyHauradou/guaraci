@@ -657,8 +657,14 @@ msgstr "O teste `stabin_electron_spheres_selected`, rodado em todo `cargo test`,
 msgid "Comparison with other codes"
 msgstr "Comparação com outros códigos"
 
-msgid "The [vial benchmark](../examples.md) provides equivalent inputs for Guaraci, GATE 10 and MCNPX."
-msgstr "O [benchmark do frasco](../examples.md) traz entradas equivalentes para o Guaraci, o GATE 10 e o MCNPX."
+msgid "The [vial benchmark](../examples.md) provides equivalent inputs for Guaraci, GATE 10 and MCNPX, in two modes:"
+msgstr "O [benchmark do frasco](../examples.md) traz entradas equivalentes para o Guaraci, o GATE 10 e o MCNPX, em dois modos:"
+
+msgid "**photons:** the photon lines of I-131 (or any nuclide), photons only in the three codes;"
+msgstr "**fótons:** as linhas de fótons do I-131 (ou de qualquer nuclídeo), só fótons nos três códigos;"
+
+msgid "**beta:** the β⁻ spectrum of Y-90 (or any β⁻ emitter), electrons and photons transported in the three codes. The same histogram, exported by `guaraci info nuclide Y-90 --beta-csv`, is the source of GATE and MCNPX."
+msgstr "**beta:** o espectro β⁻ do Y-90 (ou de qualquer emissor β⁻), com elétrons e fótons transportados nos três códigos. O mesmo histograma, exportado por `guaraci info nuclide Y-90 --beta-csv`, é a fonte do GATE e do MCNPX."
 
 msgid "Pending"
 msgstr "Pendências"

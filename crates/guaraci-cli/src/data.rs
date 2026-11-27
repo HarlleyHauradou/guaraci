@@ -1,7 +1,7 @@
 //! `guaraci data ...`
 
 use clap::Subcommand;
-use guaraci_data::library::{self, data_dir, installed, Kind, Progress, CATALOG};
+use guaraci_data::library::{self, data_dir, install, installed, Kind, Progress, CATALOG};
 use std::io::Write;
 use std::path::PathBuf;
 
@@ -143,4 +143,32 @@ pub fn run(cmd: DataCommand) -> Result<(), ()> {
             }
         }
     }
+}
+
+/// Make sure a library is installed, downloading it on first use (unless offline).
+pub fn ensure(lib: &str, kind: Kind, offline: bool) -> Result<(), ()> {
+    let dir = data_dir();
+    if installed(&dir, lib, kind).is_some() {
+        return Ok(());
+    }
+    if offline {
+        eprintln!(
+            "error: {lib} {} data is not installed and downloads are disabled (--offline)",
+            kind.name()
+        );
+        eprintln!("  install it with: guaraci data install {lib} --kind {}", kind.name());
+        return Err(());
+    }
+    eprintln!(
+        "First use of {lib} {} data: downloading from the official source (once).",
+        kind.name()
+    );
+    install(&dir, lib, kind, None, &mut Bar::new())
+        .map(|_| ())
+        .map_err(|e| eprintln!("error: {e}"))
+}
+
+/// Downloads are disabled by `--offline` or by the `GUARACI_OFFLINE` variable.
+pub fn offline_env() -> bool {
+    std::env::var_os("GUARACI_OFFLINE").is_some()
 }

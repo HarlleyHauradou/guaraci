@@ -3,6 +3,7 @@ name = "guaraci-input"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
+rust-version.workspace = true
 description = "The Guaraci input language (.gci): parser, includes and diagnostics"
 
 [dependencies]

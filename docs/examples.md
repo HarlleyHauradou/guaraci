@@ -39,6 +39,9 @@ includes a fluence spectrum showing the 140.5 keV peak and the Compton continuum
 [`validation/vial_i131/`](https://github.com/HarlleyHauradou/guaraci/tree/main/validation/vial_i131):
 a 10 mL vial of water with I-131, photon transport only. A generator writes
 three equivalent inputs (Guaraci, GATE 10 and MCNPX), and a script compares the results.
+With `--beta`, the same vial holds a β⁻ emitter such as Y-90 and the three
+codes transport the electrons:
+`python3 make_inputs.py --nuclide Y-90 --beta --out inputs_y90`.
 
 ```bash
 cd validation/vial_i131

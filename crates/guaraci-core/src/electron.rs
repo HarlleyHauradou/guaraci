@@ -740,6 +740,26 @@ impl BetaSpectrum {
         BetaSpectrum { energies, cdf, mean }
     }
 
+    /// Cumulative probability of a kinetic energy below `e` (MeV), consistent
+    /// with `sample` (linear between the tabulated points).
+    pub fn cdf_at(&self, e: f64) -> f64 {
+        let n = self.energies.len();
+        if e <= self.energies[0] {
+            return 0.0;
+        }
+        if e >= self.energies[n - 1] {
+            return 1.0;
+        }
+        let i = self.energies.partition_point(|&v| v <= e).clamp(1, n - 1);
+        let (e0, e1) = (self.energies[i - 1], self.energies[i]);
+        self.cdf[i - 1] + (self.cdf[i] - self.cdf[i - 1]) * (e - e0) / (e1 - e0)
+    }
+
+    /// Endpoint energy (MeV).
+    pub fn endpoint(&self) -> f64 {
+        *self.energies.last().unwrap_or(&0.0)
+    }
+
     pub fn sample(&self, rng: &mut impl Rng) -> f64 {
         let u = rng.uniform();
         let i = self.cdf.partition_point(|&c| c < u).clamp(1, self.cdf.len() - 1);

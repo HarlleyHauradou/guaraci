@@ -153,7 +153,7 @@ impl Solid {
                     1 => Vec3::new(a, 1.0, b),
                     _ => Vec3::new(a, b, 1.0),
                 };
-                let p = if face.is_multiple_of(2) { p } else { -p };
+                let p = if face % 2 == 0 { p } else { -p };
                 p.mul_elem(half)
             }
             Solid::Cylinder { r, half_h } => {

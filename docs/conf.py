@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "_ext"))
 project = "Guaraci"
 author = "Harlley Hauradou"
 copyright = "Guaraci"
-release = "0.1"
+release = "0.2"
 language = "en"
 
 # Translations (gettext): docs/locale/<lang>/LC_MESSAGES/*.po

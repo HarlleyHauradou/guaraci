@@ -9,8 +9,8 @@ msgstr "2\\. Instalação e dados nucleares"
 msgid "Building"
 msgstr "Compilação"
 
-msgid "You need [Rust](https://www.rust-lang.org/tools/install) (1.80 or newer)."
-msgstr "É preciso o [Rust](https://www.rust-lang.org/tools/install) (1.80 ou mais novo)."
+msgid "You need [Rust](https://www.rust-lang.org/tools/install) (1.82 or newer)."
+msgstr "É preciso o [Rust](https://www.rust-lang.org/tools/install) (1.82 ou mais novo)."
 
 msgid "The `guaraci` command is then available in the terminal."
 msgstr "O comando `guaraci` passa a estar disponível no terminal."

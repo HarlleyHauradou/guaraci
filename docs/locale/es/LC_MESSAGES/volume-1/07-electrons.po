@@ -243,8 +243,8 @@ msgstr "**Electrones de conversión y Auger:** líneas discretas con sus intensi
 msgid "**Annihilation photons:** the 511 keV lines of the decay library are left out, since the transported positrons make their own."
 msgstr "**Fotones de aniquilación:** las líneas de 511 keV de la biblioteca de decaimiento se dejan fuera, ya que los positrones transportados generan los suyos."
 
-msgid "Check: the mean β energy of the main I-131 branch (endpoint 606.3 keV) is 191.6 keV (ENSDF), and the F-18 positron spectrum has a mean of 250 keV."
-msgstr "Comprobación: la energía β media de la rama principal del I-131 (punto final 606,3 keV) es 191,6 keV (ENSDF), y el espectro de positrones del F-18 tiene una media de 250 keV."
+msgid "Check: the mean β energy of the main I-131 branch (endpoint 606.3 keV) is 191.6 keV (ENSDF), and the F-18 positron spectrum has a mean of 250 keV. For first-forbidden unique branches the shape factor p² + q² leaves out the Coulomb correction λ₂, and the mean is a little high: 946 keV for the main Y-90 branch, against 933 keV in ENDF/B-VIII.0 (+1.4 %)."
+msgstr "Comprobación: la energía β media de la rama principal del I-131 (punto final 606,3 keV) es 191,6 keV (ENSDF), y el espectro de positrones del F-18 tiene una media de 250 keV. En las ramas primeras prohibidas únicas, el factor de forma p² + q² deja fuera la corrección coulombiana λ₂, y la media queda algo alta: 946 keV en la rama principal del Y-90, frente a 933 keV en ENDF/B-VIII.0 (+1,4 %)."
 
 msgid "Limitations"
 msgstr "Limitaciones"

@@ -434,7 +434,7 @@ checksum = "1033caf0b349c518623b5396bfb2cf0bddf44f0306d543a250e5743297aafd10"
 
 [[package]]
 name = "guaraci-cli"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "clap",
  "ctrlc",
@@ -447,7 +447,7 @@ dependencies = [
 
 [[package]]
 name = "guaraci-core"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "guaraci-data",
  "guaraci-input",
@@ -455,7 +455,7 @@ dependencies = [
 
 [[package]]
 name = "guaraci-cpu"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "guaraci-core",
  "guaraci-data",
@@ -465,7 +465,7 @@ dependencies = [
 
 [[package]]
 name = "guaraci-data"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "bincode",
  "dirs",
@@ -479,7 +479,7 @@ dependencies = [
 
 [[package]]
 name = "guaraci-input"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "guaraci-data",
  "guaraci-units",
@@ -490,7 +490,7 @@ dependencies = [
 
 [[package]]
 name = "guaraci-units"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "strsim",
  "thiserror 2.0.21",

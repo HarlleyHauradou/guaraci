@@ -84,11 +84,11 @@ msgstr ""
 msgid "materials of the database"
 msgstr "materiales de la base"
 
-msgid "`guaraci info nuclide <name> [--csv]`"
+msgid "`guaraci info nuclide <name> [--csv | --beta-csv]`"
 msgstr ""
 
-msgid "decay data of a nuclide"
-msgstr "datos de decaimiento de un nucleido"
+msgid "decay data of a nuclide; `--csv` prints the photon lines and `--beta-csv` the β⁻ spectrum as a histogram (`--bins`, default 200), e.g. for the source of another Monte Carlo code"
+msgstr "datos de decaimiento de un nucleido; `--csv` imprime las líneas de fotones, y `--beta-csv`, el espectro β⁻ como histograma (`--bins`, 200 por defecto), por ejemplo para la fuente de otro código de Monte Carlo"
 
 msgid "Environment variables"
 msgstr "Variables de entorno"

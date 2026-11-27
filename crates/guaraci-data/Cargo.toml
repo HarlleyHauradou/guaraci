@@ -3,6 +3,7 @@ name = "guaraci-data"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
+rust-version.workspace = true
 description = "Nuclear and atomic data for Guaraci: ENDF-6 reader, download, local cache"
 
 [dependencies]

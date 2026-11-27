@@ -1,10 +1,10 @@
 //! `guaraci run <input>`: build the problem, run it and write the results.
 
-use crate::data::Bar;
+use crate::data::ensure;
 use crate::{check, report, BUILTINS};
 use guaraci_core::problem::{Normalization, Probe, Problem, MEV_TO_J};
 use guaraci_cpu::{Options, Results, RngChoice};
-use guaraci_data::library::{data_dir, install, installed, load_decay, load_electron, load_photon, Kind, Provenance};
+use guaraci_data::library::{data_dir, load_decay, load_electron, load_photon, Kind, Provenance};
 use guaraci_input::config::{Backend, Emission, RngKind};
 use guaraci_input::{load, Config, Diagnostic};
 use std::fmt::Write as _;
@@ -20,28 +20,6 @@ pub struct RunArgs {
     pub histories: Option<u64>,
     pub threads: Option<usize>,
     pub offline: bool,
-}
-
-fn ensure(lib: &str, kind: Kind, offline: bool) -> Result<(), ()> {
-    let dir = data_dir();
-    if installed(&dir, lib, kind).is_some() {
-        return Ok(());
-    }
-    if offline {
-        eprintln!(
-            "error: {lib} {} data is not installed and downloads are disabled (--offline)",
-            kind.name()
-        );
-        eprintln!("  install it with: guaraci data install {lib} --kind {}", kind.name());
-        return Err(());
-    }
-    eprintln!(
-        "First use of {lib} {} data: downloading from the official source (once).",
-        kind.name()
-    );
-    install(&dir, lib, kind, None, &mut Bar::new())
-        .map(|_| ())
-        .map_err(|e| eprintln!("error: {e}"))
 }
 
 pub fn run(args: RunArgs) -> Result<(), ()> {
