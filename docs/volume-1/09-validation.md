@@ -215,14 +215,15 @@ five cases with a tolerance of 3 % + the EGS4–MCNP difference + 3σ.
 ## Comparison with other codes
 
 The [vial benchmark](../examples.md) provides equivalent inputs for Guaraci,
-GATE 10 and MCNPX, in two modes:
+GATE 10, EGSnrc (DOSRZnrc) and FLUKA, and times every run on the same machine
+(1 thread, and every logical CPU). It has two modes:
 
-- **photons:** the photon lines of I-131 (or any nuclide), photons only in the three codes;
+- **photons:** the photon lines of I-131 (or any nuclide), photons only in the four codes;
 - **beta:** the β⁻ spectrum of Y-90 (or any β⁻ emitter), electrons and photons
-  transported in the three codes. The same histogram, exported by
-  `guaraci info nuclide Y-90 --beta-csv`, is the source of GATE and MCNPX.
+  transported in the four codes. The same histogram, exported by
+  `guaraci info nuclide Y-90 --beta-csv`, is the source of the other codes.
 
 ## Pending
 
-- Results of the GATE 10 and MCNPX comparisons.
+- Results of the comparison with GATE 10, EGSnrc and FLUKA, and the timing.
 - Electron benchmarks in heterogeneous geometries (depth-dose curves, backscatter).

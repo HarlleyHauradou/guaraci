@@ -244,7 +244,7 @@ PROBS = {[h[2] for h in beta]!r}"""
         source = f"""# ---- source: one electron per event, uniform in the water, isotropic, β⁻ histogram
 src = sim.add_source("GenericSource", "electrons")
 src.particle = "e-"
-src.n = {histories:.0f}
+src.n = PRIMARIES_PER_THREAD
 src.position.type = "box"
 src.position.size = [{2 * WAT_R} * cm, {2 * WAT_R} * cm, {WAT_H} * cm]
 src.position.translation = [0, 0, {WAT_Z:.4f} * cm]
@@ -264,7 +264,7 @@ WEIGHTS = {[l[1] for l in lines]!r}"""
         source = f"""# ---- source: one photon per event, uniform in the water, isotropic
 src = sim.add_source("GenericSource", "photons")
 src.particle = "gamma"
-src.n = {histories:.0f}
+src.n = PRIMARIES_PER_THREAD
 src.position.type = "box"
 src.position.size = [{2 * WAT_R} * cm, {2 * WAT_R} * cm, {WAT_H} * cm]
 src.position.translation = [0, 0, {WAT_Z:.4f} * cm]
@@ -309,11 +309,17 @@ gcm3 = g4_units.g_cm3
 
 {spectrum}
 
+# threads and output folder can be set from outside (run_all.py does);
+# in opengate, src.n is the number of primaries of EACH thread
+THREADS = int(os.environ.get("GATE_THREADS", "4"))
+HISTORIES = int(float(os.environ.get("GATE_HISTORIES", "{histories:.0f}")))
+PRIMARIES_PER_THREAD = max(1, HISTORIES // THREADS)
+OUTPUT = os.environ.get("GATE_OUTPUT", os.path.join(os.path.dirname(os.path.abspath(__file__)), "gate_output"))
+
 sim = gate.Simulation()
-sim.number_of_threads = 4
-sim.random_seed = 2026
-# results next to this script, whatever the current folder
-sim.output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "gate_output")
+sim.number_of_threads = THREADS
+sim.random_seed = int(os.environ.get("GATE_SEED", "2026"))
+sim.output_dir = OUTPUT
 sim.visu = False
 
 # ---- materials: same mass fractions and densities as Guaraci and MCNP
@@ -354,12 +360,18 @@ water.material = "Vial_Water"
 stats = sim.add_actor("SimulationStatisticsActor", "stats")
 stats.output_filename = "stats.json"
 
-# energy deposited in the water (one voxel covering the water)
-w = sim.add_actor("DoseActor", "water_edep")
-w.attached_to = "water"
-w.size = [1, 1, 1]
-w.spacing = [{2 * WAT_R} * cm, {2 * WAT_R} * cm, {WAT_H} * cm]
-w.output_filename = "water.mhd"
+# energy deposited in the water, in the vial (glass + everything inside) and in
+# the cavity (air + water): one voxel each; glass = vial - cavity
+for name, vol, size in [
+    ("water", "water", [{2 * WAT_R} * cm, {2 * WAT_R} * cm, {WAT_H} * cm]),
+    ("vial", "vial", [{2 * VIAL_R} * cm, {2 * VIAL_R} * cm, {VIAL_H} * cm]),
+    ("cavity", "cavity", [{2 * CAV_R} * cm, {2 * CAV_R} * cm, {CAV_H} * cm]),
+]:
+    a = sim.add_actor("DoseActor", f"{{name}}_edep")
+    a.attached_to = vol
+    a.size = [1, 1, 1]
+    a.spacing = size
+    a.output_filename = f"{{name}}.mhd"
 
 # 1 mm dose grid over the vial bounding box ({nx} x {nx} x {nz}), as Guaraci's `dose` probe
 d = sim.add_actor("DoseActor", "dose_grid")
@@ -372,7 +384,9 @@ d.dose_uncertainty.active = True
 
 sim.run()
 print(stats)
-print("Results in gate_output/ (water_edep.mhd: energy in the water, MeV; dose_grid_dose.mhd: Gy)")
+with open(os.path.join(OUTPUT, "events.txt"), "w") as f:
+    f.write(f"{{PRIMARIES_PER_THREAD * THREADS}}\n")
+print(f"Results in {{OUTPUT}} (water_edep.mhd: energy in the water, MeV; dose_grid_dose.mhd: Gy)")
 '''
 
 
@@ -475,6 +489,20 @@ PRDMP 2J 1
 """
 
 
+def other_inputs(a, origin, lines, hist):
+    """EGSnrc and FLUKA inputs (other_codes.py). MCNPX is written too, but only
+    as an optional extra: it is not part of the cross-validation."""
+    import other_codes as O
+
+    spectrum = os.path.abspath(os.path.join(a.out, "egsnrc_vial.spectrum"))
+    return {
+        "egsnrc_vial.spectrum": O.egsnrc_spectrum(a.nuclide, origin, lines, hist),
+        "egsnrc_vial.egsinp": O.egsnrc_input(a.nuclide, origin, a.histories, spectrum, beta=bool(hist)),
+        "fluka_vial.inp": O.fluka_input(a.nuclide, origin, a.histories, beta=hist),
+        "source.f": O.fluka_source(a.nuclide, lines, hist),
+    }
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--nuclide", default="I-131")
@@ -494,6 +522,7 @@ def main():
         files = {
             "vial.gci": guaraci_beta_input(a.nuclide, origin, info, a.histories),
             "gate10_vial.py": gate_input(a.nuclide, origin, None, a.histories, beta=hist),
+            **other_inputs(a, origin, None, hist),
             "mcnpx_vial.inp": mcnp_input(a.nuclide, origin, None, a.histories, beta=hist),
         }
         for name, text in files.items():
@@ -514,6 +543,7 @@ def main():
     files = {
         "vial.gci": guaraci_input(a.nuclide, origin, lines, a.histories),
         "gate10_vial.py": gate_input(a.nuclide, origin, lines, a.histories),
+        **other_inputs(a, origin, lines, None),
         "mcnpx_vial.inp": mcnp_input(a.nuclide, origin, lines, a.histories),
     }
     for name, text in files.items():

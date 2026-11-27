@@ -657,20 +657,20 @@ msgstr "La prueba `stabin_electron_spheres_selected`, ejecutada con cada `cargo 
 msgid "Comparison with other codes"
 msgstr "Comparación con otros códigos"
 
-msgid "The [vial benchmark](../examples.md) provides equivalent inputs for Guaraci, GATE 10 and MCNPX, in two modes:"
-msgstr "El [benchmark del vial](../examples.md) ofrece entradas equivalentes para Guaraci, GATE 10 y MCNPX, en dos modos:"
+msgid "The [vial benchmark](../examples.md) provides equivalent inputs for Guaraci, GATE 10, EGSnrc (DOSRZnrc) and FLUKA, and times every run on the same machine (1 thread, and every logical CPU). It has two modes:"
+msgstr "El [benchmark del vial](../examples.md) ofrece entradas equivalentes para Guaraci, GATE 10, EGSnrc (DOSRZnrc) y FLUKA, y cronometra cada ejecución en la misma máquina (1 hilo y todas las CPU lógicas). Tiene dos modos:"
 
-msgid "**photons:** the photon lines of I-131 (or any nuclide), photons only in the three codes;"
-msgstr "**fotones:** las líneas de fotones del I-131 (o de cualquier nucleido), solo fotones en los tres códigos;"
+msgid "**photons:** the photon lines of I-131 (or any nuclide), photons only in the four codes;"
+msgstr "**fotones:** las líneas de fotones del I-131 (o de cualquier nucleido), solo fotones en los cuatro códigos;"
 
-msgid "**beta:** the β⁻ spectrum of Y-90 (or any β⁻ emitter), electrons and photons transported in the three codes. The same histogram, exported by `guaraci info nuclide Y-90 --beta-csv`, is the source of GATE and MCNPX."
-msgstr "**beta:** el espectro β⁻ del Y-90 (o de cualquier emisor β⁻), con electrones y fotones transportados en los tres códigos. El mismo histograma, exportado por `guaraci info nuclide Y-90 --beta-csv`, es la fuente de GATE y MCNPX."
+msgid "**beta:** the β⁻ spectrum of Y-90 (or any β⁻ emitter), electrons and photons transported in the four codes. The same histogram, exported by `guaraci info nuclide Y-90 --beta-csv`, is the source of the other codes."
+msgstr "**beta:** el espectro β⁻ del Y-90 (o de cualquier emisor β⁻), con electrones y fotones transportados en los cuatro códigos. El mismo histograma, exportado por `guaraci info nuclide Y-90 --beta-csv`, es la fuente de los otros códigos."
 
 msgid "Pending"
 msgstr "Pendiente"
 
-msgid "Results of the GATE 10 and MCNPX comparisons."
-msgstr "Resultados de las comparaciones con GATE 10 y MCNPX."
+msgid "Results of the comparison with GATE 10, EGSnrc and FLUKA, and the timing."
+msgstr "Resultados de la comparación con GATE 10, EGSnrc y FLUKA, y los tiempos."
 
 msgid "Electron benchmarks in heterogeneous geometries (depth-dose curves, backscatter)."
 msgstr "Benchmarks de electrones en geometrías heterogéneas (curvas de dosis en profundidad, retrodispersión)."

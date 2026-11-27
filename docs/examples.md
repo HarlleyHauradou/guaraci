@@ -34,18 +34,19 @@ absorption would give.
 a sphere of 15 mm radius in a water cylinder, with results per decay. It
 includes a fluence spectrum showing the 140.5 keV peak and the Compton continuum.
 
-## I-131 vial: Guaraci vs GATE 10 vs MCNPX
+## I-131 vial: Guaraci vs GATE 10 vs EGSnrc vs FLUKA
 
 [`validation/vial_i131/`](https://github.com/HarlleyHauradou/guaraci/tree/main/validation/vial_i131):
 a 10 mL vial of water with I-131, photon transport only. A generator writes
-three equivalent inputs (Guaraci, GATE 10 and MCNPX), and a script compares the results.
-With `--beta`, the same vial holds a β⁻ emitter such as Y-90 and the three
-codes transport the electrons:
+equivalent inputs for Guaraci, GATE 10, EGSnrc and FLUKA, a script runs and
+times them all on the same machine, and another one compares the results and
+draws the plots. With `--beta`, the same vial holds a β⁻ emitter such as Y-90
+and the four codes transport the electrons:
 `python3 make_inputs.py --nuclide Y-90 --beta --out inputs_y90`.
 
 ```bash
 cd validation/vial_i131
 python3 make_inputs.py
-guaraci run inputs/vial -o vial_results
+python3 run_all.py
 python3 compare.py
 ```
