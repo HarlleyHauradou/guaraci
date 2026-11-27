@@ -57,7 +57,7 @@ This writes `inputs/vial.gci`, `inputs/gate10_vial.py`,
 
 ```bash
 guaraci run inputs/vial -o vial_results       # Guaraci
-(cd inputs && python3 gate10_vial.py)         # GATE 10, results in inputs/gate_output/
+python3 inputs/gate10_vial.py                 # GATE 10, results in inputs/gate_output/
 mcnpx i=inputs/mcnpx_vial.inp o=outp          # MCNPX
 ```
 
@@ -107,7 +107,7 @@ and in particular the interfaces.
 ```bash
 python3 make_inputs.py --nuclide Y-90 --beta --out inputs_y90
 guaraci run inputs_y90/vial -o y90_results
-(cd inputs_y90 && python3 gate10_vial.py)
+python3 inputs_y90/gate10_vial.py
 mcnpx i=inputs_y90/mcnpx_vial.inp o=outp_y90
 python3 compare.py --inputs inputs_y90 --guaraci y90_results --gate inputs_y90/gate_output --mcnp outp_y90
 ```

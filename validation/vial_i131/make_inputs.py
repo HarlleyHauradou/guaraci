@@ -215,7 +215,7 @@ em.pixe = False
 region = sim.physics_manager.add_region("everything")
 region.associate_volume(sim.world)
 region.user_limits["min_ekine"] = 1 * GeV
-sim.physics_manager.set_user_limits_particles(["electron"])"""
+sim.physics_manager.user_limits_particles = ["electron"]"""
 
 GATE_PHYSICS_BETA = """# ---- physics: electrons and photons transported
 # option4: the standard list recommended for dosimetry (Goudsmit-Saunderson
@@ -290,12 +290,14 @@ Same geometry, materials and spectrum as vial.gci and mcnpx_vial.inp.
 
 {physics_doc}
 
-Run:  python3 gate10_vial.py      (results in ./gate_output)
+Run:  python3 gate10_vial.py      (results in gate_output/, next to this file)
 This file was written for opengate 10.x; parameter names of the energy
 spectrum and of the user limits changed between minor versions; if a name is
 rejected, see the opengate documentation for your version (the intent of each
 line is commented).
 """
+
+import os
 
 import opengate as gate
 from opengate.utility import g4_units
@@ -308,7 +310,8 @@ gcm3 = g4_units.g_cm3
 sim = gate.Simulation()
 sim.number_of_threads = 4
 sim.random_seed = 2026
-sim.output_dir = "gate_output"
+# results next to this script, whatever the current folder
+sim.output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "gate_output")
 sim.visu = False
 
 # ---- materials: same mass fractions and densities as Guaraci and MCNP
@@ -340,7 +343,7 @@ water.material = "Vial_Water"
 
 # ---- actors
 stats = sim.add_actor("SimulationStatisticsActor", "stats")
-stats.output_filename = "stats.txt"
+stats.output_filename = "stats.json"
 
 # energy deposited in the water (one voxel covering the water)
 w = sim.add_actor("DoseActor", "water_edep")

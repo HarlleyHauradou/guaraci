@@ -80,12 +80,22 @@ def guaraci(path, per_decay):
     return out
 
 
+def gate_events_from_input(inputs):
+    """Events of the GATE run: the number of primaries `src.n` of gate10_vial.py."""
+    path = os.path.join(inputs, "gate10_vial.py")
+    if not os.path.exists(path):
+        return None
+    m = re.search(r"^src\.n\s*=\s*(\d+)", open(path).read(), re.M)
+    return int(m.group(1)) if m else None
+
+
 def gate(path, events=None):
     out = {}
-    stats = os.path.join(path, "stats.txt")
-    if not events and os.path.exists(stats):
-        m = re.search(r"Events?\s*(?:\(\w+\))?\s*[:=]?\s*(\d+)", open(stats).read())
-        events = int(m.group(1)) if m else None
+    for name in ("stats.json", "stats.txt"):
+        stats = os.path.join(path, name)
+        if not events and os.path.exists(stats):
+            m = re.search(r'"?[Ee]vents?"?\s*(?:\(\w+\))?\s*[:=]?\s*(\d+)', open(stats).read())
+            events = int(m.group(1)) if m else None
     if not events:
         print("GATE: number of events not found in stats.txt; give it with --gate-events")
         return out
@@ -139,7 +149,7 @@ def main():
     if os.path.isdir(a.guaraci):
         codes["Guaraci"] = guaraci(a.guaraci, per_decay)
     if os.path.isdir(a.gate):
-        codes["GATE 10"] = gate(a.gate, a.gate_events)
+        codes["GATE 10"] = gate(a.gate, a.gate_events or gate_events_from_input(a.inputs))
     if os.path.isfile(a.mcnp):
         codes["MCNPX"] = mcnp(a.mcnp)
     if not codes:
