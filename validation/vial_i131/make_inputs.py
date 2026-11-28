@@ -235,6 +235,9 @@ sim.physics_manager.global_production_cuts.all = 0.01 * mm"""
 def gate_input(nuclide, origin, lines, histories, beta=None):
     """`beta`: β⁻ histogram [(E_low, E_high, p)] for the beta mode, else photon lines."""
     what = f"{nuclide} β⁻ spectrum" if beta else f"{nuclide} photon lines"
+    # where the energy of a step is scored: at the interaction point ("post") for
+    # photons, whose steps are centimetres long; anywhere on the (short) step for electrons
+    hit = "random" if beta else "post"
     if beta:
         physics_doc = """Physics: G4EmStandardPhysics_option4, electrons and photons transported;
 fluorescence, Auger and PIXE off; production cut 0.01 mm."""
@@ -372,6 +375,7 @@ for name, vol, size in [
     a.size = [1, 1, 1]
     a.spacing = size
     a.output_filename = f"{{name}}.mhd"
+    a.hit_type = "{hit}"
 
 # 1 mm dose grid over the vial bounding box ({nx} x {nx} x {nz}), as Guaraci's `dose` probe
 d = sim.add_actor("DoseActor", "dose_grid")
@@ -379,11 +383,13 @@ d.attached_to = "vial"
 d.size = [{nx}, {nx}, {nz}]
 d.spacing = [{VOXEL * 10} * mm] * 3
 d.output_filename = "dose_grid.mhd"
+d.hit_type = "{hit}"   # photons: "post" (at the interaction point); electrons: "random" (along the step)
 d.dose.active = True
 d.dose_uncertainty.active = True
 
 sim.run()
 print(stats)
+os.makedirs(OUTPUT, exist_ok=True)
 with open(os.path.join(OUTPUT, "events.txt"), "w") as f:
     f.write(f"{{PRIMARIES_PER_THREAD * THREADS}}\\n")
 print(f"Results in {{OUTPUT}} (water_edep.mhd: energy in the water, MeV; dose_grid_dose.mhd: Gy)")
