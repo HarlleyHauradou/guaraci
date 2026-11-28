@@ -194,7 +194,8 @@ def egsnrc(path):
     region, from the dose summary. All the listings of the folder are averaged."""
     radii = [0.0, PROFILE_R, CAV_R, VIAL_R]
     acc, runs = {}, 0
-    row = re.compile(r"^\s*(\d+)\s+(\d+)\s+.*?(\d\.\d+E[-+]\d+)\s*\+-\s*([\d.]+)\s*%")
+    # "  Z#  P#  C#   T(Gy/particle) +/- x%   T-S ...": zone, planar slab, ring, total dose
+    row = re.compile(r"^\s*\d+\s+(\d+)\s+(\d+)\s+(\d\.\d+E[-+]\d+)\s*\+/-\s*([\d.]+)\s*%")
     for lst in sorted(glob.glob(os.path.join(path, "*.egslst"))):
         text = open(lst, errors="replace").read()
         found = 0
