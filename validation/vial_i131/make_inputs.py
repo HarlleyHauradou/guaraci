@@ -385,7 +385,7 @@ d.dose_uncertainty.active = True
 sim.run()
 print(stats)
 with open(os.path.join(OUTPUT, "events.txt"), "w") as f:
-    f.write(f"{{PRIMARIES_PER_THREAD * THREADS}}\n")
+    f.write(f"{{PRIMARIES_PER_THREAD * THREADS}}\\n")
 print(f"Results in {{OUTPUT}} (water_edep.mhd: energy in the water, MeV; dose_grid_dose.mhd: Gy)")
 '''
 

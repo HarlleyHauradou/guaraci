@@ -175,7 +175,9 @@ Bound Compton scattering= simple   # Klein-Nishina with S(x,Z), no Doppler: as G
 Pair angular sampling= Simple
 Photoelectron angular sampling= On
 Rayleigh scattering= On
-Atomic relaxations= Off            # no fluorescence: as Guaraci
+Atomic relaxations= On             # required by EGSnrc with bound Compton; in water, air and
+                                   # glass the X-rays (Si K: 1.7 keV) and Auger electrons stop
+                                   # within micrometres: in effect local, as in the other codes
 Photon cross sections= xcom
 Electron Impact Ionization= Off
 :stop MC transport parameter:

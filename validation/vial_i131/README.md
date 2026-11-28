@@ -43,7 +43,10 @@ line spectra do. In FLUKA the primaries are sampled by the user routine
 | FLUKA 4 | `DEFAULTS PRECISIO`; `EMFCUT` −10 MeV: electrons deposit locally | `EMFCUT` 10 keV / 1 keV, also as production cuts |
 
 In every code:
-- no fluorescence (GATE `fluo` off, EGSnrc `Atomic relaxations= Off`, FLUKA `EMFFLUO` off);
+- no fluorescence (GATE `fluo` off, FLUKA `EMFFLUO` off). EGSnrc does not accept bound Compton
+  scattering without atomic relaxations, so they are on there: in water, air and glass the
+  fluorescence X-rays (Si K: 1.7 keV) and Auger electrons stop within micrometres, which is
+  in effect local deposition;
 - Rayleigh on;
 - Compton with binding (S(x,Z)) and without Doppler broadening, where the code allows it.
 
