@@ -41,18 +41,29 @@ def sh(cmd, **kw):
         return f"unavailable ({e})"
 
 
+def cpu_name():
+    """CPU model, independent of the language of the system."""
+    m = re.search(r"Model name:\s*(.*)", sh("LC_ALL=C lscpu"))
+    if m:
+        return m.group(1).strip()
+    if os.path.exists("/proc/cpuinfo"):
+        m = re.search(r"model name\s*:\s*(.*)", open("/proc/cpuinfo").read())
+        if m:
+            return m.group(1).strip()
+    return platform.processor() or "unknown"
+
+
 def machine_info(a):
-    cpu = re.search(r"Model name:\s*(.*)", sh("lscpu"))
     mem = re.search(r"MemTotal:\s*(\d+)", open("/proc/meminfo").read()) if os.path.exists("/proc/meminfo") else None
     lines = [
         f"date              {time.strftime('%Y-%m-%d %H:%M:%S %z')}",
         f"system            {platform.platform()}",
-        f"CPU               {cpu.group(1).strip() if cpu else platform.processor()}",
+        f"CPU               {cpu_name()}",
         f"logical CPUs      {os.cpu_count()}",
         f"memory            {int(mem.group(1)) / 1024 ** 2:.1f} GiB" if mem else "memory            unknown",
         f"GPU               {sh('nvidia-smi --query-gpu=name,memory.total,driver_version --format=csv,noheader') or 'none found'}",
         f"Guaraci           {sh([a.guaraci, '--version'])}",
-        f"GATE (opengate)   {sh([a.gate_python, '-c', 'import opengate; print(opengate.__version__)'])}",
+        f"GATE (opengate)   {sh([a.gate_python, '-c', 'import importlib.metadata as m; print(m.version(\"opengate\"))']) or 'not found'}",
         f"EGSnrc            EGS_HOME={os.environ.get('EGS_HOME', 'not set')} HEN_HOUSE={os.environ.get('HEN_HOUSE', 'not set')}",
         f"FLUKA             FLUPRO={os.environ.get('FLUPRO', 'not set')}",
         "note              no code uses the GPU in this benchmark",
@@ -208,7 +219,8 @@ def main():
                     continue
                 if wall is None:
                     continue
-                print(f"    {wall:.1f} s, {n / wall:.4g} histories/s")
+                if ok:
+                    print(f"    {wall:.1f} s, {n / wall:.4g} histories/s")
                 w.writerow([code, t, n, f"{wall:.3f}", f"{n / wall:.6g}", out, ok])
                 f.flush()
     print(f"\nTimes in {timing_path}. Compare: python3 compare.py --inputs {a.inputs} --results {a.results}")
